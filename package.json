@@ -1,0 +1,42 @@
+{
+  "private": true,
+  "type": "module",
+  "name": "Topten",
+  "description": "멋사 파이널프로젝트를 위한 레포지토리입니다.",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "node server.mjs",
+    "test": "vitest --reporter verbose",
+    "test:ui": "vitest --ui",
+    "test:once": "npm run test -- --run",
+    "test:coverage": "vitest run --coverage",
+    "test:coverage-watch": "vitest watch --coverage"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.8",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitest/ui": "^2.0.4",
+    "eslint-plugin-jest-dom": "^5.4.0",
+    "eslint-plugin-testing-library": "^6.2.2",
+    "express": "^4.19.2",
+    "jsdom": "^24.1.1",
+    "live-server": "^1.2.0",
+    "prettier": "^3.3.3",
+    "prop-types": "^15.8.1",
+    "sass": "^1.77.8",
+    "typescript": "^5.5.4",
+    "vite": "^5.3.5",
+    "vitest": "^2.0.5"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "kind-tiger": "^1.0.1",
+    "pocketbase": "^0.21.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
