@@ -3,6 +3,11 @@ import Button from '@/components/Button/Button';
 import styles from '@/styles/pages/FindPasswordPage.module.scss';
 
 function FindPasswordPage(props) {
+  const handleEmailButtonClick = () => {
+    // 이메일 확인 버튼 클릭 시 실행할 로직 작성
+    alert('이메일 확인 버튼 클릭됨');
+  };
+
   return (
     <>
       <div>
@@ -13,9 +18,15 @@ function FindPasswordPage(props) {
       </div>
 
       <Input text={'이름'} description={'이름을 입력해주세요'} />
-      <Input text={'이메일'} description={'이메일을 입력해주세요'} />
 
-      <Button />
+      <Input
+        text={'이메일'}
+        description={'이메일을 입력해주세요'}
+        buttonText={'이메일 인증'}
+        onButtonClick={handleEmailButtonClick}
+      />
+
+      {/* <Button /> */}
     </>
   );
 }
