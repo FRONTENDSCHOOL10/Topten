@@ -1,0 +1,15 @@
+.logo {
+  &__wrapper {
+    display: flex;
+    flex-flow: column;
+  }
+}
+
+.sun {
+  width: 60px;
+}
+
+.cloud {
+  width: 100px;
+  z-index: 100;
+}
