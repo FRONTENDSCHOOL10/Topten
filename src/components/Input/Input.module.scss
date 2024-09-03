@@ -8,8 +8,14 @@
 }
 
 .input {
+  width: 288px;
+  height: 1px;
   padding: 20px 0;
-  border: 0;
-  outline: none;
-  border-bottom: 1px solid #ccc;
+  border: none;
+  border-bottom: 1px solid #e5e5e5;
+
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 13.2px;
+  letter-spacing: -0.48px;
 }
