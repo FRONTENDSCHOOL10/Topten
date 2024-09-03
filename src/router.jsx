@@ -40,6 +40,16 @@
 
 import { createBrowserRouter } from 'react-router-dom';
 import { configRoutes, getNavigationItems } from '@/utils';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import FindPasswordPage from './pages/FindPasswordPage';
+import MainPage from './pages/MainPage';
+import LikedPage from './pages/LikedPage';
+import MyPage from './pages/MyPage';
+import LookbookPage from './pages/LookbookPage';
+import CalendarPage from './pages/CalendarPage';
+import IntroPage from './pages/IntroPage';
+import RootLayout from './layouts/RootLayout';
 
 // import {
 //   Component as NoteDetail,
@@ -47,7 +57,53 @@ import { configRoutes, getNavigationItems } from '@/utils';
 // } from '@/pages/Notes/NoteDetail';
 
 /**@type {import('react-router-dom').RouteObject[]} */
-const navigation = [];
+const navigation = [
+  {
+    text: '인트로',
+    path: '/',
+    element: <IntroPage />,
+  },
+  {
+    text: '로그인',
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    text: '회원가입',
+    path: '/register',
+    element: <RegisterPage />,
+  },
+  {
+    text: '비밀번호찾기',
+    path: '/findpassword',
+    element: <FindPasswordPage />,
+  },
+  {
+    text: '메인페이지',
+    path: '/main',
+    element: <MainPage />,
+  },
+  {
+    text: '룩북페이지',
+    path: '/lookbook',
+    element: <LookbookPage />,
+  },
+  {
+    text: '달력페이지',
+    path: '/calender',
+    element: <CalendarPage />,
+  },
+  {
+    text: '좋아요페이지',
+    path: '/liked',
+    element: <LikedPage />,
+  },
+  {
+    text: '마이페이지',
+    path: '/myinfo',
+    element: <MyPage />,
+  },
+];
 
 /**@type {import('react-router-dom').RouteObject[]} */
 export const routes = [
