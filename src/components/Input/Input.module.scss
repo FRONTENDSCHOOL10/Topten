@@ -1,0 +1,15 @@
+.inputComponent {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 700;
+}
+
+.input {
+  padding: 20px 0;
+  border: 0;
+  outline: none;
+  border-bottom: 1px solid #ccc;
+}
