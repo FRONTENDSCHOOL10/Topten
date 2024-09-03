@@ -7,6 +7,11 @@
   font-weight: 700;
 }
 
+.inputWrapper {
+  display: flex;
+  align-items: center;
+}
+
 .input {
   width: 288px;
   height: 1px;
@@ -21,6 +26,31 @@
 
   &:focus {
     outline: none;
-    border-bottom: 1px solid #FFBC17;
+    border-bottom: 1px solid #ffbc17;
+  }
+}
+
+// 이메일 인증 버튼(비밀번호 찾기 페이지)
+.button {
+  width: 80px;
+  height: 22px;
+  flex-shrink: 0;
+
+  color: var(--black, #000);
+  background: rgba(255, 255, 255, 0);
+  border: 1px solid var(--gray-300, #e5e5e5);
+  border-radius: 10px;
+  text-align: center;
+
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 13.2px;
+  letter-spacing: -0.48px;
+
+  &:hover{
+    background-color: #ffbc17;
+    border: none;
   }
 }
