@@ -60,7 +60,7 @@ import RootLayout from './layouts/RootLayout';
 const navigation = [
   {
     text: '인트로',
-    path: '/',
+    index: true,
     element: <IntroPage />,
   },
   {

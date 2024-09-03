@@ -1,5 +1,3 @@
-import React from 'react';
-
 function FindPasswordPage(props) {
   return <div>비번찾기</div>;
 }
