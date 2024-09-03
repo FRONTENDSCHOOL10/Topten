@@ -1,9 +1,12 @@
+import React, { useRef } from 'react';
 import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
 import styles from '@/styles/pages/FindPasswordPage.module.scss';
-import React, { useRef } from 'react';
+import useDocumentTitle from './../utils/useDocumentTitle';
 
 function FindPasswordPage(props) {
+  useDocumentTitle('비밀번호 찾기');
+
   const nameRef = useRef(null); // 이름 입력칸
   const emailRef = useRef(null); // 이메일 입력칸
 
@@ -11,6 +14,12 @@ function FindPasswordPage(props) {
   const handleChange = (e) => {
     console.log(`변경됨: ${e.target.value}`); // 변경된 입력 값 출력
   };
+  // const handleInput = throttle((e) => {
+  //   const userInputValue = e.target.value;
+    
+  //   setInputValue(userInputValue);
+  //   onInput?.(userInputValue);
+  // }, 600);
 
   // 이메일 인증 버튼 누를 시
   const handleEmailButtonClick = (e) => {
