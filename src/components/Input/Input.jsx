@@ -1,7 +1,10 @@
-import React, { forwardRef } from 'react';
+import React, { useId } from 'react';
 import styles from './Input.module.scss';
 
-const Input = forwardRef((props, ref) => {
+function Input(props) {
+
+  const id = useId();
+
   return (
     <div className={styles.inputComponent}>
       <label className={styles.label} htmlFor="">
@@ -12,11 +15,11 @@ const Input = forwardRef((props, ref) => {
 
       <div className={styles.inputWrapper}>
         <input
-          ref={ref}
           className={styles.input}
           type={props.type}
           placeholder={props.description}
           onChange={props.onChange}
+          id={id}
         />
         {props.text === '이메일' && (
           <button className={styles.button} onClick={props.onButtonClick}>
@@ -26,6 +29,6 @@ const Input = forwardRef((props, ref) => {
       </div>
     </div>
   );
-});
+};
 
 export default Input;
