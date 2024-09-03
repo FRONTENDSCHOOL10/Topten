@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Input from '@/components/Input/Input';
 import Button from '@/components/Button/Button';
 import styles from '@/styles/pages/FindPasswordPage.module.scss';
@@ -6,37 +6,86 @@ import useDocumentTitle from './../utils/useDocumentTitle';
 import { throttle } from './../utils/throttle';
 import Form from './../components/Form/Form';
 
+// 유효성 검사 함수
+function validateName(name) {
+  const nameRegex = /^[가-힣]{2,6}$/;
+  return nameRegex.test(name);
+}
+
+function validateEmail(email) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+}
+
 function FindPasswordPage(props) {
   useDocumentTitle('비밀번호 찾기');
 
-  // const nameRef = useRef(null); // 이름 입력칸
-  // const emailRef = useRef(null); // 이메일 입력칸
+  // 이름과 이메일을 위한 상태 추가
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-  // // 입력칸 입력 시
-  // const handleChange = throttle((e) => {
-  //   console.log(`변경됨: ${e.target.value}`); // 변경된 입력 값 출력
-  // }, 600);
-  // // const handleInput = throttle((e) => {
-  // //   const userInputValue = e.target.value;
+  const [warnings, setWarnings] = useState({ name: '', email: '' });
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  // //   setInputValue(userInputValue);
-  // //   onInput?.(userInputValue);
-  // // }, 600);
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
 
-  // // 이메일 인증 버튼 누를 시
-  // const handleEmailButtonClick = (e) => {
-  //   // e.preventDefault()
+  // 입력 변경 시 상태 업데이트 함수
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
 
-  //   alert(nameRef.current.value);
-  //   alert(emailRef.current.value);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-  //   if (nameRef.current.value === '') {
-  //     alert('이름을 입력하세요.');
-  //   }
-  //   if (emailRef.current.value === '') {
-  //     alert('이메일을 입력하세요.');
-  //   }
-  // };
+  // 입력 필드에서 포커스가 떼어졌을 때 유효성 검사
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+
+    if (name === 'name' && !validateName(value)) {
+      setWarnings((prevWarnings) => ({
+        ...prevWarnings,
+        name: '이름은 2자에서 6자 사이의 한글이어야 합니다.',
+      }));
+    } else if (name === 'email' && !validateEmail(value)) {
+      setWarnings((prevWarnings) => ({
+        ...prevWarnings,
+        email: '유효한 이메일 주소를 입력하세요.',
+      }));
+    } else {
+      setWarnings((prevWarnings) => ({
+        ...prevWarnings,
+        [name]: '',
+      }));
+    }
+  };
+
+  // 버튼 활성화 상태 업데이트
+  useEffect(() => {
+    if (name && email && !warnings.name && !warnings.email) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [name, email, warnings]);
+
+  // 이메일 인증 버튼 클릭 시
+  const handleEmailButtonClick = () => {
+    if (!name) {
+      nameRef.current.focus();
+      return;
+    }
+    if (!email) {
+      emailRef.current.focus();
+      return;
+    }
+
+    console.log('이름:', name);
+    console.log('이메일:', email);
+
+    // 이메일 인증 로직 추가
+  };
 
   // 폼 제출 시 실행
   const handleSignIn = async (e) => {
@@ -53,18 +102,10 @@ function FindPasswordPage(props) {
       // 데이터를 콘솔에 출력
       console.log('Name:', name);
       console.log('Email:', email);
-
     } catch (error) {
       console.error(error);
     }
   };
-
-
-  //   const handleEmailButtonClick = (e) => {
-  //   // e.preventDefault()
-
-
-  // };
 
   return (
     <>
@@ -78,15 +119,23 @@ function FindPasswordPage(props) {
         <Input
           text={'이름'}
           description={'이름을 입력해주세요'}
-          // onChange={handleChange}
+          onChange={handleNameChange}
+          onBlur={handleBlur}
+          value={name}
+          warningText={warnings.name}
+          inputRef={nameRef}
         />
 
         <Input
           text={'이메일'}
           description={'이메일을 입력해주세요'}
           buttonText={'이메일 인증'}
-          // onButtonClick={handleEmailButtonClick}
-          // onChange={handleChange}
+          value={email}
+          onChange={handleEmailChange}
+          onButtonClick={handleEmailButtonClick}
+          onBlur={handleBlur}
+          warningText={warnings.email}
+          inputRef={emailRef}
         />
       </Form>
     </>
