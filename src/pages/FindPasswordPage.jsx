@@ -27,6 +27,12 @@ function FindPasswordPage(props) {
   // 이메일 상태
   const [email, setEmail] = useState('');
 
+  // 새 비밀번호 상태
+  const [newPassword, setNewPassword] = useState('');
+
+  // 비밀번호 확인 상태
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   // 경고 문구
   const [warnings, setWarnings] = useState({ name: '', email: '' });
 
@@ -36,13 +42,21 @@ function FindPasswordPage(props) {
   const nameRef = useRef(null);
   const emailRef = useRef(null);
 
-  // 입력 변경 시 상태 업데이트 ------------------------
+  // 입력 변경 시 상태 업데이트 ----------------------------
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+  };
+
+  const handleNewPasswordChange = (e) => {
+    setNewPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
   // 입력 필드에서 포커스가 떠났을 때 ------------------------
@@ -131,31 +145,45 @@ function FindPasswordPage(props) {
         <Input
           text={'이름'}
           description={'이름을 입력해주세요'}
+          value={name}
+          inputRef={nameRef}
           onChange={handleNameChange}
           onBlur={handleBlur}
-          value={name}
           warningText={warnings.name}
-          inputRef={nameRef}
         />
-
         <Input
           text={'이메일'}
           description={'이메일을 입력해주세요'}
           buttonText={'이메일 인증'}
           value={email}
+          inputRef={emailRef}
           onChange={handleEmailChange}
           onButtonClick={handleAction}
           onBlur={handleBlur}
           warningText={warnings.email}
           warningStyle={isEmailVerified ? { color: 'rgb(27, 182, 104)' } : { color: 'red' }}
-          inputRef={emailRef}
         />
       </Form>
+
       {/* 새 비밀번호 변경 입력칸 */}
       {/* - 이메일 인증이 완료된 경우에만 보여줌 */}
       {isEmailVerified && (
         <div className={styles.successMessage}>
-          <p>이메일 인증이 완료되었습니다. 비밀번호 재설정 이메일이 발송되었습니다.</p>
+          <p>이메일 인증이 완료 시</p>
+
+          <Form>
+            <Input
+              text={'새 비밀번호'}
+              description={'새 비밀번호를 입력해주세요'}
+              value={newPassword}
+            />
+            <Input
+              text={'새 비밀번호 확인'}
+              description={'새 비밀번호를 한 번 더 입력해주세요'}
+              value={confirmPassword}
+            />
+            <Button text={'비밀번호 변경'} />
+          </Form>
         </div>
       )}
     </>
