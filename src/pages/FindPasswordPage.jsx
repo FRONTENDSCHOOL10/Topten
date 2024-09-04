@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Input from '@/components/Input/Input';
+import Input from '@/components/Input/Input_kbr';
 import Button from '@/components/Button/Button';
 import styles from '@/styles/pages/FindPasswordPage.module.scss';
 import useDocumentTitle from './../utils/useDocumentTitle';
 import { throttle } from './../utils/throttle';
 import Form from './../components/Form/Form';
+import pb from './../api/pocketbase';
+
+
+const response = await pb.collection('users').getList();
+
+console.log(response);
 
 // 유효성 검사 함수
 function validateName(name) {
@@ -91,20 +97,23 @@ function FindPasswordPage(props) {
   const handleSignIn = async (e) => {
     e.preventDefault();
 
-    try {
-      // 폼 데이터 추출(이메일, 비번)
-      const formData = new FormData(e.currentTarget);
+    // try {
+    //   const response = await pb.collection('users').getList();
+    //   console.log(response);
+    // } catch (error) {
+    //   console.error('Error fetching users:', error);
+    // }
 
-      // FormData에서 데이터를 추출
-      const name = formData.get('name');
-      const email = formData.get('email');
 
-      // 데이터를 콘솔에 출력
-      console.log('Name:', name);
-      console.log('Email:', email);
-    } catch (error) {
-      console.error(error);
-    }
+    // 폼 데이터 추출(이메일, 비번)
+    const formData = new FormData(e.currentTarget);
+
+    // FormData에서 데이터 추출
+    const name = formData.get('name');
+    const email = formData.get('email');
+
+    // console.log('Name:', name);
+    // console.log('Email:', email);
   };
 
   return (
