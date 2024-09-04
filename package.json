@@ -35,10 +35,11 @@
     "vitest": "^2.0.5"
   },
   "dependencies": {
+    "@gsap/react": "^2.1.1",
     "@vitejs/plugin-react": "^4.3.1",
     "clsx": "^2.1.1",
-    "gsap": "^3.12.5",
     "kind-tiger": "^1.0.1",
+    "motion": "^10.18.0",
     "pocketbase": "^0.21.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

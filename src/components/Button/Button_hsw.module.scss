@@ -1,0 +1,17 @@
+.button {
+  background-color: var(--white);
+  border: 1px solid var(--black);
+  border-radius: 8px;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s;
+
+  &.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .icon {
+    margin-right: 8px;
+  }
+}
