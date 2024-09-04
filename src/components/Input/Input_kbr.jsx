@@ -23,23 +23,25 @@ function Input({
       </label>
 
       <div className={styles.inputWrapper}>
-        <input
-          className={styles.input}
-          type={type}
-          placeholder={description}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          id={id}
-          name={text === '이름' ? 'name' : 'email'}
-          ref={inputRef} // ref 추가
-        />
+        <div className={styles.inputWrapper2}>
+          <input
+            className={styles.input}
+            type={type}
+            placeholder={description}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            id={id}
+            name={text === '이름' ? 'name' : 'email'}
+            ref={inputRef}
+          />
+          {warningText && <p className={styles.warningText}>{warningText}</p>}
+        </div>
         {text === '이메일' && (
           <button className={styles.button} type="button" onClick={onButtonClick}>
             {buttonText ?? '확인'}
           </button>
         )}
-        {warningText && <p className={styles.warningText}>{warningText}</p>}
       </div>
     </div>
   );
