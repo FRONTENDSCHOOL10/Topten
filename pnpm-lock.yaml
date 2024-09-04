@@ -8,21 +8,12 @@ importers:
 
   .:
     dependencies:
-      '@gsap/react':
-        specifier: ^2.1.1
-        version: 2.1.1
-      '@motionone/react':
-        specifier: ^10.16.4
-        version: 10.16.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@vitejs/plugin-react':
         specifier: ^4.3.1
         version: 4.3.1(vite@5.4.2(@types/node@22.5.0)(sass@1.77.8))
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
-      gsap:
-        specifier: ^3.12.5
-        version: 3.12.5
       kind-tiger:
         specifier: ^1.0.1
         version: 1.0.1
@@ -54,6 +45,9 @@ importers:
         specifier: 4.5.5
         version: 4.5.5(@types/react@18.3.4)(immer@10.1.1)(react@18.3.1)
     devDependencies:
+      '@gsap/react':
+        specifier: ^2.1.1
+        version: 2.1.1
       '@testing-library/jest-dom':
         specifier: ^6.4.8
         version: 6.5.0
@@ -422,17 +416,6 @@ packages:
 
   '@motionone/generators@10.18.0':
     resolution: {integrity: sha512-+qfkC2DtkDj4tHPu+AFKVfR/C30O1vYdvsGYaR13W/1cczPrrcjdvYCj0VLFuRMN+lP1xvpNZHCRNM4fBzn1jg==}
-
-  '@motionone/react@10.16.4':
-    resolution: {integrity: sha512-LLGmXT+nPOKAVs5DQI89yRgefUoFG1NAftf1GVej3Rx8V/O0ORGbNwMoYL7fvC3BO7YbCG/4w8zoyU8dUiOVxQ==}
-    peerDependencies:
-      react: ^17.0.2
-      react-dom: ^17.0.2
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
 
   '@motionone/types@10.17.1':
     resolution: {integrity: sha512-KaC4kgiODDz8hswCrS0btrVrzyU2CSQKO7Ps90ibBVSQmjkrt2teqta6/sOG59v7+dPnKMAg13jyqtMKV2yJ7A==}
@@ -2902,15 +2885,6 @@ snapshots:
       '@motionone/types': 10.17.1
       '@motionone/utils': 10.18.0
       tslib: 2.7.0
-
-  '@motionone/react@10.16.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@motionone/dom': 10.18.0
-      hey-listen: 1.0.8
-      tslib: 2.7.0
-    optionalDependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   '@motionone/types@10.17.1': {}
 
