@@ -24,3 +24,19 @@
     border-bottom: 1px solid #FFBC17;
   }
 }
+
+.errorMessage{
+  margin-top:6px;
+  color:var(--red-100, #FF5050);
+  font-size:12px;
+  font-weight:500;
+  line-height: 13.2px;
+}
+
+.approveMessage{
+  margin-top:6px;
+  color:var(--green-100, #1bb668);
+  font-size:12px;
+  font-weight:500;
+  line-height: 13.2px;
+}
