@@ -30,6 +30,9 @@ function FindPasswordPage(props) {
   // 경고 문구
   const [warnings, setWarnings] = useState({ name: '', email: '' });
 
+  // 이메일 인증 상태 관리
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+
   const nameRef = useRef(null);
   const emailRef = useRef(null);
 
@@ -98,18 +101,20 @@ function FindPasswordPage(props) {
       alert(email + '로 비밀번호 초기화 이메일을 발송했습니다. 비밀번호 재설정 후 로그인하세요.');
       // ----------------------------------------------
 
+      // 이메일 인증 성공 시 상태 업데이트
+      setIsEmailVerified(true);
+
       // 이메일 인증 완료 시 문구
       setWarnings({
         ...warnings,
         email: '이메일 인증이 완료되었습니다.',
       });
-
     } catch (error) {
       console.error('사용자가 존재하지 않습니다.', error);
 
-      setWarnings({ 
-        ...warnings, 
-        email: '사용자를 찾을 수 없습니다.' 
+      setWarnings({
+        ...warnings,
+        email: '사용자를 찾을 수 없습니다.',
       });
     }
   };
@@ -142,9 +147,17 @@ function FindPasswordPage(props) {
           onButtonClick={handleAction}
           onBlur={handleBlur}
           warningText={warnings.email}
+          warningStyle={isEmailVerified ? { color: 'rgb(27, 182, 104)' } : { color: 'red' }}
           inputRef={emailRef}
         />
       </Form>
+      {/* 새 비밀번호 변경 입력칸 */}
+      {/* - 이메일 인증이 완료된 경우에만 보여줌 */}
+      {isEmailVerified && (
+        <div className={styles.successMessage}>
+          <p>이메일 인증이 완료되었습니다. 비밀번호 재설정 이메일이 발송되었습니다.</p>
+        </div>
+      )}
     </>
   );
 }

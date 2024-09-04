@@ -11,6 +11,7 @@ function Input({
   onButtonClick,
   onBlur,
   warningText,
+  warningStyle,
   inputRef,
 }) {
   const id = useId();
@@ -35,7 +36,11 @@ function Input({
             name={text === '이름' ? 'name' : 'email'}
             ref={inputRef}
           />
-          {warningText && <p className={styles.warningText}>{warningText}</p>}
+          {warningText && (
+            <p className={styles.warningText} style={warningStyle}>
+              {warningText}
+            </p>
+          )}
         </div>
         {text === '이메일' && (
           <button className={styles.button} type="button" onClick={onButtonClick}>
