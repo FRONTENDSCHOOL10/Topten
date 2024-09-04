@@ -6,6 +6,7 @@ import useDocumentTitle from './../utils/useDocumentTitle';
 import { throttle } from './../utils/throttle';
 import Form from './../components/Form/Form';
 import pb from './../api/pocketbase';
+import toast, { Toaster } from 'react-hot-toast';
 
 // 유효성 검사 함수
 function validateName(name) {
@@ -100,16 +101,26 @@ function FindPasswordPage(props) {
 
       console.log('사용자:', user);
 
-
       // 비밀번호 재설정 이메일 전송 --------------------------
       const rep = await pb.collection('users').requestPasswordReset(email);
 
-      console.log(rep)
-
+      console.log(rep);
 
       // 이메일 발송 성공 메시지 출력
-      alert(email + '로 비밀번호 초기화 이메일을 발송했습니다. 비밀번호 재설정 후 로그인하세요.');
-
+      toast.success(
+        email + '로 비밀번호 초기화 이메일을 발송했습니다. 비밀번호 재설정 후 로그인하세요.',
+        {
+          style: {
+            border: '1px solid #713200',
+            padding: '16px',
+            color: '#713200',
+          },
+          iconTheme: {
+            primary: '#713200',
+            secondary: '#FFFAEE',
+          },
+        }
+      );
 
       // 이메일 인증 성공 시 상태 업데이트
       setIsEmailVerified(true);
@@ -119,7 +130,6 @@ function FindPasswordPage(props) {
         ...warnings,
         email: '비밀번호 재설정 이메일이 전송되었습니다.',
       });
-      
     } catch (error) {
       console.error('사용자가 존재하지 않습니다.', error);
 
@@ -138,6 +148,7 @@ function FindPasswordPage(props) {
           비밀번호를 찾고자 하는 <br /> 이름과 이메일을 입력해주세요.
         </p>
       </div>
+      <Toaster />
       <Form onSubmit={handleAction}>
         <Input
           text={'이름'}
@@ -161,14 +172,6 @@ function FindPasswordPage(props) {
           warningStyle={isEmailVerified ? { color: 'rgb(27, 182, 104)' } : { color: 'red' }}
         />
       </Form>
-
-      {/* 새 비밀번호 변경 입력칸 */}
-      {/* - 이메일 인증이 완료된 경우에만 보여줌 */}
-      {isEmailVerified && (
-        <div className={styles.successMessage}>
-          <p>이메일 인증이 완료</p>
-        </div>
-      )}
     </>
   );
 }
