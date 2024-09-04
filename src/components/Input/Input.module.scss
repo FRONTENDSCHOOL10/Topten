@@ -10,23 +10,40 @@
 .inputWrapper {
   display: flex;
   align-items: center;
-}
 
-.input {
-  width: 288px;
-  height: 1px;
-  padding: 20px 0;
-  border: none;
-  border-bottom: 1px solid #e5e5e5;
 
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 13.2px;
-  letter-spacing: -0.48px;
+  .inputWrapper2 {
+    margin: 0;
+  }
 
-  &:focus {
-    outline: none;
-    border-bottom: 1px solid #ffbc17;
+  .input {
+    width: 288px;
+    height: 1px;
+    padding: 20px 0;
+    border: none;
+    border-bottom: 1px solid #e5e5e5;
+
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 13.2px;
+    letter-spacing: -0.48px;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid #ffbc17;
+    }
+  }
+
+  p {
+    margin-top: 6px;
+
+    color: #ff5050;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 13.2px;
+    letter-spacing: -0.48px;
   }
 }
 
@@ -49,7 +66,7 @@
   line-height: 13.2px;
   letter-spacing: -0.48px;
 
-  &:hover{
+  &:hover {
     background-color: #ffbc17;
     border: none;
   }
