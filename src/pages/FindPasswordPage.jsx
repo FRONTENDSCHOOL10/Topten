@@ -7,11 +7,6 @@ import { throttle } from './../utils/throttle';
 import Form from './../components/Form/Form';
 import pb from './../api/pocketbase';
 
-
-const response = await pb.collection('users').getList();
-
-console.log(response);
-
 // 유효성 검사 함수
 function validateName(name) {
   const nameRegex = /^[가-힣]{2,6}$/;
@@ -26,17 +21,19 @@ function validateEmail(email) {
 function FindPasswordPage(props) {
   useDocumentTitle('비밀번호 찾기');
 
-  // 이름과 이메일을 위한 상태 추가
+  // 이름 상태
   const [name, setName] = useState('');
+
+  // 이메일 상태
   const [email, setEmail] = useState('');
 
+  // 경고 문구
   const [warnings, setWarnings] = useState({ name: '', email: '' });
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const nameRef = useRef(null);
   const emailRef = useRef(null);
 
-  // 입력 변경 시 상태 업데이트 함수
+  // 입력 변경 시 상태 업데이트 ------------------------
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -45,7 +42,8 @@ function FindPasswordPage(props) {
     setEmail(e.target.value);
   };
 
-  // 입력 필드에서 포커스가 떼어졌을 때 유효성 검사
+  // 입력 필드에서 포커스가 떠났을 때 ------------------------
+  // - 유효성 검사
   const handleBlur = (e) => {
     const { name, value } = e.target;
 
@@ -67,17 +65,12 @@ function FindPasswordPage(props) {
     }
   };
 
-  // 버튼 활성화 상태 업데이트
-  useEffect(() => {
-    if (name && email && !warnings.name && !warnings.email) {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
-  }, [name, email, warnings]);
+  // 이메일 인증 버튼 클릭 ------------------------
+  // - 폼 제출
+  const handleAction = async (e) => {
+    e.preventDefault();
 
-  // 이메일 인증 버튼 클릭 시
-  const handleEmailButtonClick = () => {
+    // 입력 필드 검사
     if (!name) {
       nameRef.current.focus();
       return;
@@ -87,33 +80,38 @@ function FindPasswordPage(props) {
       return;
     }
 
-    console.log('이름:', name);
-    console.log('이메일:', email);
+    // 데이터 검증 및 서버 요청
+    try {
+      // 입력값이 DB에 있는지 확인
+      const user = await pb
+        .collection('users')
+        .getFirstListItem(`userID="${name}" && email="${email}"`);
 
-    // 이메일 인증 로직 추가
-  };
+      console.log('사용자:', user);
 
-  // 폼 제출 시 실행
-  const handleSignIn = async (e) => {
-    e.preventDefault();
+      // 비밀번호 재설정******(메일링 보류) ----------------
+      // - 사용자 이메일로 비밀번호 재설정 이메일 요청
+      await pb.collection('users').requestPasswordReset(email);
+      console.log('비밀번호 재설정 이메일이 전송되었습니다.');
 
-    // try {
-    //   const response = await pb.collection('users').getList();
-    //   console.log(response);
-    // } catch (error) {
-    //   console.error('Error fetching users:', error);
-    // }
+      // 이메일 발송 성공 메시지 출력
+      alert(email + '로 비밀번호 초기화 이메일을 발송했습니다. 비밀번호 재설정 후 로그인하세요.');
+      // ----------------------------------------------
 
+      // 이메일 인증 완료 시 문구
+      setWarnings({
+        ...warnings,
+        email: '이메일 인증이 완료되었습니다.',
+      });
 
-    // 폼 데이터 추출(이메일, 비번)
-    const formData = new FormData(e.currentTarget);
+    } catch (error) {
+      console.error('사용자가 존재하지 않습니다.', error);
 
-    // FormData에서 데이터 추출
-    const name = formData.get('name');
-    const email = formData.get('email');
-
-    // console.log('Name:', name);
-    // console.log('Email:', email);
+      setWarnings({ 
+        ...warnings, 
+        email: '사용자를 찾을 수 없습니다.' 
+      });
+    }
   };
 
   return (
@@ -124,7 +122,7 @@ function FindPasswordPage(props) {
           비밀번호를 찾고자 하는 <br /> 이름과 이메일을 입력해주세요.
         </p>
       </div>
-      <Form onSubmit={handleSignIn}>
+      <Form onSubmit={handleAction}>
         <Input
           text={'이름'}
           description={'이름을 입력해주세요'}
@@ -141,7 +139,7 @@ function FindPasswordPage(props) {
           buttonText={'이메일 인증'}
           value={email}
           onChange={handleEmailChange}
-          onButtonClick={handleEmailButtonClick}
+          onButtonClick={handleAction}
           onBlur={handleBlur}
           warningText={warnings.email}
           inputRef={emailRef}
