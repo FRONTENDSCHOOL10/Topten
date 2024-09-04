@@ -27,12 +27,6 @@ function FindPasswordPage(props) {
   // 이메일 상태
   const [email, setEmail] = useState('');
 
-  // 새 비밀번호 상태
-  const [newPassword, setNewPassword] = useState('');
-
-  // 비밀번호 확인 상태
-  const [confirmPassword, setConfirmPassword] = useState('');
-
   // 경고 문구
   const [warnings, setWarnings] = useState({ name: '', email: '' });
 
@@ -106,14 +100,16 @@ function FindPasswordPage(props) {
 
       console.log('사용자:', user);
 
-      // 비밀번호 재설정******(메일링 보류) ----------------
-      // - 사용자 이메일로 비밀번호 재설정 이메일 요청
-      await pb.collection('users').requestPasswordReset(email);
-      console.log('비밀번호 재설정 이메일이 전송되었습니다.');
+
+      // 비밀번호 재설정 이메일 전송 --------------------------
+      const rep = await pb.collection('users').requestPasswordReset(email);
+
+      console.log(rep)
+
 
       // 이메일 발송 성공 메시지 출력
       alert(email + '로 비밀번호 초기화 이메일을 발송했습니다. 비밀번호 재설정 후 로그인하세요.');
-      // ----------------------------------------------
+
 
       // 이메일 인증 성공 시 상태 업데이트
       setIsEmailVerified(true);
@@ -121,8 +117,9 @@ function FindPasswordPage(props) {
       // 이메일 인증 완료 시 문구
       setWarnings({
         ...warnings,
-        email: '이메일 인증이 완료되었습니다.',
+        email: '비밀번호 재설정 이메일이 전송되었습니다.',
       });
+      
     } catch (error) {
       console.error('사용자가 존재하지 않습니다.', error);
 
@@ -169,21 +166,7 @@ function FindPasswordPage(props) {
       {/* - 이메일 인증이 완료된 경우에만 보여줌 */}
       {isEmailVerified && (
         <div className={styles.successMessage}>
-          <p>이메일 인증이 완료 시</p>
-
-          <Form>
-            <Input
-              text={'새 비밀번호'}
-              description={'새 비밀번호를 입력해주세요'}
-              value={newPassword}
-            />
-            <Input
-              text={'새 비밀번호 확인'}
-              description={'새 비밀번호를 한 번 더 입력해주세요'}
-              value={confirmPassword}
-            />
-            <Button text={'비밀번호 변경'} />
-          </Form>
+          <p>이메일 인증이 완료</p>
         </div>
       )}
     </>
