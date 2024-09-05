@@ -1,0 +1,13 @@
+{
+  "icons": [
+    { "src": "icon/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "icon/icon-mask.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable" },
+    { "src": "icon/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ],
+  "name": "StyleCast",
+  "short_name": "StyleCast",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
+}
