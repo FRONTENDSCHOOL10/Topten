@@ -46,3 +46,15 @@
     - props로 받아서 사용하는 것으로 리팩토링
   - style: 비밀번호 찾기 페이지
      - 페이지 클릭 시 커서 깜빡임 현상 제거를 위한 코드 추가
+
+- 황선우
+  - develop 브랜치:
+    1.  vitest 중복 부분 정리
+    2.  server.mjs 삭제
+    3.  index.html 태그 정리
+    4.  manifest.webmanifest 생성
+    5.  gitignore에 .env, pocketbase 제외하도록 설정
+    6.  router.jsx 코드 스플리팅
+    7.  \_theme.scss 에서 css 커스텀 속성 활용
+    8.  공통 컴포넌트 (Button, Input, Select 피드백 요소 반영)
+
