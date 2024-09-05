@@ -44,3 +44,5 @@
     - SEO 메타 태그를 위한 react-helmet-async 설정
   - refactor: Input 컴포넌트
     - props로 받아서 사용하는 것으로 리팩토링
+  - style: 비밀번호 찾기 페이지
+     - 페이지 클릭 시 커서 깜빡임 현상 제거를 위한 코드 추가
