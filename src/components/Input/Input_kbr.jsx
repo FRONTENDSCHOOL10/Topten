@@ -1,25 +1,13 @@
 import React, { useId } from 'react';
 import styles from './Input.module.scss';
 
-function Input({
-  text,
-  description,
-  type = 'text',
-  value,
-  onChange,
-  buttonText,
-  onButtonClick,
-  onBlur,
-  warningText,
-  warningStyle,
-  inputRef,
-}) {
+function Input(props) {
   const id = useId();
 
   return (
     <div className={styles.inputComponent}>
       <label className={styles.label} htmlFor={id}>
-        {text}
+        {props.text}
         <span style={{ color: '#FFBC17' }}> *</span>
       </label>
 
@@ -27,24 +15,24 @@ function Input({
         <div className={styles.inputWrapper2}>
           <input
             className={styles.input}
-            type={type}
-            placeholder={description}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
+            type={props.type || 'text'}
+            placeholder={props.description}
+            value={props.value}
+            onChange={props.onChange}
+            onBlur={props.onBlur}
             id={id}
-            name={text === '이름' ? 'name' : 'email'}
-            ref={inputRef}
+            name={props.text === '이름' ? 'name' : 'email'}
+            ref={props.inputRef}
           />
-          {warningText && (
-            <p className={styles.warningText} style={warningStyle}>
-              {warningText}
+          {props.warningText && (
+            <p className={styles.warningText} style={props.warningStyle}>
+              {props.warningText}
             </p>
           )}
         </div>
-        {text === '이메일' && (
-          <button className={styles.button} type="button" onClick={onButtonClick}>
-            {buttonText ?? '확인'}
+        {props.text === '이메일' && (
+          <button className={styles.button} type="button" onClick={props.onButtonClick}>
+            {props.buttonText ?? '확인'}
           </button>
         )}
       </div>
