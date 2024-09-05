@@ -40,6 +40,7 @@
 
 import { createBrowserRouter } from 'react-router-dom';
 import { configRoutes, getNavigationItems } from '@/utils';
+import RootLayout from './layouts/RootLayout';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import FindPasswordPage from './pages/FindPasswordPage';
@@ -49,7 +50,18 @@ import MyPage from './pages/MyPage';
 import LookbookPage from './pages/LookbookPage';
 import CalendarPage from './pages/CalendarPage';
 import IntroPage from './pages/IntroPage';
-import RootLayout from './layouts/RootLayout';
+
+// import {
+//   LoginPage,
+//   RegisterPage,
+//   FindPasswordPage,
+//   MainPage,
+//   LikedPage,
+//   MyPage,
+//   LookbookPage,
+//   CalendarPage,
+//   IntroPage,
+// } from './pages';
 
 // import {
 //   Component as NoteDetail,
