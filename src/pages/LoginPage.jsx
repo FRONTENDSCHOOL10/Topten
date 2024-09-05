@@ -14,7 +14,7 @@ export function emailReg(text) {
 
 // 비밀번호 유효성 검사 함수
 export function pwReg(text) {
-  const re = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,30}$/;
+  const re = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,12}$/;
   return re.test(String(text));
 }
 
