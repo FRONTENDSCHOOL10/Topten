@@ -18,8 +18,8 @@ function Input(props) {
         placeholder={props.description}
         onChange={props.onChange}
       />
-      <span className={styles.errorMessage}>{props.errorMessage}</span>
-      <span className={styles.approveMessage}>{props.approveMessage}</span>
+      <span className={`${styles.message} ${styles.errorMessage}`}>{props.errorMessage}</span>
+      <span className={`${styles.message} ${styles.approveMessage}`}>{props.approveMessage}</span>
     </div>
   );
 }

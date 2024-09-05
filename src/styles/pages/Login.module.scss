@@ -23,6 +23,7 @@ form > div:nth-child(2){
 }
 .showPassword{
   margin-top:0;
+  margin-bottom:30px;
   text-align:right;
 }
 
@@ -47,5 +48,36 @@ button{
   .distinguished{
     display:inline-block;
     padding:0 16px;
+  }
+}
+
+.redirecting{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  position:fixed;
+  top:0%;
+  left:0%;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+
+  .pop{
+    position:absolute;
+    top:50%;
+    left:50%;
+    translate:-50% -50%;
+    width:60%;
+    max-width:280px;
+    padding:30px;
+    border-radius:10px;
+    background:var(--white, #fff);
+  }
+
+  p{
+    font-size:16px;
+    font-weight:400;
+    line-height:1.4;
+    text-align:center;
   }
 }
