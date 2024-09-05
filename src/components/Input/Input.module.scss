@@ -1,3 +1,7 @@
+body {
+  user-select: none;
+}
+
 .inputComponent {
   display: flex;
   flex-direction: column;
