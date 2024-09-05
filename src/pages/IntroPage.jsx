@@ -3,9 +3,11 @@ import { animate } from 'motion';
 // import Button from '../components/Button/Button';
 import Button from '../components/Button/Button_hsw';
 
+// import { IoIosRefresh } from 'react-icons/io'; // 아이콘 임포트
 import { NavLink } from 'react-router-dom';
 import logoSun from '/image/logo-sun.png';
 import logoCloud from '/image/logo-cloud.png';
+
 import { Helmet } from 'react-helmet-async';
 import S from '@/styles/pages/IntroPage.module.scss';
 import clsx from 'clsx';
@@ -21,6 +23,8 @@ const IntroPage = () => {
     link: clsx(S.link),
   };
 
+  const iconAnimation = {};
+
   useEffect(() => {
     // 구름이 먼저 나타나도록 애니메이션
     animate(`.${S.cloud}`, { opacity: [0, 1] }, { duration: 1, easing: 'ease-out', delay: 1 });
@@ -28,7 +32,7 @@ const IntroPage = () => {
     // 해가 구름 뒤에서 위로 올라오면서 나타나도록 애니메이션
     animate(
       `.${S.sun}`,
-      { opacity: [0, 1], translateY: [20, 0] },
+      { opacity: [0, 1], translateY: [20, -20] },
       { duration: 1.5, easing: 'ease-out', delay: 2 }
     );
   }, []);
@@ -58,7 +62,13 @@ const IntroPage = () => {
         </div>
 
         <div className={classes.buttonArea}>
-          <Button text="시작하기" active={true} icon={null} />
+          <Button
+            text="시작하기"
+            backgroundColor="var(--primary-color)"
+            borderColor="var(--primary-color)"
+            fontWeight={700}
+            linkTo="/main"
+          />
           <div className={classes.authArea}>
             <NavLink to="/login" className={classes.link}>
               로그인
