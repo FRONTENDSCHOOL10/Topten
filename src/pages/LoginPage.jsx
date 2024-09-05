@@ -20,13 +20,21 @@ export function pwReg(text) {
 
 const pb = new PocketBase(import.meta.env.VITE_PB_URL);
 
-// 세션 스토리지에 저장 설정
+// 세션 스토리지와 로컬 스토리지에 저장 설정
 pb.authStore.save = (model, token, expiration) => {
-  sessionStorage.setItem('pb_auth', JSON.stringify({ model, token, expiration }));
+  const authData = { model, token, expiration };
+
+  // 세션 스토리지에 저장
+  sessionStorage.setItem('pb_auth', JSON.stringify(authData));
+
+  // 로컬 스토리지에도 저장
+  localStorage.setItem('pb_auth', JSON.stringify(authData));
 };
 
 pb.authStore.clear = () => {
+  // 세션 스토리지와 로컬 스토리지에서 모두 삭제
   sessionStorage.removeItem('pb_auth');
+  localStorage.removeItem('pb_auth');
 };
 
 function LoginPage() {
@@ -35,11 +43,13 @@ function LoginPage() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  // 세션 스토리지에서 로그인 상태 불러오기
+  // 세션 또는 로컬 스토리지에서 로그인 상태 불러오기
   const loadSessionFromStorage = () => {
-    const sessionData = sessionStorage.getItem('pb_auth');
+    // 세션 스토리지에서 먼저 가져오고 없으면 로컬 스토리지에서 가져옴
+    let sessionData = sessionStorage.getItem('pb_auth') || localStorage.getItem('pb_auth');
     if (sessionData) {
       const { model, token, expiration } = JSON.parse(sessionData);
       pb.authStore.save(model, token, expiration);
@@ -84,28 +94,30 @@ function LoginPage() {
     }
 
     try {
-        // PocketBase의 authWithPassword API를 사용하여 로그인
-        const authData = await pb.collection('users').authWithPassword(email, password);
+      // PocketBase의 authWithPassword API를 사용하여 로그인
+      const authData = await pb.collection('users').authWithPassword(email, password);
 
-        // 로그인 성공 시 토큰과 유저 정보 저장
-        console.log('로그인 성공:', authData);
-        console.log('JWT 토큰:', authData.token); // JWT 토큰 확인
-        console.log('유저 ID:', authData.record.id); // 유저 ID 확인
+      // 로그인 성공 시 토큰과 유저 정보 저장
+      console.log('로그인 성공:', authData);
+      console.log('JWT 토큰:', authData.token); // JWT 토큰 확인
+      console.log('유저 ID:', authData.record.id); // 유저 ID 확인
 
-        setIsLoggedIn(true); // 로그인 상태 업데이트
+      setIsLoggedIn(true); // 로그인 상태 업데이트
 
-        // 세션 스토리지에 저장된 데이터 확인 (디버깅용)
-        //console.log('세션 스토리지 데이터:', sessionStorage.getItem('pb_auth'));
-
-        // 메인 페이지로 리다이렉트
-        navigate('/main');
+      // 메인 페이지로 리다이렉트
+      navigate('/main');
     } catch (error) {
-        // 로그인 실패 시 에러 처리
-        console.error('로그인 실패:', error);
-        setEmailError('이메일 또는 비밀번호가 잘못되었습니다.');
-        setPasswordError('이메일 또는 비밀번호가 잘못되었습니다.');
+      // 로그인 실패 시 에러 처리
+      console.error('로그인 실패:', error);
+      setEmailError('이메일 또는 비밀번호가 잘못되었습니다.');
+      setPasswordError('이메일 또는 비밀번호가 잘못되었습니다.');
     }
-};
+  };
+
+  // 비밀번호 보기 토글 핸들러
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className={styles.wrapComponent}>
@@ -135,12 +147,22 @@ function LoginPage() {
 
         <Input
           text="비밀번호"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           description="비밀번호를 입력하세요"
           value={password}
           onChange={handlePasswordChange}
           errorMessage={passwordError}
         />
+        
+        <div className={styles.showPassword}>
+          <input
+            type="checkbox"
+            id="showPassword"
+            checked={showPassword}
+            onChange={toggleShowPassword}
+          />
+          <label htmlFor="showPassword"> 비밀번호 보기</label>
+        </div>
         
         <Button text="로그인" type="submit" disabled={emailError || passwordError} />
       </form>
