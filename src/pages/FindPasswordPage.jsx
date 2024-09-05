@@ -107,7 +107,6 @@ function FindPasswordPage(props) {
 
       console.log(rep);
 
-
       // 이메일 발송 성공 메시지 출력
       toast.success(
         `${email}로 \n 초기화 이메일을 발송했습니다. \n 비밀번호 재설정 후 로그인하세요.`,
@@ -120,7 +119,6 @@ function FindPasswordPage(props) {
           duration: 4000,
         }
       );
-
 
       // 이메일 인증 성공 시 상태 업데이트
       setIsEmailVerified(true);
@@ -150,7 +148,7 @@ function FindPasswordPage(props) {
       </div>
       <Toaster />
       <Form onSubmit={handleAction}>
-        <Input 
+        <Input
           text={'이름'}
           description={'이름을 입력해주세요'}
           value={name}
@@ -175,7 +173,7 @@ function FindPasswordPage(props) {
 
       {isEmailVerified && (
         <div className={styles.successMessage}>
-          <Button text={'로그인 하러 가기'} />
+          <Button text={'로그인 하러 가기'} to="/login" />
         </div>
       )}
     </>
