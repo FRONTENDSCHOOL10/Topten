@@ -40,3 +40,7 @@
      - 클래스명 변경 및 추가
   - update: 비밀번호 찾기 페이지 
     - '로그인 하러 가기' 버튼 로직 구현
+  - update: 비밀번호 찾기 페이지 
+    - SEO 메타 태그를 위한 react-helmet-async 설정
+  - refactor: Input 컴포넌트
+    - props로 받아서 사용하는 것으로 리팩토링
