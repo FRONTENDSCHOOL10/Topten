@@ -139,21 +139,15 @@ function FindPasswordPage(props) {
   return (
     <>
       <Helmet>
-        <title>비밀번호 찾기</title>
-        <meta
-          name="description"
-          content="Zustand를 사용하면 Context, useReducer, useState 없이 보다 효과적으로, 더 빠르게, 더 가볍게 상태를 관리할 수 있습니다."
-        />
-        <meta property="og:title" content="이듬(E.UID) 블렌디드 러닝" />
-        <meta property="twitter:title" content="이듬(E.UID) 블렌디드 러닝" />
+        <title>비밀번호 찾기 | StyleCast - 나만의 스타일 캐스트</title>
+        <meta name="description" content="Stylecast의 introPage" />
+        <meta property="og:title" content="StyleCast - 비밀번호 찾기" />
+        <meta property="twitter:title" content="StyleCast - 비밀번호 찾기" />
         <meta property="og:type" content="site" />
-        <meta property="og:url" content="https://yamoo9.github.io/EUID" />
-        <meta
-          property="og:description"
-          content="Front-End 개발자를 꿈꾸는 이들을 위한 블렌디드 러닝으로 개발에 필요한 모든 것!"
-        />
-        <meta property="og:image" content="https://yamoo9.github.io/EUID/og-image.jpg" />
-        <meta property="og:site:author" content="야무(yamoo9)" />
+        <meta property="og:url" content="" />
+        <meta property="og:description" content="StyleCast의 비밀번호 찾기 페이지" />
+        <meta property="og:image" content="" />
+        <meta property="og:site:author" content="TopTen" />
       </Helmet>
 
       <div className={styles.findPassword}>
