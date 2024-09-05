@@ -1,6 +1,10 @@
 .inputComponent {
   display: flex;
   flex-direction: column;
+
+  margin-left: 5px; // 임시
+  margin-top: 42px;
+  margin-bottom: 28px;
 }
 
 .label {
@@ -10,7 +14,6 @@
 .inputWrapper {
   display: flex;
   align-items: center;
-
 
   .inputWrapper2 {
     margin: 0;
@@ -68,6 +71,6 @@
 
   &:hover {
     background-color: #ffbc17;
-    border: none;
+    border-color: #ffbc17;
   }
 }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Input from '@/components/Input/Input_kbr';
 import Button from '@/components/Button/Button_kbr';
-import styles from '@/styles/pages/FindPasswordPage.module.scss';
+// import styles from '@/styles/pages/FindPasswordPage.module.scss';
+import styles from './../styles/pages/FindPasswordPage.module.scss';
 import useDocumentTitle from './../utils/useDocumentTitle';
 import { throttle } from './../utils/throttle';
 import Form from './../components/Form/Form';
@@ -120,7 +121,7 @@ function FindPasswordPage(props) {
         }
       );
 
-      
+
       // 이메일 인증 성공 시 상태 업데이트
       setIsEmailVerified(true);
 
@@ -141,7 +142,7 @@ function FindPasswordPage(props) {
 
   return (
     <>
-      <div>
+      <div className={styles.findPassword}>
         <h2>비밀번호 찾기</h2>
         <p>
           비밀번호를 찾고자 하는 <br /> 이름과 이메일을 입력해주세요.
@@ -149,7 +150,7 @@ function FindPasswordPage(props) {
       </div>
       <Toaster />
       <Form onSubmit={handleAction}>
-        <Input
+        <Input 
           text={'이름'}
           description={'이름을 입력해주세요'}
           value={name}
