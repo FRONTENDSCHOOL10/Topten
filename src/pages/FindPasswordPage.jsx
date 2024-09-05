@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Input from '@/components/Input/Input_kbr';
-import Button from '@/components/Button/Button';
+import Button from '@/components/Button/Button_kbr';
 import styles from '@/styles/pages/FindPasswordPage.module.scss';
 import useDocumentTitle from './../utils/useDocumentTitle';
 import { throttle } from './../utils/throttle';
@@ -106,22 +106,21 @@ function FindPasswordPage(props) {
 
       console.log(rep);
 
+
       // 이메일 발송 성공 메시지 출력
       toast.success(
-        email + '로 비밀번호 초기화 이메일을 발송했습니다. 비밀번호 재설정 후 로그인하세요.',
+        `${email}로 \n 초기화 이메일을 발송했습니다. \n 비밀번호 재설정 후 로그인하세요.`,
         {
           style: {
-            border: '1px solid #713200',
-            padding: '16px',
-            color: '#713200',
+            width: '250px',
+            height: '85px',
+            fontSize: '14px',
           },
-          iconTheme: {
-            primary: '#713200',
-            secondary: '#FFFAEE',
-          },
+          duration: 4000,
         }
       );
 
+      
       // 이메일 인증 성공 시 상태 업데이트
       setIsEmailVerified(true);
 
@@ -172,6 +171,12 @@ function FindPasswordPage(props) {
           warningStyle={isEmailVerified ? { color: 'rgb(27, 182, 104)' } : { color: 'red' }}
         />
       </Form>
+
+      {isEmailVerified && (
+        <div className={styles.successMessage}>
+          <Button text={'로그인 하러 가기'} />
+        </div>
+      )}
     </>
   );
 }
