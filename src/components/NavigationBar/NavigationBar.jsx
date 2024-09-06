@@ -1,48 +1,32 @@
 import { NavLink } from 'react-router-dom';
+import S from './NavigationBar.module.scss';
 
 const NavigationBar = () => {
   return (
-    <nav
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-around',
-        padding: '10px 0',
-        backgroundColor: '#fff',
-        borderTop: '1px solid #e5e5e5',
-      }}
-    >
-      <NavLink to="/calender">
-        <span role="img" aria-label="Calendar">
-          🗓️
-        </span>
+    <nav className={S.navBar}>
+      <NavLink to="/calendar" className={S.navItem}>
+        <img src="/image/dock-icon-calendar.png" alt="Calendar" className={S.icon} />
+        <span>캘린더</span>
       </NavLink>
 
-      <NavLink to="/lookbook">
-        <span role="img" aria-label="Lookbook">
-          📖
-        </span>
+      <NavLink to="/lookbook" className={S.navItem}>
+        <img src="/image/dock-icon-lookbook.png" alt="Lookbook" className={S.icon} />
+        <span>룩북</span>
       </NavLink>
 
-      <NavLink to="/main">
-        <span role="img" aria-label="Home">
-          🏠
-        </span>
+      <NavLink to="/main" className={S.navItem}>
+        <img src="/image/dock-icon-home.png" alt="Home" className={S.icon} />
+        <span>홈</span>
       </NavLink>
 
-      <NavLink to="/liked">
-        <span role="img" aria-label="Liked">
-          ❤️
-        </span>
+      <NavLink to="/liked" className={S.navItem}>
+        <img src="/image/dock-icon-like.png" alt="Liked" className={S.icon} />
+        <span>좋아요</span>
       </NavLink>
 
-      <NavLink to="/myinfo">
-        <span role="img" aria-label="My Info">
-          👤
-        </span>
+      <NavLink to="/myinfo" className={S.navItem}>
+        <img src="/image/dock-icon-mypage.png" alt="My Info" className={S.icon} />
+        <span>마이</span>
       </NavLink>
     </nav>
   );
