@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100%;
+  background-color: black; // 배경색을 검은색으로 설정
+  position: relative;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  color: white; // 텍스트 색상을 흰색으로 설정
+}
+
+.logo {
+  // width: 40px;
+  width: 100%;
+  margin-left: 0.5rem;
+}
+
+.profileImage {
+  width: 40px;
+  border-radius: 50%;
+  background-color: #fff;
+  margin-right: 1.5rem;
+}
