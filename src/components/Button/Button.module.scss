@@ -5,18 +5,18 @@
 
   color: #000000;
   background: rgba(255, 188, 23, 0);
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--gray-300, #e5e5e5);
   border-radius: 80px;
-  transition:0.2s;
 
-  &:hover,
-  &:focus,
-  &:active{
-    background-color: var(--primary-color, #FFBC17);
-    border-color: var(--primary-color, #FFBC17);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  text-align: center;
+
+  &:hover {
+    background-color: #ffbc17;
+    border-color: #ffbc17;
   }
-}
-
-.active {
-  background-color: var(--primary-color, #FFBC17);
 }

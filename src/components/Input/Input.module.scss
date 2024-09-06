@@ -1,42 +1,80 @@
+body {
+  user-select: none;
+}
+
 .inputComponent {
   display: flex;
   flex-direction: column;
-  margin-bottom:30px;
+
+  margin-left: 5px; // 임시
+  margin-top: 42px;
+  margin-bottom: 28px;
 }
 
 .label {
   font-weight: 700;
 }
 
-.input {
-  width: 100%;
-  height: 1px;
-  padding: 20px 0;
-  border: none;
-  border-bottom: 1px solid #e5e5e5;
+.inputWrapper {
+  display: flex;
+  align-items: center;
 
+  .inputWrapper2 {
+    margin: 0;
+  }
+
+  .input {
+    width: 288px;
+    height: 1px;
+    padding: 20px 0;
+    border: none;
+    border-bottom: 1px solid #e5e5e5;
+
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 13.2px;
+    letter-spacing: -0.48px;
+
+    &:focus {
+      outline: none;
+      border-bottom: 1px solid #ffbc17;
+    }
+  }
+
+  p {
+    margin-top: 6px;
+
+    color: #ff5050;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 13.2px;
+    letter-spacing: -0.48px;
+  }
+}
+
+// 이메일 인증 버튼(비밀번호 찾기 페이지)
+.button {
+  width: 80px;
+  height: 22px;
+  flex-shrink: 0;
+
+  color: var(--black, #000);
+  background: rgba(255, 255, 255, 0);
+  border: 1px solid var(--gray-300, #e5e5e5);
+  border-radius: 10px;
+  text-align: center;
+
+  font-family: Pretendard;
   font-size: 12px;
+  font-style: normal;
   font-weight: 300;
   line-height: 13.2px;
   letter-spacing: -0.48px;
 
-  &:focus {
-    outline: none;
-    border-bottom: 1px solid #FFBC17;
-  }
-}
-
-.message{
-  margin-top:6px;
-  font-size:12px;
-  font-weight:500;
-  line-height: 13.2px;
-  
-  &.errorMessage{
-    color:var(--red-100, #FF5050);
-  }
-  
-  &.approveMessage{
-    color:var(--green-100, #1bb668);
+  &:hover {
+    background-color: #ffbc17;
+    border-color: #ffbc17;
   }
 }
