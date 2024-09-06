@@ -110,4 +110,5 @@
   - refactor: 수정된 Button 컴포넌트 기준으로 리팩토링
   - update: Input 컴포넌트 타입 검사 추가
 
-
+- 함정민
+  - style : 모든 페이지의 콘텐츠를 가운데 래핑 적용하는 공통 스타일(wrapComponent) 지정
