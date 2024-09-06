@@ -30,7 +30,7 @@ function Input(props) {
             </p>
           )}
         </div>
-        {props.text === '이메일' && (
+        {props.text === '이메일' && props.active && (
           <button className={styles.button} type="button" onClick={props.onButtonClick}>
             {props.buttonText ?? '확인'}
           </button>

@@ -163,6 +163,7 @@ function FindPasswordPage(props) {
           description={'이메일을 입력해주세요'}
           buttonText={'이메일 인증'}
           value={email}
+          active={true}
           inputRef={emailRef}
           onChange={handleEmailChange}
           onButtonClick={handleAction}
