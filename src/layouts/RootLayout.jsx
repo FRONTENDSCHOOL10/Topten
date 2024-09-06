@@ -5,7 +5,6 @@ import NavigationBar from '@/components/NavigationBar/NavigationBar';
 import Header from '@/components/Header/Header';
 // import NavigationBar from '../components/';
 
-
 const RootLayout = () => {
   const location = useLocation();
 
@@ -15,19 +14,13 @@ const RootLayout = () => {
   return (
     <>
       {/* 헤더와 네비게이션바는 IntroPage에 있을 때 숨김 */}
-      {/* {!hideHeaderAndNav && <Header />} */}
 
-      {hideHeaderAndNav && <Header />}
-      {/*  */}
+      {!hideHeaderAndNav && <Header />}
 
       <main style={{ paddingBottom: hideHeaderAndNav ? '0' : '60px' }}>
         <Outlet />
       </main>
-      {/* {!hideHeaderAndNav && <NavigationBar />} */}
-
-      {/* {hideHeaderAndNav && <NavigationBar />} */}
-      <NavigationBar />
-
+      {!hideHeaderAndNav && <NavigationBar />}
     </>
   );
 };

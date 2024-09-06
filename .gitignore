@@ -7,12 +7,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules and build directories
 node_modules
 dist
 dist-ssr
+
+# Local environment files
 *.local
-*.env
-pocketbase
+.env
+*.env.*
+
+# Pocketbase directory
+/pocketbase
 
 # Editor directories and files
 .vscode/*

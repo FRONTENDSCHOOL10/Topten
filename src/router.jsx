@@ -2,6 +2,14 @@ import { createBrowserRouter } from 'react-router-dom';
 import { configRoutes, getNavigationItems } from '@/utils';
 import RootLayout from '@/layouts/RootLayout';
 import IntroPage from './pages/IntroPage';
+import LoginPage from './pages/LoginPage'; // Static import for now
+import RegisterPage from './pages/RegisterPage'; // Static import for now
+import FindPasswordPage from './pages/FindPasswordPage'; // Static import for now
+import MainPage from './pages/MainPage'; // Static import for now
+import LookbookPage from './pages/LookbookPage'; // Static import for now
+import CalendarPage from './pages/CalendarPage'; // Static import for now
+import LikedPage from './pages/LikedPage'; // Static import for now
+import MyPage from './pages/MyPage'; // Static import for now
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -13,42 +21,50 @@ const navigation = [
   {
     text: '로그인',
     path: '/login',
-    lazy: () => import('./pages/LoginPage'),
+    element: <LoginPage />, // Static component for now
+    // lazy: () => import('./pages/LoginPage'),
   },
   {
     text: '회원가입',
     path: '/register',
-    lazy: () => import('./pages/RegisterPage'),
+    element: <RegisterPage />, // Static component for now
+    // lazy: () => import('./pages/RegisterPage'),
   },
   {
     text: '비밀번호찾기',
     path: '/findpassword',
-    lazy: () => import('./pages/FindPasswordPage'),
+    element: <FindPasswordPage />, // Static component for now
+    // lazy: () => import('./pages/FindPasswordPage'),
   },
   {
     text: '메인페이지',
     path: '/main',
-    lazy: () => import('./pages/MainPage'),
+    element: <MainPage />, // Static component for now
+    // lazy: () => import('./pages/MainPage'),
   },
   {
     text: '룩북페이지',
     path: '/lookbook',
-    lazy: () => import('./pages/LookbookPage'),
+    element: <LookbookPage />, // Static component for now
+    // lazy: () => import('./pages/LookbookPage'),
   },
   {
     text: '달력페이지',
     path: '/calendar',
-    lazy: () => import('./pages/CalendarPage'),
+    element: <CalendarPage />, // Static component for now
+    // lazy: () => import('./pages/CalendarPage'),
   },
   {
     text: '좋아요페이지',
     path: '/liked',
-    lazy: () => import('./pages/LikedPage'),
+    element: <LikedPage />, // Static component for now
+    // lazy: () => import('./pages/LikedPage'),
   },
   {
     text: '마이페이지',
     path: '/myinfo',
-    lazy: () => import('./pages/MyPage'),
+    element: <MyPage />, // Static component for now
+    // lazy: () => import('./pages/MyPage'),
   },
 ];
 
