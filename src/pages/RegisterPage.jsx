@@ -2,7 +2,6 @@ import styles from '../styles/pages/RegisterPage.module.scss';
 import Form from '../components/Form/Form';
 import Input from './../components/Input/Input_kbr';
 import { useState } from 'react';
-import RegisterSelect from '../components/RegisterSelect/RegisterSelect';
 import RegisterCheckbox from '../components/RegisterCheckbox/RegisterCheckbox';
 import { useEffect } from 'react';
 import Button from './../components/Button/Button';
@@ -11,6 +10,7 @@ import { createUser } from '../api/createUser';
 import { COLORS, GENDER, POLICY, SIZE, INITCHECKED, INITUSER, WRANING } from '../data/constant';
 import { getData } from '../api/getData';
 import { validateEmail, validateName, validatePassword } from '../api/validation';
+import Select from '../components/Select/Select';
 
 function RegisterPage(props) {
   const navigate = useNavigate();
@@ -205,17 +205,12 @@ function RegisterPage(props) {
         </div>
         <div className={styles.select__container}>
           <h2 className={styles.select__title}>체형</h2>
-          <RegisterSelect name="topSize" text="상의 사이즈" items={SIZE} onChange={handleChange} />
-          <RegisterSelect
-            name="bottomSize"
-            text="하의 사이즈"
-            items={SIZE}
-            onChange={handleChange}
-          />
+          <Select name="topSize" text="상의 사이즈" items={SIZE} onChange={handleChange} />
+          <Select name="bottomSize" text="하의 사이즈" items={SIZE} onChange={handleChange} />
         </div>
         <div className={styles.select__container}>
           <h2 className={styles.select__title}>퍼스널 컬러</h2>
-          <RegisterSelect name="colors" items={COLORS} onChange={handleChange} />
+          <Select name="colors" items={COLORS} onChange={handleChange} />
         </div>
 
         <div className={styles.policy__container}>
