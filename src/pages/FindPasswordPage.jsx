@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Input from '@/components/Input/Input_kbr';
 import Button from '@/components/Button/Button_kbr';
-// import styles from '@/styles/pages/FindPasswordPage.module.scss';
 import styles from './../styles/pages/FindPasswordPage.module.scss';
-import { throttle } from './../utils/throttle';
 import Form from './../components/Form/Form';
 import pb from './../api/pocketbase';
 import toast, { Toaster } from 'react-hot-toast';
@@ -45,13 +43,6 @@ function FindPasswordPage(props) {
     setEmail(e.target.value);
   };
 
-  const handleNewPasswordChange = (e) => {
-    setNewPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
 
   // 입력 필드에서 포커스가 떠났을 때 ------------------------
   // - 유효성 검사
