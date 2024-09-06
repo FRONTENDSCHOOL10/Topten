@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Input from '@/components/Input/Input_kbr';
-import Button_hsw from './../components/Button/Button_hsw';
+import Button from './../components/Button/Button';
 import styles from './../styles/pages/FindPasswordPage.module.scss';
 import Form from './../components/Form/Form';
 import pb from './../api/pocketbase';
@@ -174,7 +174,7 @@ function FindPasswordPage(props) {
 
       {isEmailVerified && (
         <div className={styles.successMessage}>
-          <Button_hsw
+          <Button
             text="로그인 하러 가기"
             backgroundColor="var(--primary-color)"
             borderColor="var(--primary-color)"
