@@ -27,13 +27,13 @@ const IntroPage = () => {
 
   useEffect(() => {
     // 구름이 먼저 나타나도록 애니메이션
-    animate(`.${S.cloud}`, { opacity: [0, 1] }, { duration: 1, easing: 'ease-out', delay: 1 });
+    animate(`.${S.cloud}`, { opacity: [0, 1] }, { duration: 1, easing: 'ease-out', delay: 0.5 });
 
     // 해가 구름 뒤에서 위로 올라오면서 나타나도록 애니메이션
     animate(
       `.${S.sun}`,
-      { opacity: [0, 1], translateY: [20, -20] },
-      { duration: 1.5, easing: 'ease-out', delay: 2 }
+      { opacity: [0, 1], translateY: [-10, -17, -20] },
+      { duration: 1.5, easing: ['linear', 'ease-out'], delay: 1.5 }
     );
   }, []);
 
