@@ -70,6 +70,7 @@ function RegisterPage(props) {
     }
   }, [isChecked]);
 
+  //
   const handleCheckAll = () => {
     const checkedAll = {
       0: true,
