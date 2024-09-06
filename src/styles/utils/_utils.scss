@@ -20,3 +20,10 @@
     white-space: initial;
   }
 }
+
+// 모든 페이지 공통 - 콘텐츠 가운데 래핑
+.wrapComponent{
+  width:320px;
+  margin:0 auto;
+  padding: 90px 0 100px;
+}
