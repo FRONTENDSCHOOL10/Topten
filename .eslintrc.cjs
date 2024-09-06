@@ -1,19 +1,18 @@
 module.exports = {
   extends: [
-    // ...
-    'plugin:testing-library/react',
-    'prettier',
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:react-refresh/recommended',
+    'plugin:storybook/recommended',
   ],
-  plugins: [
-    // ...
-    'react',
-    'testing-library',
-  ],
+  plugins: ['react', 'react-hooks', 'react-refresh'],
   rules: {
-    // ...
-    'testing-library/await-async-query': 'error',
-    'testing-library/no-await-sync-query': 'error',
-    'testing-library/no-debugging-utils': 'warn',
-    'testing-library/no-dom-import': 'off',
+    'react/react-in-jsx-scope': 'off',
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
 };
