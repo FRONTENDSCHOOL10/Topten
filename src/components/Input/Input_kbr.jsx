@@ -21,7 +21,7 @@ function Input(props) {
             onChange={props.onChange}
             onBlur={props.onBlur}
             id={id}
-            name={props.text === '이름' ? 'name' : 'email'}
+            name={props.name ?? (props.text === '이름' ? 'name' : 'email')}
             ref={props.inputRef}
           />
           {props.warningText && (
