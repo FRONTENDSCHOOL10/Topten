@@ -91,3 +91,13 @@
   - fix : 인풋 경고문구에 클래스 추가 (Input.jsx)
   - fix : div 전체에 적용되던 스타일링 해제 (FindPasswordPage.module.scss)
 
+### 9월 5일
+
+- 곽승헌
+  - create: 체크박스 컴포넌트 생성
+  - create: 셀렉트 컴포넌트 생성
+  - create: 회원가입 기능 추가
+  - create: pb통신 함수 생성
+  - create: 회원가입 기능 추가
+  - fix: 버튼 컴포넌트 속성 추가
+
