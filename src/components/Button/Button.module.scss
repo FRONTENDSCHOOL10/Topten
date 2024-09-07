@@ -1,22 +1,36 @@
 .button {
   width: 243px;
   height: 38px;
-  flex-shrink: 0;
 
-  color: #000000;
-  background: rgba(255, 188, 23, 0);
-  border: 1px solid var(--gray-300, #e5e5e5);
+  color: var(--black);
+  border: 1px solid var(--gray-custom-300);
+  background-color: var(--white);
   border-radius: 80px;
 
-  font-family: Pretendard;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-  text-align: center;
-
-  &:hover {
-    background-color: #ffbc17;
-    border-color: #ffbc17;
+  &:active {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
   }
+  &:focus {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    font-weight: 700;
+  }
+  &:hover {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+
+  &__Content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
 }

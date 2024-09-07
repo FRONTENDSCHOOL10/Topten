@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { animate } from 'motion';
-// import Button from '../components/Button/Button';
-import Button from '../components/Button/Button_hsw';
+import Button from '../components/Button/Button';
 
 // import { IoIosRefresh } from 'react-icons/io'; // 아이콘 임포트
 import { NavLink } from 'react-router-dom';
@@ -66,6 +65,7 @@ const IntroPage = () => {
             text="시작하기"
             backgroundColor="var(--primary-color)"
             borderColor="var(--primary-color)"
+            active={true}
             fontWeight={700}
             linkTo="/main"
           />
