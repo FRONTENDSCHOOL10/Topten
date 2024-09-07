@@ -1,11 +1,9 @@
-.registerPage {
+@import './../utils/utils';
+.wrapComponent {
   font-family: Pretendard;
-  border: 1px solid black;
-  max-width: 320px;
   font-family: Pretendard;
   color: var(--black, #000);
-  margin: 0 auto;
-  padding: 30px 12px;
+  //padding: 30px 12px;
 
   .title {
     font-size: 18px;
