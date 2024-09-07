@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import { useId } from 'react';
 import styles from './Input.module.scss';
 import PropTypes, { string, func, bool, oneOf, oneOfType, object, element } from 'prop-types';
 
