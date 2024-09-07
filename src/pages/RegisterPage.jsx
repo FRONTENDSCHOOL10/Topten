@@ -11,6 +11,7 @@ import { COLORS, GENDER, POLICY, SIZE, INITCHECKED, INITUSER, WRANING } from '..
 import { getData } from '../api/getData';
 import { validateEmail, validateName, validatePassword } from '../api/validation';
 import Select from '../components/Select/Select';
+import { Helmet } from 'react-helmet-async';
 
 function RegisterPage(props) {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ function RegisterPage(props) {
     const createdUserInfo = await createUser(user);
     console.log('createdUserInfo', createdUserInfo);
     alert('가입 완료!');
-    navigate('/');
+    //navigate('/');
   };
 
   // 유효성 검사
@@ -140,94 +141,109 @@ function RegisterPage(props) {
   const disabled = Object.values(visible).filter((item) => item === false).length < 4;
 
   return (
-    <section className={styles.registerPage}>
-      <h1 className={styles.title}>
-        스타일 캐스트에
-        <br />
-        오신 것을 환영해요!
-      </h1>
-      <p className={styles.description}>
-        스타일 캐스트에 가입하시려면
-        <br />
-        아래 정보를 입력해주세요.
-      </p>
-      <Form>
-        <Input
-          text={'이름'}
-          name="name"
-          description={'이름을 입력해주세요'}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          warningText={nameWarn}
-        />
-        <Input
-          text={'이메일'}
-          name="email"
-          description={'이메일을 입력해주세요'}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          warningText={emailWarn}
-          onButtonClick={checkEmail}
-          buttonText="중복확인"
-        />
-        <Input
-          text={'비밀번호'}
-          name="password"
-          description={'비밀번호를 입력해주세요'}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          warningText={passwordWarn}
-        />
-        <Input
-          text={'비밀번호 확인'}
-          name="checkPassword"
-          description={'비밀번호를 한번 더 입력해주세요'}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          warningText={passwordCheckWarn}
-        />
-        <Input
-          text={'닉네임'}
-          name="nickName"
-          description={'닉네임을 입력해주세요'}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
-        <p className={styles.ootd__info}>
-          맞춤 OOTD 추천을 위해 <br />
+    <>
+      <Helmet>
+        <title>회원가입 | StyleCast - 나만의 스타일 캐스트</title>
+        <meta name="description" content="Stylecast의 introPage" />
+        <meta property="og:title" content="StyleCast - 회원가입" />
+        <meta property="twitter:title" content="StyleCast - 회원가입" />
+        <meta property="og:type" content="site" />
+        <meta property="og:url" content="" />
+        <meta property="og:description" content="StyleCast의 회원가입 페이지" />
+        <meta property="og:image" content="" />
+        <meta property="og:site:author" content="TopTen" />
+      </Helmet>
+      <section className={styles.wrapComponent}>
+        <h1 className={styles.title}>
+          스타일 캐스트에
+          <br />
+          오신 것을 환영해요!
+        </h1>
+        <p className={styles.description}>
+          스타일 캐스트에 가입하시려면
+          <br />
           아래 정보를 입력해주세요.
         </p>
-        <div className={styles.radio__container}>
-          <label>
-            성별 <span className={styles.mark}>*</span>
-          </label>
-          <div className={styles.radio__inner}>{genderComponent}</div>
-        </div>
-        <div className={styles.select__container}>
-          <h2 className={styles.select__title}>체형</h2>
-          <Select name="topSize" text="상의 사이즈" items={SIZE} onChange={handleChange} />
-          <Select name="bottomSize" text="하의 사이즈" items={SIZE} onChange={handleChange} />
-        </div>
-        <div className={styles.select__container}>
-          <h2 className={styles.select__title}>퍼스널 컬러</h2>
-          <Select name="colors" items={COLORS} onChange={handleChange} />
-        </div>
-
-        <div className={styles.policy__container}>
-          <p className={styles.policy__title}>아래 이용약관에 동의해주세요</p>
-          <div>
-            <input type="checkbox" id="checkAll" checked={checkAll} onChange={handleCheckAll} />
-            <label className={styles.checkAll__title} htmlFor="checkAll">
-              전체 동의합니다
+        <Form>
+          <Input
+            text={'이름'}
+            name="name"
+            description={'이름을 입력해주세요'}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            warningText={nameWarn}
+          />
+          <Input
+            text={'이메일'}
+            name="email"
+            description={'이메일을 입력해주세요'}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            warningText={emailWarn}
+            onButtonClick={checkEmail}
+            buttonText="중복확인"
+          />
+          <Input
+            text={'비밀번호'}
+            name="password"
+            type={'password'}
+            description={'비밀번호를 입력해주세요'}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            warningText={passwordWarn}
+          />
+          <Input
+            text={'비밀번호 확인'}
+            name="checkPassword"
+            type={'password'}
+            description={'비밀번호를 한번 더 입력해주세요'}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            warningText={passwordCheckWarn}
+          />
+          <Input
+            text={'닉네임'}
+            name="nickName"
+            description={'닉네임을 입력해주세요'}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <p className={styles.ootd__info}>
+            맞춤 OOTD 추천을 위해 <br />
+            아래 정보를 입력해주세요.
+          </p>
+          <div className={styles.radio__container}>
+            <label>
+              성별 <span className={styles.mark}>*</span>
             </label>
+            <div className={styles.radio__inner}>{genderComponent}</div>
           </div>
-          {policyComponent}
-        </div>
-        <div className={styles.button__container}>
-          <Button text="가입하기" disabled={disabled} onClick={handleRegister} />
-        </div>
-      </Form>
-    </section>
+          <div className={styles.select__container}>
+            <h2 className={styles.select__title}>체형</h2>
+            <Select name="topSize" text="상의 사이즈" items={SIZE} onChange={handleChange} />
+            <Select name="bottomSize" text="하의 사이즈" items={SIZE} onChange={handleChange} />
+          </div>
+          <div className={styles.select__container}>
+            <h2 className={styles.select__title}>퍼스널 컬러</h2>
+            <Select name="colors" items={COLORS} onChange={handleChange} />
+          </div>
+
+          <div className={styles.policy__container}>
+            <p className={styles.policy__title}>아래 이용약관에 동의해주세요</p>
+            <div>
+              <input type="checkbox" id="checkAll" checked={checkAll} onChange={handleCheckAll} />
+              <label className={styles.checkAll__title} htmlFor="checkAll">
+                전체 동의합니다
+              </label>
+            </div>
+            {policyComponent}
+          </div>
+          <div className={styles.button__container}>
+            <Button text="가입하기" disabled={disabled} onClick={handleRegister} />
+          </div>
+        </Form>
+      </section>
+    </>
   );
 }
 
