@@ -1,14 +1,16 @@
-import { string, bool, shape } from 'prop-types';
-import getPbImageURL from '@/api/getPbImageURL';
+import { string, bool, func, shape } from 'prop-types';
 import S from './CostumeCard.module.scss';
 
-const CostumeCard = ({ record }) => {
-  const { costumeTitle, costumeBrand, costumeLink, costumeImage, isRainsnow } = record;
-
-  const imageUrl = getPbImageURL(record, 'costumeImage');
+const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
+  const { costumeTitle, costumeBrand, costumeLink } = record;
 
   return (
     <div className={S.card}>
+      {/* 좋아요 버튼 */}
+      <button className={S.likeButton} onClick={onLikeToggle}>
+        {isLiked ? '❤️' : '🤍'}
+      </button>
+
       {/* 상단의 제품 이미지 */}
       <div className={S.imageWrapper}>
         <img src={imageUrl} alt={costumeTitle} className={S.image} />
@@ -19,11 +21,8 @@ const CostumeCard = ({ record }) => {
         <h3 className={S.title}>{costumeBrand}</h3>
         <p className={S.description}>{costumeTitle}</p>
 
-        {/* 비오는 날 여부에 따른 아이콘 */}
-        {isRainsnow && <div className={S.rainsnow}>🌧️ 비/눈</div>}
-
         {/* 구매 링크 */}
-        <a href={costumeLink} className={S.link} target="_blank" rel="noopener noreferrer">
+        <a href={costumeLink.url} className={S.link} target="_blank" rel="noopener noreferrer">
           구매하러 가기
         </a>
       </div>
@@ -35,10 +34,13 @@ CostumeCard.propTypes = {
   record: shape({
     costumeTitle: string.isRequired,
     costumeBrand: string.isRequired,
-    costumeLink: string.isRequired,
-    costumeImage: string.isRequired,
-    isRainsnow: bool.isRequired,
+    costumeLink: shape({
+      url: string.isRequired,
+    }).isRequired,
   }).isRequired,
+  imageUrl: string.isRequired, // 이미지 URL도 props로 받음
+  isLiked: bool.isRequired, // 좋아요 상태
+  onLikeToggle: func.isRequired, // 좋아요 상태 변경 함수
 };
 
 export default CostumeCard;
