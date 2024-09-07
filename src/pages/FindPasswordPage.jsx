@@ -140,7 +140,7 @@ function FindPasswordPage(props) {
         <meta property="og:site:author" content="TopTen" />
       </Helmet>
 
-      <div className={styles.container}>
+      <div className={styles.wrapComponent}>
         <div className={styles.title}>
           <h2>비밀번호 찾기</h2>
           <p>
