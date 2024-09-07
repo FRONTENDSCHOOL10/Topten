@@ -134,4 +134,16 @@
   - update: 폰트 믹스인 추가
   - fix: --gray-600 색상 코드 변경
     - 실제 피그마에 사용하는 색상이 없어서 기존 --gray-600 코드 색상 변경
-
+  - update: 이메일 인증 버튼 위치 조정
+    - 입력칸 위로 조정
+  - refactor: Input 컴포넌트 CSS 리팩토링
+  - fix: 로그인 하러 가기 버튼 위치 조정
+  - fix: Input 컴포넌트
+     - React import 제거
+  - create: 메인 페이지
+    - 컴포넌트 생성(날씨(Weather), 상품 목록(Product), 룩북(LookBook))
+  - 메인 페이지 scss 파일 생성
+  - update: 룩북 컴포넌트
+    - 레이아웃 제작
+    - 버튼 컴포넌트 생성
+  - update: '더 많은 룩북 보기' 클릭 시 룩북 페이지로 이동
