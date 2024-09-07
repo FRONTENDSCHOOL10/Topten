@@ -1,8 +1,13 @@
 import { string, bool, func, shape } from 'prop-types';
+import { FaLink } from 'react-icons/fa6';
 import S from './CostumeCard.module.scss';
 
 const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
   const { costumeTitle, costumeBrand, costumeLink } = record;
+
+  // 링크의 키와 URL을 추출
+  const linkKey = Object.keys(costumeLink)[0];
+  const linkUrl = costumeLink[linkKey];
 
   return (
     <div className={S.card}>
@@ -22,8 +27,9 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
         <p className={S.description}>{costumeTitle}</p>
 
         {/* 구매 링크 */}
-        <a href={costumeLink.url} className={S.link} target="_blank" rel="noopener noreferrer">
-          구매하러 가기
+        <a href={linkUrl} className={S.link} target="_blank" rel="noopener noreferrer">
+          <FaLink />
+          {linkKey}
         </a>
       </div>
     </div>
@@ -38,9 +44,9 @@ CostumeCard.propTypes = {
       url: string.isRequired,
     }).isRequired,
   }).isRequired,
-  imageUrl: string.isRequired, // 이미지 URL도 props로 받음
-  isLiked: bool.isRequired, // 좋아요 상태
-  onLikeToggle: func.isRequired, // 좋아요 상태 변경 함수
+  imageUrl: string.isRequired,
+  isLiked: bool.isRequired,
+  onLikeToggle: func.isRequired,
 };
 
 export default CostumeCard;
