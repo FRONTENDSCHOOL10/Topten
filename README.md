@@ -143,3 +143,6 @@
   - create: 메인 페이지
     - 컴포넌트 생성(날씨(Weather), 상품 목록(Product), 룩북(LookBook))
   - 메인 페이지 scss 파일 생성
+  - update: 룩북 컴포넌트
+    - 레이아웃 제작
+    - 버튼 컴포넌트 생성
