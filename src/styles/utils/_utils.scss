@@ -27,3 +27,15 @@
   margin:0 auto;
   padding: 90px 0 100px;
 }
+
+// 믹스인
+@mixin font-style($font-size, $font-weight, $color) {
+  font-family: Pretendard;
+  font-style: normal;
+  line-height: normal;
+
+  font-size: $font-size;
+  font-weight: $font-weight;
+  color: $color;
+}
+

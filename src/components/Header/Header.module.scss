@@ -1,7 +1,8 @@
 .wrapper {
   width: 100%;
+  position: fixed;
   background-color: black; // 배경색을 검은색으로 설정
-  position: relative;
+  z-index: 1000;
 }
 
 .header {

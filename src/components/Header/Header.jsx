@@ -15,8 +15,8 @@ const Header = () => {
     <div className={S.wrapper}>
       <header className={S.header}>
         {/* 왼쪽에 있는 아이콘 */}
-        <NavLink to="/main">
-          <img src={logo} alt="Style Cast Logo" className={S.logo} />
+        <NavLink to="/">
+          <img src={logo} alt="StyleCast 로고, 클릭시 인트로로 이동" className={S.logo} />
         </NavLink>
 
         {/* 오른쪽 프로필 이미지 */}
