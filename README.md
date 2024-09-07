@@ -138,5 +138,8 @@
     - 입력칸 위로 조정
   - refactor: Input 컴포넌트 CSS 리팩토링
   - fix: 로그인 하러 가기 버튼 위치 조정
-
-  
+  - fix: Input 컴포넌트
+     - React import 제거
+  - create: 메인 페이지
+    - 컴포넌트 생성(날씨(Weather), 상품 목록(Product), 룩북(LookBook))
+  - 메인 페이지 scss 파일 생성
