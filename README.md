@@ -150,15 +150,17 @@
 
 ### 9월 8일
 
-  - 함정민
-    - refactor: 로그인 페이지
-      - 비밀번호보기 버튼 마크업 및 스타일 수정
-      - Form.jsx, Input_kbr.jsx, Button.jsx 에 따라 코드 수정
-      - 믹스인 사용
-  - 황선우
-    - feature/costumeCard/hsw 브랜치
-      1. 의상카드 컴포넌트 및 이를 관리하는 컴포넌트(CostumeCardManager) 생성
-      2. 의상카드 컴포넌트 에러핸들링
-      3. 의상카드 컴포넌트 스타일링
-      4. 의상카드 컴포넌트 테스트
+- 함정민
 
+  - refactor: 로그인 페이지
+    - 비밀번호보기 버튼 마크업 및 스타일 수정
+    - Form.jsx, Input_kbr.jsx, Button.jsx 에 따라 코드 수정
+    - 믹스인 사용
+
+- 황선우
+
+  - feature/costumeCard/hsw 브랜치
+    1. 의상카드 컴포넌트 및 이를 관리하는 컴포넌트(CostumeCardManager) 생성
+    2. 의상카드 컴포넌트 에러핸들링
+    3. 의상카드 컴포넌트 스타일링
+    4. 의상카드 컴포넌트 테스트
