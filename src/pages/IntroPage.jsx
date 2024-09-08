@@ -1,17 +1,33 @@
 import { useEffect } from 'react';
-import { animate } from 'motion';
-import Button from '../components/Button/Button';
-
-// import { IoIosRefresh } from 'react-icons/io'; // 아이콘 임포트
 import { NavLink } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { animate } from 'motion';
+
+import Button from '../components/Button/Button';
 import logoSun from '/image/logo-sun.png';
 import logoCloud from '/image/logo-cloud.png';
+import initialCards from '@/data/test.js';
 
-import { Helmet } from 'react-helmet-async';
 import S from '@/styles/pages/IntroPage.module.scss';
 import clsx from 'clsx';
 
+////테스트용 import
+// import { useState } from 'react';
+// import CostumeCard from '@/components/CostumeCard/CostumeCard';
+///
+
 const IntroPage = () => {
+  ///테스트용으로 넣음
+  // const [likeList, setLikeList] = useState([]);
+
+  // const toggleLike = (id) => {
+  //   if (likeList.includes(id)) {
+  //     setLikeList(likeList.filter((likeId) => likeId !== id)); // 좋아요 해제
+  //   } else {
+  //     setLikeList([...likeList, id]); // 좋아요 추가
+  //   }
+  // };
+  ///
   const classes = {
     logoWrapper: clsx(S.logo__wrapper),
     sun: clsx(S.sun),
@@ -21,8 +37,6 @@ const IntroPage = () => {
     divider: clsx(S.divider),
     link: clsx(S.link),
   };
-
-  const iconAnimation = {};
 
   useEffect(() => {
     // 구름이 먼저 나타나도록 애니메이션
@@ -80,6 +94,17 @@ const IntroPage = () => {
             </NavLink>
           </div>
         </div>
+        {/* <div style={{ display: 'grid', gap: '20px', padding: '20px' }} className="wrapComponent">
+          {initialCards.map((card) => (
+            <CostumeCard
+              key={card.id}
+              record={card}
+              imageUrl={card.costumeImage}
+              isLiked={likeList.includes(card.id)} // 좋아요 상태 전달
+              onLikeToggle={() => toggleLike(card.id)} // 좋아요 토글 함수 전달
+            />
+          ))}
+        </div> */}
       </section>
     </>
   );
