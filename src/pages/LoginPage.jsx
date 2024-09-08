@@ -94,7 +94,6 @@ function LoginPage() {
   useEffect(() => {
     const checkLoginStatus = () => {
       try {
-        // 세션 스토리지에서 'pb_auth' 정보를 가져옴
         const sessionAuth = sessionStorage.getItem('pb_auth');
         const localAuth = localStorage.getItem('pb_auth');
         
@@ -102,7 +101,7 @@ function LoginPage() {
         if (authData) {
           const parsedAuth = JSON.parse(authData);
           if (parsedAuth && parsedAuth.token) {
-            // 유저가 로그인되어 있으면 3초 후에 메인 페이지로 리다이렉트
+            // 유저가 로그인되어 있으면 2초 후 메인 페이지로 리다이렉트
             setRedirecting(true);
             setTimeout(() => {
               navigate('/main');
