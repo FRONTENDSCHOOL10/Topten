@@ -26,11 +26,12 @@ function RegisterPage(props) {
   const [isChecked, setIsChecked] = useState(INITCHECKED);
 
   //회원가입
-  const handleRegister = async () => {
+  const handleRegister = async (e) => {
+    e.preventDefault();
     const createdUserInfo = await createUser(user);
     console.log('createdUserInfo', createdUserInfo);
     alert('가입 완료!');
-    //navigate('/');
+    navigate('/');
   };
 
   // 유효성 검사
@@ -239,7 +240,10 @@ function RegisterPage(props) {
             {policyComponent}
           </div>
           <div className={styles.button__container}>
-            <Button text="가입하기" disabled={disabled} onClick={handleRegister} />
+            {/* <Button text="가입하기" disabled={disabled} onClick={handleRegister} /> */}
+            <button type="submit" disabled={disabled} onClick={(e) => handleRegister(e)}>
+              가입하기 버튼 임시
+            </button>
           </div>
         </Form>
       </section>
