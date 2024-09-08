@@ -121,6 +121,14 @@ function LoginPage() {
     <>
       <Helmet>
         <title>로그인 | StyleCast - 나만의 스타일 캐스트</title>
+        <meta name="description" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="og:title" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="twitter:title" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="og:type" content="site" />
+        <meta property="og:url" content="https://stylecast.netlify.app/" />
+        <meta property="og:description" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="og:image" content="https://stylecast.netlify.app/og-sc.png" />
+        <meta property="og:site:author" content="TopTen" />
       </Helmet>
       
       <div className="wrapComponent">
@@ -181,8 +189,8 @@ function LoginPage() {
             </div>
             <Button 
               text="로그인"
-              onClick={handleLogin}  // 기존 로그인 핸들러를 그대로 전달
-              active={true}  // 버튼을 활성화 상태로 설정
+              onClick={handleLogin}
+              active={true}
             />
           </Form>
         )}
