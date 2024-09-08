@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { string, bool, func, shape } from 'prop-types';
 import { FaLink } from 'react-icons/fa6';
@@ -12,6 +13,7 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
   const linkKey = Object.keys(costumeLink)[0];
   const linkUrl = costumeLink[linkKey];
 
+
   // 이미지가 없거나, 로딩에 실패한 경우 에러 아이콘 또는 기본 이미지 표시
   const validImageUrl = imageUrl && !imageError ? imageUrl : null;
 
@@ -25,11 +27,14 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
     }
   }, [imageUrl]);
 
+
   return (
     <div className={S.card}>
       {/* 좋아요 버튼 */}
       <button className={S.likeButton} onClick={onLikeToggle}>
+
         {/* 좋아요 상태에 따라 다른 좋아요 표시 */}
+
         <img
           src={isLiked ? '/image/icon-like.png' : '/image/icon-like-blank.png'}
           alt={isLiked ? '좋아요 설정됨' : '좋아요 설정되지 않음'}
@@ -39,6 +44,7 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
 
       {/* 상단의 제품 이미지 또는 에러 아이콘 */}
       <div className={S.imageWrapper}>
+
         {validImageUrl && !imageError ? (
           <img
             src={validImageUrl}
@@ -54,6 +60,7 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
           />
         ) : (
           <TbPhotoExclamation className={S.errorIcon} /> // 이미지 로딩 실패 또는 경로가 없는 경우 아이콘 표시
+
         )}
       </div>
 
@@ -80,7 +87,9 @@ CostumeCard.propTypes = {
       url: string.isRequired,
     }).isRequired,
   }).isRequired,
+
   imageUrl: string, // 이미지 경로가 없을 수 있으므로 string으로 설정
+
   isLiked: bool.isRequired,
   onLikeToggle: func.isRequired,
 };
