@@ -22,7 +22,9 @@ const Header = () => {
         <div className={S.imageContainer}>
           {/* 오른쪽 프로필 이미지 */}
           {pbAuth ? (
-            <img src={profileImageUrl} alt="User Profile" className={S.profileImage} />
+            <NavLink to="/myinfo">
+              <img src={profileImageUrl} alt="User Profile" className={S.profileImage} />
+            </NavLink>
           ) : (
             <NavLink to="/login">
               <img src={userLoginImg} alt="Default Profile" className={S.profileImage} />
