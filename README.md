@@ -156,6 +156,12 @@
     - 비밀번호보기 버튼 마크업 및 스타일 수정
     - Form.jsx, Input_kbr.jsx, Button.jsx 에 따라 코드 수정
     - 믹스인 사용
+- 권보령
+  - fix: 이메일 인증 버튼 위치 조정 오류 해결
+  - fix: 수정된 Button 컴포넌트에 따른 Button 컴포넌트 props 수정
+  - delete: 다른 버튼 컴포넌트 파일 삭제
+
+
 
 - 황선우
 
