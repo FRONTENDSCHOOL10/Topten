@@ -17,10 +17,25 @@
 
 .imageWrapper {
   width: 100%;
+  min-height: 300px;
+
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .errorIcon {
+    font-size: 3rem; /* 에러 아이콘의 크기 */
+    color: var(--primary-color); /* 에러 아이콘의 색상 */
+    object-fit: contain;
+  }
+
 }
 
 .infoWrapper {

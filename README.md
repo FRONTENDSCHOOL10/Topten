@@ -139,7 +139,7 @@
   - refactor: Input 컴포넌트 CSS 리팩토링
   - fix: 로그인 하러 가기 버튼 위치 조정
   - fix: Input 컴포넌트
-     - React import 제거
+    - React import 제거
   - create: 메인 페이지
     - 컴포넌트 생성(날씨(Weather), 상품 목록(Product), 룩북(LookBook))
   - 메인 페이지 scss 파일 생성
@@ -148,12 +148,17 @@
     - 버튼 컴포넌트 생성
   - update: '더 많은 룩북 보기' 클릭 시 룩북 페이지로 이동
 
-
-
 ### 9월 8일
 
-- 함정민
-  - refactor: 로그인 페이지
-    - 비밀번호보기 버튼 마크업 및 스타일 수정
-    - Form.jsx, Input_kbr.jsx, Button.jsx 에 따라 코드 수정
-    - 믹스인 사용
+  - 함정민
+    - refactor: 로그인 페이지
+      - 비밀번호보기 버튼 마크업 및 스타일 수정
+      - Form.jsx, Input_kbr.jsx, Button.jsx 에 따라 코드 수정
+      - 믹스인 사용
+  - 황선우
+    - feature/costumeCard/hsw 브랜치
+      1. 의상카드 컴포넌트 및 이를 관리하는 컴포넌트(CostumeCardManager) 생성
+      2. 의상카드 컴포넌트 에러핸들링
+      3. 의상카드 컴포넌트 스타일링
+      4. 의상카드 컴포넌트 테스트
+
