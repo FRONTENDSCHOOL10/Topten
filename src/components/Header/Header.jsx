@@ -19,14 +19,16 @@ const Header = () => {
           <img src={logo} alt="StyleCast 로고, 클릭시 인트로로 이동" className={S.logo} />
         </NavLink>
 
-        {/* 오른쪽 프로필 이미지 */}
-        {pbAuth ? (
-          <img src={profileImageUrl} alt="User Profile" className={S.profileImage} />
-        ) : (
-          <NavLink to="/login">
-            <img src={userLoginImg} alt="Default Profile" className={S.profileImage} />
-          </NavLink>
-        )}
+        <div className={S.imageContainer}>
+          {/* 오른쪽 프로필 이미지 */}
+          {pbAuth ? (
+            <img src={profileImageUrl} alt="User Profile" className={S.profileImage} />
+          ) : (
+            <NavLink to="/login">
+              <img src={userLoginImg} alt="Default Profile" className={S.profileImage} />
+            </NavLink>
+          )}
+        </div>
       </header>
     </div>
   );

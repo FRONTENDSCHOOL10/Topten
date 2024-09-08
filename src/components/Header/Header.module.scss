@@ -21,9 +21,15 @@
   margin-left: 0.5rem;
 }
 
-.profileImage {
+.imageContainer {
   width: 40px;
   border-radius: 50%;
   background-color: #fff;
   margin-right: 1.5rem;
+  overflow: hidden;
+
+  .profileImage {
+    width: 100%;
+    object-fit: cover;
+  }
 }
