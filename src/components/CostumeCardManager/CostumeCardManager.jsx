@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import pb from '@/api/pocketbase';
 import CostumeCard from '@/components/CostumeCard/CostumeCard';
-import S from './CostumeCardList.module.scss'; // SCSS 스타일
+import S from './CostumeCardManager.module.scss';
 
 // Swiper 관련 라이브러리
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.min.css';
-import 'swiper/swiper.min.css';
+import 'swiper/css';
 
 const CostumeCardManager = ({ user, viewType }) => {
   const [likeList, setLikeList] = useState([]); // 좋아요 리스트 상태
@@ -16,15 +15,21 @@ const CostumeCardManager = ({ user, viewType }) => {
   useEffect(() => {
     const fetchLikeList = async () => {
       try {
-        const likeListRecords = await pb.collection('likeList').getFullList({
-          filter: `owner="${user.id}"`,
-          expand: 'costumeCard',
-        });
+        const likeListRecords = await pb
+          .collection('likeList')
+          .getFirstListItem(`owner="${user.id}"`, {
+            expand: 'costumeCard',
+          });
 
-        const likedCardIds = likeListRecords.map((record) => record.expand.costumeCard.id);
+        const likedCardIds = likeListRecords.costumeCard || [];
         setLikeList(likedCardIds); // 좋아요 상태 업데이트
       } catch (error) {
-        console.error('Error fetching like list:', error);
+        if (error.status === 404) {
+          // LikeList가 존재하지 않으면 빈 리스트 유지
+          setLikeList([]);
+        } else {
+          console.error('Error fetching like list:', error);
+        }
       }
     };
 
@@ -56,22 +61,47 @@ const CostumeCardManager = ({ user, viewType }) => {
   // 좋아요 토글 함수
   const toggleLike = async (costumeCardId) => {
     try {
+      let likeListRecord;
+      try {
+        // 유저의 좋아요 리스트가 있는지 확인
+        likeListRecord = await pb.collection('likeList').getFirstListItem(`owner="${user.id}"`);
+      } catch (error) {
+        if (error.status === 404) {
+          // 좋아요 리스트가 없다면 생성
+          likeListRecord = await pb.collection('likeList').create({
+            owner: user.id,
+            costumeCard: [costumeCardId], // 새로운 카드 추가
+          });
+          setLikeList([costumeCardId]); // 상태 업데이트
+          return;
+        } else {
+          console.error('Error fetching like list:', error);
+          return;
+        }
+      }
+
       const isLiked = likeList.includes(costumeCardId);
 
       if (isLiked) {
-        setLikeList((prevList) => prevList.filter((id) => id !== costumeCardId)); // 좋아요 해제
+        // 좋아요 해제: 리스트에서 제거
+        const updatedCostumeCardList = likeList.filter((id) => id !== costumeCardId);
 
-        const likeRecord = await pb
-          .collection('likeList')
-          .getFirstListItem(`owner="${user.id}" && costumeCard="${costumeCardId}"`);
-        await pb.collection('likeList').delete(likeRecord.id); // DB에서 삭제
+        // DB 업데이트: 리스트에서 해당 카드 ID 제거
+        await pb.collection('likeList').update(likeListRecord.id, {
+          costumeCard: updatedCostumeCardList,
+        });
+
+        setLikeList(updatedCostumeCardList); // 상태 업데이트
       } else {
-        setLikeList((prevList) => [...prevList, costumeCardId]); // 좋아요 추가
+        // 좋아요 추가: 리스트에 추가
+        const updatedCostumeCardList = [...likeList, costumeCardId];
 
-        await pb.collection('likeList').create({
-          owner: user.id,
-          costumeCard: costumeCardId,
-        }); // DB에 저장
+        // DB 업데이트: 리스트에 카드 ID 추가
+        await pb.collection('likeList').update(likeListRecord.id, {
+          costumeCard: updatedCostumeCardList,
+        });
+
+        setLikeList(updatedCostumeCardList); // 상태 업데이트
       }
     } catch (error) {
       console.error('Error toggling like status:', error);
