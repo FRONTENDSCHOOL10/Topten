@@ -7,18 +7,16 @@
   background-color: var(--white);
   border-radius: 80px;
 
-  &:active {
-    background-color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-  }
-  &:focus {
+  &.active {
     background-color: var(--primary-color);
     border: 1px solid var(--primary-color);
     font-weight: 700;
   }
+  &:focus,
   &:hover {
     background-color: var(--primary-color);
     border: 1px solid var(--primary-color);
+    font-weight: 700;
   }
 
   &__Content {

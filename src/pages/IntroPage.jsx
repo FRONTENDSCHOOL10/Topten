@@ -75,14 +75,7 @@ const IntroPage = () => {
         </div>
 
         <div className={classes.buttonArea}>
-          <Button
-            text="시작하기"
-            backgroundColor="var(--primary-color)"
-            borderColor="var(--primary-color)"
-            active={true}
-            fontWeight={700}
-            linkTo="/main"
-          />
+          <Button text="시작하기" active={true} linkTo="/main" />
           <div className={classes.authArea}>
             <NavLink to="/login" className={classes.link}>
               로그인
