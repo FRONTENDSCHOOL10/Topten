@@ -22,9 +22,9 @@ function MainPage(props) {
   }, []);
 
   // user 정보가 로드되지 않았으면 로딩 상태 표시
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+  // if (!user) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div className={S.wrapComponent}>
