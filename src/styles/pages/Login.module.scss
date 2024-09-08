@@ -1,24 +1,26 @@
+@import './../utils/theme';
+@import './../utils/utils';
+
+
 .top__title{
   margin-bottom:30px;
 }
 
 .top__title--big{
-  font-size:20px;
-  font-weight:700; //bold
+  @include font-style(20px, 700, $--black);
 }
 .top__title--sm{
+  @include font-style(14px, 500, $--gray-custom-600);
+
   margin-top:12px;
-  font-size:14px;
-  font-weight:500; //light
-  color:var(--gray-custom-600, #919191);
   line-height:1.4;
 }
 form > div:nth-child(2){
   margin-bottom:0 !important;
 }
-.showPassword{
-  display:block;
-  margin-top:0;
+
+.showPasswordWrap{
+  margin-top:4px;
   margin-bottom:30px;
   text-align:right;
 }
@@ -29,16 +31,15 @@ button{
 }
 
 .joinGroup{
+  @include font-style(14px, 500, $--gray-custom-600);
+
   display: flex;
   justify-content: center;
   margin-top:50px;
-  font-size:14px;
-  font-weight:500; //light
-  color:var(--gray-custom-600, #919191);
   
   a{
     text-decoration:none;
-    color:var(--gray-custom-600, #919191);
+    color:$--gray-custom-600;
   }
 
   .distinguished{
@@ -67,12 +68,12 @@ button{
     max-width:280px;
     padding:30px;
     border-radius:10px;
-    background:var(--white, #fff);
+    background:$--white;
   }
 
   p{
-    font-size:16px;
-    font-weight:400;
+    @include font-style(16px, 400, $--black);
+
     line-height:1.4;
     text-align:center;
   }

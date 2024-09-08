@@ -13,24 +13,17 @@ function validateEmail(email) {
 }
 
 function validatePassword(password) {
-  // 비밀번호는 영문자, 숫자, 특수문자를 포함하고 8자 이상, 12자 이하
   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,12}$/;
   return passwordRegex.test(password);
 }
 
-// 세션 스토리지와 로컬 스토리지에 저장 설정
 pb.authStore.save = (model, token, expiration) => {
   const authData = { model, token, expiration };
-
-  // 세션 스토리지에 저장
   sessionStorage.setItem('pb_auth', JSON.stringify(authData));
-
-  // 로컬 스토리지에도 저장
   localStorage.setItem('pb_auth', JSON.stringify(authData));
 };
 
 pb.authStore.clear = () => {
-  // 세션 스토리지와 로컬 스토리지에서 모두 삭제
   sessionStorage.removeItem('pb_auth');
   localStorage.removeItem('pb_auth');
 };
@@ -39,7 +32,7 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [warnings, setWarnings] = useState({ email: '', password: '' });
+  const [warnings, setWarnings] = useState({ email: '', password: '', auth: '' });
   const [redirecting, setRedirecting] = useState(false);
 
   const emailRef = useRef(null);
@@ -70,7 +63,6 @@ function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     if (!email) {
       emailRef.current.focus();
       setWarnings((prev) => ({ ...prev, email: '이메일을 입력하세요.' }));
@@ -85,11 +77,13 @@ function LoginPage() {
     try {
       const authData = await pb.collection('users').authWithPassword(email, password);
       console.log('로그인 성공:', authData);
-
-      // 페이지 전환 로직
       navigate('/main');
     } catch (error) {
       console.error('로그인 실패:', error);
+      setWarnings((prev) => ({
+        ...prev,
+        auth: '이메일 또는 비밀번호를 확인해주세요.',
+      }));
     }
   };
 
@@ -98,20 +92,28 @@ function LoginPage() {
   };
 
   useEffect(() => {
-    const checkLoginStatus = async () => {
+    const checkLoginStatus = () => {
       try {
-        const user = await pb.authStore.model;
-        if (user) {
-          setRedirecting(true);
-          setTimeout(() => {
-            navigate('/main');
-          }, 3000);
+        // 세션 스토리지에서 'pb_auth' 정보를 가져옴
+        const sessionAuth = sessionStorage.getItem('pb_auth');
+        const localAuth = localStorage.getItem('pb_auth');
+        
+        const authData = sessionAuth || localAuth; // 세션 스토리지가 우선, 없으면 로컬 스토리지
+        if (authData) {
+          const parsedAuth = JSON.parse(authData);
+          if (parsedAuth && parsedAuth.token) {
+            // 유저가 로그인되어 있으면 3초 후에 메인 페이지로 리다이렉트
+            setRedirecting(true);
+            setTimeout(() => {
+              navigate('/main');
+            }, 2000);
+          }
         }
       } catch (error) {
         console.error('로그인 상태 확인 실패:', error);
       }
     };
-
+  
     checkLoginStatus();
   }, [navigate]);
 
@@ -153,7 +155,7 @@ function LoginPage() {
               inputRef={emailRef}
               onChange={handleEmailChange}
               onBlur={handleBlur}
-              warningText={warnings.email}
+              warningText={warnings.email || warnings.auth}
             />
             <Input
               text="비밀번호"
@@ -164,18 +166,24 @@ function LoginPage() {
               inputRef={passwordRef}
               onChange={handlePasswordChange}
               onBlur={handleBlur}
-              warningText={warnings.password}
+              warningText={warnings.password || warnings.auth}
             />
-            <label htmlFor="showPassword" className={styles.showPassword}>
-              <input
-                type="checkbox"
-                id="showPassword"
-                checked={showPassword}
-                onChange={toggleShowPassword}
-              />
-              비밀번호 보기
-            </label>
-            <Button text="로그인" onClick={handleLogin} />
+            <div className={styles.showPasswordWrap}>
+              <label htmlFor="showPassword">
+                <input
+                  type="checkbox"
+                  id="showPassword"
+                  checked={showPassword}
+                  onChange={toggleShowPassword}
+                />
+                비밀번호 보기
+              </label>
+            </div>
+            <Button 
+              text="로그인"
+              onClick={handleLogin}  // 기존 로그인 핸들러를 그대로 전달
+              active={true}  // 버튼을 활성화 상태로 설정
+            />
           </Form>
         )}
         <div className={styles.joinGroup}>
