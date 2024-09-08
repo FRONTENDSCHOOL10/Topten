@@ -178,9 +178,6 @@ function FindPasswordPage(props) {
           <div className={styles.successMessage}>
             <Button
               text="로그인 하러 가기"
-              backgroundColor="var(--primary-color)"
-              borderColor="var(--primary-color)"
-              fontWeight={400}
               linkTo="/login"
             />
           </div>
