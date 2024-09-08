@@ -140,49 +140,52 @@ function FindPasswordPage(props) {
         <meta property="og:site:author" content="TopTen" />
       </Helmet>
 
-      <div className={styles.findPassword}>
-        <h2>비밀번호 찾기</h2>
-        <p>
-          비밀번호를 찾고자 하는 <br /> 이름과 이메일을 입력해주세요.
-        </p>
-      </div>
-      <Toaster />
-      <Form onSubmit={handleAction}>
-        <Input
-          text={'이름'}
-          description={'이름을 입력해주세요'}
-          value={name}
-          inputRef={nameRef}
-          onChange={handleNameChange}
-          onBlur={handleBlur}
-          warningText={warnings.name}
-        />
-        <Input
-          text={'이메일'}
-          description={'이메일을 입력해주세요'}
-          buttonText={'이메일 인증'}
-          value={email}
-          active={true}
-          inputRef={emailRef}
-          onChange={handleEmailChange}
-          onButtonClick={handleAction}
-          onBlur={handleBlur}
-          warningText={warnings.email}
-          warningStyle={isEmailVerified ? { color: 'rgb(27, 182, 104)' } : { color: 'red' }}
-        />
-      </Form>
-
-      {isEmailVerified && (
-        <div className={styles.successMessage}>
-          <Button
-            text="로그인 하러 가기"
-            backgroundColor="var(--primary-color)"
-            borderColor="var(--primary-color)"
-            fontWeight={400}
-            linkTo="/login"
-          />
+      <div className={styles.wrapComponent}>
+        <div className={styles.title}>
+          <h2>비밀번호 찾기</h2>
+          <p>
+            비밀번호를 찾고자 하는 <br /> 이름과 이메일을 입력해주세요.
+          </p>
         </div>
-      )}
+
+        <Toaster />
+        <Form onSubmit={handleAction}>
+          <Input
+            text={'이름'}
+            description={'이름을 입력해주세요'}
+            value={name}
+            inputRef={nameRef}
+            onChange={handleNameChange}
+            onBlur={handleBlur}
+            warningText={warnings.name}
+          />
+          <Input
+            text={'이메일'}
+            description={'이메일을 입력해주세요'}
+            buttonText={'이메일 인증'}
+            value={email}
+            active={true}
+            inputRef={emailRef}
+            onChange={handleEmailChange}
+            onButtonClick={handleAction}
+            onBlur={handleBlur}
+            warningText={warnings.email}
+            warningStyle={isEmailVerified ? { color: 'rgb(27, 182, 104)' } : { color: 'red' }}
+          />
+        </Form>
+
+        {isEmailVerified && (
+          <div className={styles.successMessage}>
+            <Button
+              text="로그인 하러 가기"
+              backgroundColor="var(--primary-color)"
+              borderColor="var(--primary-color)"
+              fontWeight={400}
+              linkTo="/login"
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 }

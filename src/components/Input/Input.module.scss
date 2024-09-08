@@ -1,80 +1,72 @@
+@import './../../styles/utils/theme';
+@import './../../styles/utils/utils';
+
 body {
   user-select: none;
 }
 
 .inputComponent {
-  display: flex;
-  flex-direction: column;
+  margin: 42px 0 28px 5px;
 
-  margin-left: 5px; // 임시
-  margin-top: 42px;
-  margin-bottom: 28px;
-}
-
-.label {
-  font-weight: 700;
+  .label {
+    font-weight: 700;
+  }
 }
 
 .inputWrapper {
-  display: flex;
-  align-items: center;
+  position: relative;
 
   .inputWrapper2 {
-    margin: 0;
-  }
+    .input {
+      width: 288px;
+      height: 1px;
+      padding: 20px 0;
+      border: none;
+      border-bottom: 1px solid #e5e5e5;
 
-  .input {
-    width: 288px;
-    height: 1px;
-    padding: 20px 0;
-    border: none;
-    border-bottom: 1px solid #e5e5e5;
+      @include font-style(12px, 300, $--black);
+      letter-spacing: -0.48px;
 
-    font-size: 12px;
-    font-weight: 300;
-    line-height: 13.2px;
-    letter-spacing: -0.48px;
-
-    &:focus {
-      outline: none;
-      border-bottom: 1px solid #ffbc17;
+      &:focus {
+        outline: none;
+        border-bottom: 1px solid $--primary-color;
+      }
     }
-  }
 
-  p {
-    margin-top: 6px;
+    p {
+      margin-top: 6px;
 
-    color: #ff5050;
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 13.2px;
-    letter-spacing: -0.48px;
+      @include font-style(12px, 300, $--red-100);
+      line-height: 13.2px;
+      letter-spacing: -0.48px;
+    }
   }
 }
 
 // 이메일 인증 버튼(비밀번호 찾기 페이지)
 .button {
+  position: absolute;
+  right: 8%;
+  top: 50%;
+  transform: translateY(-50%);
+
   width: 80px;
   height: 22px;
   flex-shrink: 0;
 
-  color: var(--black, #000);
+  color: $--black;
   background: rgba(255, 255, 255, 0);
-  border: 1px solid var(--gray-300, #e5e5e5);
+  border: 1px solid $--gray-300;
   border-radius: 10px;
   text-align: center;
 
-  font-family: Pretendard;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 300;
+  @include font-style(12px, 300, $--black);
   line-height: 13.2px;
   letter-spacing: -0.48px;
 
   &:hover {
-    background-color: #ffbc17;
-    border-color: #ffbc17;
+    background-color: $--primary-color;
+    border-color: $--primary-color;
   }
 }
+
