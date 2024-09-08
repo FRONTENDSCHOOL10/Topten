@@ -12,6 +12,7 @@ import { getData } from '../api/getData';
 import { validateEmail, validateName, validatePassword } from '../api/validation';
 import Select from '../components/Select/Select';
 import { Helmet } from 'react-helmet-async';
+import toast, { Toaster } from 'react-hot-toast';
 
 function RegisterPage(props) {
   const navigate = useNavigate();
@@ -28,10 +29,22 @@ function RegisterPage(props) {
   //회원가입
   const handleRegister = async (e) => {
     e.preventDefault();
-    const createdUserInfo = await createUser(user);
-    console.log('createdUserInfo', createdUserInfo);
-    alert('가입 완료!');
-    navigate('/');
+    try {
+      const createdUserInfo = await createUser(user); //;
+      console.log('createdUserInfo', createdUserInfo);
+      toast('회원가입이 완료되었습니다', {
+        icon: '📌',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          position: 'top-right',
+          color: '#fff',
+        },
+      });
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // 유효성 검사
@@ -165,6 +178,7 @@ function RegisterPage(props) {
           <br />
           아래 정보를 입력해주세요.
         </p>
+        <Toaster />
         <Form>
           <Input
             text={'이름'}
