@@ -6,26 +6,13 @@ import pb from './../api/pocketbase';
 import { Helmet } from 'react-helmet-async';
 import styles from '@/styles/pages/Login.module.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { validatePassword, validateEmail } from './../api/validation';
 
-function validateEmail(email) {
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  return emailRegex.test(email);
-}
-
-function validatePassword(password) {
-  const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,12}$/;
-  return passwordRegex.test(password);
-}
 
 pb.authStore.save = (model, token, expiration) => {
   const authData = { model, token, expiration };
   sessionStorage.setItem('pb_auth', JSON.stringify(authData));
   localStorage.setItem('pb_auth', JSON.stringify(authData));
-};
-
-pb.authStore.clear = () => {
-  sessionStorage.removeItem('pb_auth');
-  localStorage.removeItem('pb_auth');
 };
 
 function LoginPage() {
