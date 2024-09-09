@@ -1,0 +1,22 @@
+@import './../utils/theme';
+@import './../utils/utils';
+
+.weatherWrap{
+  display:flex;
+  flex-direction: column;
+  gap:18px;
+
+  margin-bottom:60px;
+}
+
+.weatherLocation{
+  @include font-style(16px, 500, $--black);
+}
+
+.icon{
+  width:16px;
+}
+
+.currentTemperature{
+
+}
