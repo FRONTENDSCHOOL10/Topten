@@ -20,7 +20,8 @@ body {
     .input {
       width: 288px;
       height: 1px;
-      padding: 20px 100px 20px 0;
+      padding: 20px;
+
       border: none;
       border-bottom: 1px solid #e5e5e5;
       box-sizing: border-box;
@@ -41,14 +42,20 @@ body {
       line-height: 13.2px;
       letter-spacing: -0.48px;
     }
+
+    // 이메일 입력칸 범위 조정
+    .inputWithButton {
+      padding: 20px 100px 20px 20px;
+      box-sizing: border-box;
+    }
   }
 }
 
 // 이메일 인증 버튼(비밀번호 찾기 페이지)
 .button {
   position: absolute;
-  right: 29px; 
-  top: 23px; 
+  right: 29px;
+  top: 23px;
   transform: translateY(-50%);
 
   width: 80px;
@@ -70,4 +77,3 @@ body {
     border-color: $--primary-color;
   }
 }
-
