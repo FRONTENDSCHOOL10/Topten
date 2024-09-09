@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { string, bool, element, object } from 'prop-types';
+import { string, bool, element, object, oneOf } from 'prop-types';
 import { animate } from 'motion'; // motion-one에서 animate 함수 import
 import clsx from 'clsx'; // clsx 라이브러리로 className 동적 할당
 import S from './Button.module.scss';
