@@ -192,6 +192,7 @@
   - 룩북 컴포넌트
     - update: CostumeCard 컴포넌트 추가
 
+
 - 곽승헌
   - feature/product/ksh
     1. product 컴포넌트 생성 및 스타일링
@@ -199,3 +200,11 @@
     3. 테스트를 위한 data.js 배열에 아이템 추가
     4. 새로고침 버튼 UI 생성 애니매이션은 아직 미완
     5. 새로고침 버튼 클릭 시 새로운 아이템 랜더링 로직 작성
+
+- 함정민
+  - 로그인 페이지
+    - fix: api/validation 파일의 유효성 검사 사용으로 수정
+    - fix: 불필요한 pb.authStore.clear 코드 삭제
+  - 유효성검사 : 패스워드 제한 글자수 수정 및 특수문자 추가 (src/api/validation.js)
+  - 인풋 스타일 수정 : 미세한 간격 등 수정 (src/components/Input/Input.module.scss)
+
