@@ -6,17 +6,7 @@ import Form from './../components/Form/Form';
 import pb from './../api/pocketbase';
 import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
-
-// 유효성 검사 함수
-function validateName(name) {
-  const nameRegex = /^[가-힣]{2,6}$/;
-  return nameRegex.test(name);
-}
-
-function validateEmail(email) {
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  return emailRegex.test(email);
-}
+import { validateName, validateEmail } from './../api/validation';
 
 function FindPasswordPage(props) {
   // 이름 상태
