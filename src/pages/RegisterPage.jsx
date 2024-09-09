@@ -12,10 +12,11 @@ import { getData } from '../api/getData';
 import { validateEmail, validateName, validatePassword } from '../api/validation';
 import Select from '../components/Select/Select';
 import { Helmet } from 'react-helmet-async';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
+import loadToast from '../api/loadToast';
 
 function RegisterPage(props) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [user, setUser] = useState(INITUSER);
   const [visible, setVisible] = useState({
     name: null,
@@ -28,20 +29,12 @@ function RegisterPage(props) {
 
   //회원가입
   const handleRegister = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     try {
+      console.log(user);
       const createdUserInfo = await createUser(user); //;
       console.log('createdUserInfo', createdUserInfo);
-      toast('회원가입이 완료되었습니다', {
-        icon: '📌',
-        style: {
-          borderRadius: '10px',
-          background: '#333',
-          position: 'top-right',
-          color: '#fff',
-        },
-      });
-      navigate('/');
+      loadToast('회원가입이 완료되었습니다', '📌');
     } catch (error) {
       console.error(error);
     }
@@ -64,10 +57,10 @@ function RegisterPage(props) {
     }).then((result) => result.length);
 
     if (sameEmail) {
-      alert('이메일이 이미 존재합니다');
+      loadToast('이메일이 이미 존재합니다', '📌');
       return;
     } else {
-      alert('사용 가능한 이메일입니다');
+      loadToast('사용 가능한 이메일입니다', '📌');
     }
   };
 
@@ -178,7 +171,7 @@ function RegisterPage(props) {
           <br />
           아래 정보를 입력해주세요.
         </p>
-        <Toaster />
+
         <Form>
           <Input
             text={'이름'}
@@ -197,6 +190,7 @@ function RegisterPage(props) {
             warningText={emailWarn}
             onButtonClick={checkEmail}
             buttonText="중복확인"
+            active="true"
           />
           <Input
             text={'비밀번호'}
@@ -254,12 +248,16 @@ function RegisterPage(props) {
             {policyComponent}
           </div>
           <div className={styles.button__container}>
-            {/* <Button text="가입하기" disabled={disabled} onClick={handleRegister} /> */}
-            <button type="submit" disabled={disabled} onClick={(e) => handleRegister(e)}>
-              가입하기 버튼 임시
-            </button>
+            <Button
+              text="가입하기"
+              type="button"
+              linkTo={'/'}
+              disabled={disabled}
+              onClick={handleRegister}
+            />
           </div>
         </Form>
+        <Toaster />
       </section>
     </>
   );
