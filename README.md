@@ -194,3 +194,4 @@
     - fix: api/validation 파일의 유효성 검사 사용으로 수정
     - fix: 불필요한 pb.authStore.clear 코드 삭제
   - 유효성검사 : 패스워드 제한 글자수 수정 및 특수문자 추가 (src/api/validation.js)
+  - 인풋 스타일 수정 : 미세한 간격 등 수정 (src/components/Input/Input.module.scss)
