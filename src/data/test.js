@@ -73,6 +73,54 @@ const initialCards = [
     costumeImage: '/image/sample2.jpg', // 예시 이미지
   },
   {
+    id: '22',
+    costumeTitle: '5°~8° 랜덤 22',
+    costumeBrand: '비비앙',
+    costumeLink: {
+      무신사: 'https://www.musinsa.com/products/4268814',
+    },
+    costumeTemperature: ['5°~8°'],
+    upperCategory: '상의',
+    lowerCategory: '긴팔',
+    costumeImage: '/image/sample1.jpg',
+  },
+  {
+    id: '23',
+    costumeTitle: '5°~8° 랜덤 23',
+    costumeBrand: '하츠크루',
+    costumeLink: {
+      무신사: 'https://www.musinsa.com/products/4251234',
+    },
+    costumeTemperature: ['5°~8°'],
+    upperCategory: '상의',
+    lowerCategory: '반바지',
+    costumeImage: '/image/sample2.jpg', // 예시 이미지
+  },
+  {
+    id: '24',
+    costumeTitle: '5°~8° 랜덤 24',
+    costumeBrand: '비비앙',
+    costumeLink: {
+      무신사: 'https://www.musinsa.com/products/4268814',
+    },
+    costumeTemperature: ['5°~8°'],
+    upperCategory: '하의',
+    lowerCategory: '반바지',
+    costumeImage: '/image/sample1.jpg',
+  },
+  {
+    id: '25',
+    costumeTitle: '5°~8° 랜덤 25',
+    costumeBrand: '하츠크루',
+    costumeLink: {
+      무신사: 'https://www.musinsa.com/products/4251234',
+    },
+    costumeTemperature: ['5°~8°'],
+    upperCategory: '하의',
+    lowerCategory: '반바지',
+    costumeImage: '/image/sample2.jpg', // 예시 이미지
+  },
+  {
     id: '7',
     costumeTitle: '4° ↓ 확인용 오드퍼퓸 월넛크릭그린 EDP 50ml',
     costumeBrand: '비비앙',
