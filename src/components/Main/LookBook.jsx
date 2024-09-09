@@ -4,7 +4,7 @@ import pb from './../../api/pocketbase';
 import getPbImageURL from './../../api/getPbImageURL';
 
 // CostumeCard 컴포넌트
-import initialCards from '@/data/test.js';
+// import initialCards from '@/data/test.js';
 import { useState, useEffect } from 'react';
 import CostumeCard from '@/components/CostumeCard/CostumeCard';
 
@@ -20,21 +20,18 @@ function LookBook() {
     }
   };
 
-  // 착용샷 불러오기 -----------------------
+  // 착용샷
   const [lookBookItem, setLookBookItems] = useState(null);
+
+  // 관련 상품
+  const [relatedItems, setRelatedItems] = useState([]);
 
   useEffect(() => {
     const fetchLookBookItems = async () => {
       try {
         const items = await pb.collection('lookBook').getFullList();
 
-        // items.forEach((item) => {
-        //   console.log(item.lookBookSeason);
-        // });
-
-        // setLookBookItems(items);
-
-        // 임시!!!!! ----------------------------------
+        // 임시!!! ----------------------------------
         const weather = '가을';
 
         // 계절에 맞는 아이템 필터링
@@ -42,18 +39,24 @@ function LookBook() {
 
         console.log(seasonItems);
 
-        
         // 해당 계절 중 랜덤으로 하나 선택
         if (seasonItems.length > 0) {
           const randomItem = seasonItems[Math.floor(Math.random() * seasonItems.length)];
 
-          console.log('선택된 아이템:', randomItem);
           setLookBookItems(randomItem);
 
+          console.log('선택된 착용샷:', randomItem);
+
+          // randomItem의 items 배열을 관련 상품으로 설정
+          if (randomItem.items && randomItem.items.length > 0) {
+            setRelatedItems(randomItem.items);
+          } else {
+            // 관련 상품이 없을 때
+            setRelatedItems([]); 
+          }
         } else {
           console.log('해당 계절에 맞는 아이템이 없습니다.');
         }
-
       } catch (error) {
         console.error('LookBook 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -66,15 +69,7 @@ function LookBook() {
     <div className={styles.container}>
       <h2 className={styles.title}>Look Book : OOTD</h2>
 
-      <div>
-        {/* {lookBookItems.map((item) => (
-            <li key={item.id}>
-              <img
-                src={getPbImageURL(item, 'outfitImage')}
-                alt={item.lookBookTitle}
-                className={styles.outfitImage}
-              />
-            </li> */}
+      <div className={styles.outfitContainer}>
         {lookBookItem ? (
           <img
             src={getPbImageURL(lookBookItem, 'outfitImage')}
@@ -90,15 +85,24 @@ function LookBook() {
         <section id="page">
           <h3>관련 상품</h3>
           <div className={styles.product}>
-            {initialCards.map((card) => (
-              <CostumeCard
-                key={card.id}
-                record={card}
-                imageUrl={card.costumeImage}
-                isLiked={likeList.includes(card.id)} // 좋아요 상태 전달
-                onLikeToggle={() => toggleLike(card.id)} // 좋아요 토글 함수 전달
-              />
-            ))}
+            {relatedItems.length > 0 ? (
+              relatedItems.map((item, index) => (
+                <CostumeCard
+                  key={index}
+                  record={{
+                    costumeTitle: item.title || '제목 없음',
+                    costumeBrand: item.brand || '브랜드 없음',
+                    costumeLink: { url: item.link || '#' }
+                    // 링크가 없을 경우 기본값
+                  }}
+                  imageUrl={getPbImageURL(item, 'costumeImage')}
+                  isLiked={likeList.includes(item.id)} // 좋아요 상태 전달
+                  onLikeToggle={() => toggleLike(item.id)} // 좋아요 토글 함수 전달
+                />
+              ))
+            ) : (
+              <p>관련 상품이 없습니다.</p>
+            )}
           </div>
         </section>
       </div>
