@@ -168,6 +168,7 @@ function FindPasswordPage(props) {
           <div className={styles.successMessage}>
             <Button
               text="로그인 하러 가기"
+              type='button'
               linkTo="/login"
             />
           </div>

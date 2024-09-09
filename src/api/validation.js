@@ -10,6 +10,6 @@ export const validateEmail = (email) => {
 };
 
 export const validatePassword = (password) => {
-  const passwordRegex = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+  const passwordRegex = /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=*-]).*$/;
   return passwordRegex.test(password);
 };

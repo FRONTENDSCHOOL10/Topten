@@ -6,7 +6,7 @@ body {
 }
 
 .inputComponent {
-  margin: 42px 0 28px 5px;
+  margin: 42px 0 28px;
 
   .label {
     font-weight: 700;
@@ -18,11 +18,13 @@ body {
 
   .inputWrapper2 {
     .input {
-      width: 288px;
+      width: 100%;
       height: 1px;
       padding: 20px 0;
+
       border: none;
       border-bottom: 1px solid #e5e5e5;
+      box-sizing: border-box;
 
       @include font-style(12px, 300, $--black);
       letter-spacing: -0.48px;
@@ -40,14 +42,20 @@ body {
       line-height: 13.2px;
       letter-spacing: -0.48px;
     }
+
+    // 이메일 입력칸 범위 조정
+    .inputWithButton {
+      padding-right: 100px;
+      box-sizing: border-box;
+    }
   }
 }
 
 // 이메일 인증 버튼(비밀번호 찾기 페이지)
 .button {
   position: absolute;
-  right: 29px; 
-  top: 23px; 
+  right: 8px;
+  top: 20px;
   transform: translateY(-50%);
 
   width: 80px;
@@ -69,4 +77,3 @@ body {
     border-color: $--primary-color;
   }
 }
-

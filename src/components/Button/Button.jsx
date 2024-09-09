@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom/dist';
  *
  * @param {object} props - 컴포넌트에 전달되는 props 객체
  * @param {string} props.text - 버튼에 표시될 텍스트 (필수)
+ * @param {string} props.type - 사용할 버튼 타입 (선택)
  * @param {boolean} [props.active=false] - 버튼이 활성화된 상태인지 여부 (선택)
  * @param {JSX.Element|null} [props.icon=null] - 버튼에 표시될 아이콘 컴포넌트 (선택)
  * @param {object} [props.iconAnimation={}] - 아이콘에 적용할 애니메이션 설정 객체 (선택)
@@ -94,7 +95,7 @@ function Button({
 // propTypes 정의
 Button.propTypes = {
   text: string.isRequired, // 필수 문자열
-  type: oneOf(['button', 'submit', 'reset']).isRequired,
+  type: oneOf(['button', 'submit', 'reset']), //사용할 버튼 타입
   active: bool, // active 여부
   icon: element, // 아이콘으로 JSX 요소 전달
   iconAnimation: object, // 아이콘에 적용할 애니메이션 설정
