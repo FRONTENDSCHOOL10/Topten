@@ -9,8 +9,14 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    
+
     margin-top: 30px;
     margin-bottom: 14px;
+  }
+
+  .outfitImage {
+    width: 320px;
+    height: 320px;
+    flex-shrink: 0;
   }
 }
