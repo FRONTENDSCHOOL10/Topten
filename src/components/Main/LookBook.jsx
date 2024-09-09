@@ -21,19 +21,39 @@ function LookBook() {
   };
 
   // 착용샷 불러오기 -----------------------
-  const [lookBookItems, setLookBookItems] = useState([]);
+  const [lookBookItem, setLookBookItems] = useState(null);
 
   useEffect(() => {
     const fetchLookBookItems = async () => {
       try {
         const items = await pb.collection('lookBook').getFullList();
-        // console.log(items);
 
-        items.forEach((item) => {
-          console.log(item.lookBookSeason);
-        });
+        // items.forEach((item) => {
+        //   console.log(item.lookBookSeason);
+        // });
 
-        setLookBookItems(items);
+        // setLookBookItems(items);
+
+        // 임시!!!!! ----------------------------------
+        const weather = '가을';
+
+        // 계절에 맞는 아이템 필터링
+        const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather));
+
+        console.log(seasonItems);
+
+        
+        // 해당 계절 중 랜덤으로 하나 선택
+        if (seasonItems.length > 0) {
+          const randomItem = seasonItems[Math.floor(Math.random() * seasonItems.length)];
+
+          console.log('선택된 아이템:', randomItem);
+          setLookBookItems(randomItem);
+
+        } else {
+          console.log('해당 계절에 맞는 아이템이 없습니다.');
+        }
+
       } catch (error) {
         console.error('LookBook 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -47,24 +67,29 @@ function LookBook() {
       <h2 className={styles.title}>Look Book : OOTD</h2>
 
       <div>
-        <ul>
-          {/* 착용샷 */}
-          {lookBookItems.map((item) => (
+        {/* {lookBookItems.map((item) => (
             <li key={item.id}>
               <img
                 src={getPbImageURL(item, 'outfitImage')}
                 alt={item.lookBookTitle}
                 className={styles.outfitImage}
               />
-            </li>
-          ))}
-        </ul>
+            </li> */}
+        {lookBookItem ? (
+          <img
+            src={getPbImageURL(lookBookItem, 'outfitImage')}
+            alt={lookBookItem.lookBookTitle}
+            className={styles.outfitImage}
+          />
+        ) : (
+          <p>해당 계절에 맞는 이미지를 찾을 수 없습니다.</p>
+        )}
       </div>
 
       <div>
         <section id="page">
           <h3>관련 상품</h3>
-          <div className="wrapComponent">
+          <div className={styles.product}>
             {initialCards.map((card) => (
               <CostumeCard
                 key={card.id}
