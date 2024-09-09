@@ -1,19 +1,33 @@
-//나중에 수정
-button {
-  margin: 0;
-}
+.product__component {
+  font-family: Pretendard;
 
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  button {
-    width: 22%;
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: normal;
+    padding-top: 30px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 18px 0;
+  }
+  .recommend__container {
+    padding-bottom: 18px;
+
+    .recommend {
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      letter-spacing: -0.48px;
+      margin-left: 5px;
+    }
   }
 }
 
-.recommend {
-  font-size: 12px;
-}
 .upper__section,
 .lower__section {
   display: flex;
