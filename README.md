@@ -176,18 +176,30 @@
     1. 프로필 사진이 빈 공간이 없게 채워지도록 수정
 
 ### 9월 9일
+
 - 황선우
+
   - fix/Button/hsw
     1. 야무쌤의 도움으로 button에 type 속성이 빠진 것을 확인하고 수정
     2. type을 reset, submit, button 3가지로 전달할 수 있도록 수정
 
 - 권보령
+
   - Input 컴포넌트
     - fix: Input 컴포넌트 입력칸 범위 지정
       - 비밀번호 페이지 이메일 입력칸
     - fix: 이메일 입력칸 범위 조정을 위한 조건부 스타일 추가
-  - 룩북 컴포넌트 
+  - 룩북 컴포넌트
     - update: CostumeCard 컴포넌트 추가
+
+
+- 곽승헌
+  - feature/product/ksh
+    1. product 컴포넌트 생성 및 스타일링
+    2. 버튼 클릭 시 기온, 카테고리에 맞는 아이템 랜더링 로직 작성
+    3. 테스트를 위한 data.js 배열에 아이템 추가
+    4. 새로고침 버튼 UI 생성 애니매이션은 아직 미완
+    5. 새로고침 버튼 클릭 시 새로운 아이템 랜더링 로직 작성
 
 - 함정민
   - 로그인 페이지
@@ -195,3 +207,4 @@
     - fix: 불필요한 pb.authStore.clear 코드 삭제
   - 유효성검사 : 패스워드 제한 글자수 수정 및 특수문자 추가 (src/api/validation.js)
   - 인풋 스타일 수정 : 미세한 간격 등 수정 (src/components/Input/Input.module.scss)
+
