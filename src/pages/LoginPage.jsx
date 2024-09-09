@@ -174,6 +174,7 @@ function LoginPage() {
               </label>
             </div>
             <Button 
+              type="submit"
               text="로그인"
               onClick={handleLogin}
               active={true}
