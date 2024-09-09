@@ -1,5 +1,22 @@
 function LookbookPage(props) {
-  return <div>룩북</div>;
+  return (
+    <>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div>룩북</div>;
+    </>
+  );
 }
 
 export default LookbookPage;
