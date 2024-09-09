@@ -176,13 +176,15 @@
     1. 프로필 사진이 빈 공간이 없게 채워지도록 수정
 
 ### 9월 9일
+- 황선우
+  - fix/Button/hsw
+    1. 야무쌤의 도움으로 button에 type 속성이 빠진 것을 확인하고 수정
+    2. type을 reset, submit, button 3가지로 전달할 수 있도록 수정
+
 - 권보령
   - Input 컴포넌트
     - fix: Input 컴포넌트 입력칸 범위 지정
       - 비밀번호 페이지 이메일 입력칸
     - fix: 이메일 입력칸 범위 조정을 위한 조건부 스타일 추가
   - 룩북 컴포넌트 
-    - update: CostumeCard 컴포넌트 추가- 황선우
-  - fix/Button/hsw
-    1. 야무쌤의 도움으로 button에 type 속성이 빠진 것을 확인하고 수정
-    2. type을 reset, submit, button 3가지로 전달할 수 있도록 수정
+    - update: CostumeCard 컴포넌트 추가
