@@ -181,3 +181,19 @@
   - fix/Button/hsw
     1. 야무쌤의 도움으로 button에 type 속성이 빠진 것을 확인하고 수정
     2. type을 reset, submit, button 3가지로 전달할 수 있도록 수정
+  - feature/costumeCard/hsw
+    1. likeStore.js
+       - 좋아요 리스트 전역 관리
+       - likeList, toggleLike, setLikeList 제공
+       - persist를 통해 새로고침 등에도 유지
+    2. useLikeSync.js
+       - 좋아요 리스트를 포켓베이스 서버와 동기화
+       - 페이지 이동시에만 동기화 발생
+    3. CostumeCardManager.jsx
+       - 카드 리스트 렌더링, 페이지 이동 시 커스텀 훅(useLikeSync) 실행
+       - 카드와 상태가 메모이제이션 적용되어있음.
+       - 상태는 zustand로 관리됨.
+    4. MainPage.jsx
+       - 사용자 정보 및 CostumeCardList 불러오도록 설정 및 CCM에 전달
+    5. RootLayout.jsx
+       - 최상단에서 페이지 이동 감지 및 좋아요리스트 동기화 처리하도록 변경
