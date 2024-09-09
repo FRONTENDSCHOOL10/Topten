@@ -176,7 +176,13 @@
     1. 프로필 사진이 빈 공간이 없게 채워지도록 수정
 
 ### 9월 9일
+- 권보령
   - 비밀번호 페이지
     - fix: api/validation 파일의 유효성 검사 사용으로 수정
 
 
+- 함정민
+  - 로그인 페이지
+    - fix: api/validation 파일의 유효성 검사 사용으로 수정
+    - fix: 불필요한 pb.authStore.clear 코드 삭제
+  - 유효성검사 : 패스워드 제한 글자수 수정 및 특수문자 추가 (src/api/validation.js)
