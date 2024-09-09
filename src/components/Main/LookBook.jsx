@@ -52,7 +52,7 @@ function LookBook() {
             setRelatedItems(randomItem.items);
           } else {
             // 관련 상품이 없을 때
-            setRelatedItems([]); 
+            setRelatedItems([]);
           }
         } else {
           console.log('해당 계절에 맞는 아이템이 없습니다.');
@@ -81,7 +81,7 @@ function LookBook() {
         )}
       </div>
 
-      <div>
+      <div className={styles.productContainer}>
         <section id="page">
           <h3>관련 상품</h3>
           <div className={styles.product}>
@@ -92,7 +92,7 @@ function LookBook() {
                   record={{
                     costumeTitle: item.title || '제목 없음',
                     costumeBrand: item.brand || '브랜드 없음',
-                    costumeLink: { url: item.link || '#' }
+                    costumeLink: { url: item.link || '#' },
                     // 링크가 없을 경우 기본값
                   }}
                   imageUrl={getPbImageURL(item, 'costumeImage')}
@@ -107,7 +107,9 @@ function LookBook() {
         </section>
       </div>
 
-      <Button text="더 많은 룩북 보기" type="button" linkTo="/lookbook" />
+      <div className={styles.btnContainer}>
+        <Button text="더 많은 룩북 보기" type="button" linkTo="/lookbook" />
+      </div>
     </div>
   );
 }
