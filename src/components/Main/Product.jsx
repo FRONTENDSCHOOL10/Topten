@@ -84,17 +84,21 @@ function Product() {
     }
   };
 
+  // 초기 현재 기온 상태
   const [temperature, setTemperature] = useState(() => ({
     current: '5°~8°',
   }));
+
+  // 랜더링 시 전체 프로덕트 아이템을 받아옴
   const [productItems, setProductItems] = useState(initialCards);
 
+  // 버튼 클릭시 해당 기온으로 temperature를 업데이트
   const handleClick = (e) => {
     const { name } = e.target;
     setTemperature({ current: name });
   };
 
-  //기온 조건 추가 아직
+  // 파생된 상태, 기온에 맞게 상의 하의를 필터링
   const filteredUpper = productItems
     .filter(
       ({ costumeTemperature: t, upperCategory }) =>
@@ -108,8 +112,6 @@ function Product() {
     )
     .slice(0, 2);
 
-  console.log('filteredUpper', filteredUpper);
-  console.log('filteredLower', filteredLower);
   return (
     <div>
       <h2>오늘 날씨엔?</h2>
