@@ -157,6 +157,12 @@
     - Form.jsx, Input_kbr.jsx, Button.jsx 에 따라 코드 수정
     - 믹스인 사용
 
+- 권보령
+
+  - fix: 이메일 인증 버튼 위치 조정 오류 해결
+  - fix: 수정된 Button 컴포넌트에 따른 Button 컴포넌트 props 수정
+  - delete: 다른 버튼 컴포넌트 파일 삭제
+
 - 황선우
 
   - feature/costumeCard/hsw 브랜치
@@ -168,3 +174,17 @@
 
   - fix/header/hsw 브랜치
     1. 프로필 사진이 빈 공간이 없게 채워지도록 수정
+
+### 9월 9일
+- 황선우
+  - fix/Button/hsw
+    1. 야무쌤의 도움으로 button에 type 속성이 빠진 것을 확인하고 수정
+    2. type을 reset, submit, button 3가지로 전달할 수 있도록 수정
+
+- 권보령
+  - Input 컴포넌트
+    - fix: Input 컴포넌트 입력칸 범위 지정
+      - 비밀번호 페이지 이메일 입력칸
+    - fix: 이메일 입력칸 범위 조정을 위한 조건부 스타일 추가
+  - 룩북 컴포넌트 
+    - update: CostumeCard 컴포넌트 추가
