@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import styles from './Input.module.scss';
+import clsx from 'clsx';
 import PropTypes, { string, func, bool, oneOf, oneOfType, object, element } from 'prop-types';
 
 Input.propTypes = {
@@ -14,16 +15,18 @@ Input.propTypes = {
   onChange: func, // 입력 값이 변경될 때 호출
   onBlur: func, // 입력칸에서 포커스가 벗어났을 때 호출
   onButtonClick: func, // 버튼 클릭 시 호출
-  warningText: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-  ]), // 경고 문구
+  warningText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]), // 경고 문구
   warningStyle: object, // 경고 문구 스타일
 };
 
 function Input(props) {
   const id = useId();
 
+  const inputClass = clsx({
+    [styles.input]: true, 
+    [styles.inputWithButton]: props.text === '이메일' && props.active,
+  });
+  
   return (
     <div className={styles.inputComponent}>
       <label className={styles.label} htmlFor={id}>
@@ -34,7 +37,7 @@ function Input(props) {
       <div className={styles.inputWrapper}>
         <div className={styles.inputWrapper2}>
           <input
-            className={styles.input}
+            className={inputClass}
             type={props.type || 'text'}
             placeholder={props.description}
             value={props.value}
