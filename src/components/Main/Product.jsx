@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styles from './Product.module.scss';
+import initialCards from '@/data/test.js';
+import CostumeCard from '@/components/CostumeCard/CostumeCard';
 const temperatureList = [
   '4° ↓',
   '5°~8°',
@@ -72,16 +74,42 @@ const cards = [
 ];
 
 function Product() {
-  const [currentTemperature, setCurrentTemperature] = useState({ current: null });
+  const [likeList, setLikeList] = useState([]);
+
+  const toggleLike = (id) => {
+    if (likeList.includes(id)) {
+      setLikeList(likeList.filter((likeId) => likeId !== id)); // 좋아요 해제
+    } else {
+      setLikeList([...likeList, id]); // 좋아요 추가
+    }
+  };
+
+  const [temperature, setTemperature] = useState(() => ({
+    current: '5°~8°',
+  }));
+  const [productItems, setProductItems] = useState(initialCards);
+
   const handleClick = (e) => {
     const { name } = e.target;
-    setCurrentTemperature({ current: name });
+    setTemperature({ current: name });
   };
 
   //기온 조건 추가 아직
-  const filteredUpper = cards.filter((item) => item.upperCategory === '상의');
-  const filteredLower = cards.filter((item) => item.lowerCategory === '하의');
+  const filteredUpper = productItems
+    .filter(
+      ({ costumeTemperature: t, upperCategory }) =>
+        upperCategory === '상의' && t.includes(temperature.current)
+    )
+    .slice(0, 2);
+  const filteredLower = productItems
+    .filter(
+      ({ costumeTemperature: t, upperCategory }) =>
+        upperCategory === '하의' && t.includes(temperature.current)
+    )
+    .slice(0, 2);
 
+  console.log('filteredUpper', filteredUpper);
+  console.log('filteredLower', filteredLower);
   return (
     <div>
       <h2>오늘 날씨엔?</h2>
@@ -93,22 +121,24 @@ function Product() {
       <img src="/image/notification.png" alt="notification" />
       <span className={styles.recommend}>반팔, 얇은 셔츠, 반바지, 면바지를 입으면 좋아요!</span>
       <div className={styles.upper__section}>
-        {filteredUpper.map((item) => (
-          <Card
-            key={item.id}
-            imgPath={item.costumeImage}
-            title={item.costumeTitle}
-            brand={item.costumeBrand}
+        {filteredUpper.map((card) => (
+          <CostumeCard
+            key={card.id}
+            record={card}
+            imageUrl={card.costumeImage}
+            isLiked={likeList.includes(card.id)} // 좋아요 상태 전달
+            onLikeToggle={() => toggleLike(card.id)} // 좋아요 토글 함수 전달
           />
         ))}
       </div>
       <div className={styles.lower__section}>
-        {filteredLower.map((item) => (
-          <Card
-            key={item.id}
-            imgPath={item.costumeImage}
-            title={item.costumeTitle}
-            brand={item.costumeBrand}
+        {filteredLower.map((card) => (
+          <CostumeCard
+            key={card.id}
+            record={card}
+            imageUrl={card.costumeImage}
+            isLiked={likeList.includes(card.id)} // 좋아요 상태 전달
+            onLikeToggle={() => toggleLike(card.id)} // 좋아요 토글 함수 전달
           />
         ))}
       </div>
@@ -118,17 +148,17 @@ function Product() {
 
 export default Product;
 
-function Card({ imgPath, title, brand }) {
-  return (
-    <div>
-      <div>
-        <img className={styles.card} src={imgPath} alt="" />
-        <p>{title}</p>
-        <p>{brand}</p>
-      </div>
-    </div>
-  );
-}
+// function Card({ imgPath, title, brand }) {
+//   return (
+//     <div>
+//       <div>
+//         <img className={styles.card} src={imgPath} alt="" />
+//         <p>{title}</p>
+//         <p>{brand}</p>
+//       </div>
+//     </div>
+//   );
+// }
 
 function Button({ value, onClick }) {
   return (
@@ -137,3 +167,22 @@ function Button({ value, onClick }) {
     </button>
   );
 }
+
+// {filteredUpper.map((item) => (
+//   <Card
+//     key={item.id}
+//     imgPath={item.costumeImage}
+//     title={item.costumeTitle}
+//     brand={item.costumeBrand}
+//   />
+// ))}
+// {filteredLower.map((item) => (
+//   <Card
+//     key={item.id}
+//     imgPath={item.costumeImage}
+//     title={item.costumeTitle}
+//     brand={item.costumeBrand}
+//   />
+// ))}
+
+// import initialCards from '@/data/test.js';
