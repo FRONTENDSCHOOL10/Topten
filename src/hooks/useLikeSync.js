@@ -1,12 +1,11 @@
-// src/hooks/useLikeSync.js
-import { useEffect } from 'react';
-import pb from '@/api/pocketbase'; // PocketBase ì¸ìŠ¤í„´ìŠ¤
+import { useCallback } from 'react';
+import pb from '@/api/pocketbase';
 
 export const useLikeSync = (userId, likeList) => {
-  const syncLikesToServer = async () => {
+  const syncLikesToServer = useCallback(async () => {
     if (!userId) {
-      console.log('ë¡œê·¸ì¸í•˜ì§€ ì•Šì€ ìƒíƒœë¡œ ì„œë²„ ë™ê¸°í™”ëŠ” ì§„í–‰í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.');
-      return; // userIdê°€ ì—†ìœ¼ë©´ ë™ê¸°í™”í•˜ì§€ ì•ŠìŒ
+      console.log('·Î±×ÀÎÇÏÁö ¾ÊÀº »óÅÂ·Î ¼­¹ö µ¿±âÈ­´Â ÁøÇàÇÏÁö ¾Ê½À´Ï´Ù.');
+      return;
     }
 
     try {
@@ -15,35 +14,22 @@ export const useLikeSync = (userId, likeList) => {
         .getFirstListItem(`owner="${userId}"`);
 
       if (existingLikeList) {
-        // ê¸°ì¡´ ë¦¬ìŠ¤íŠ¸ê°€ ìžˆì„ ê²½ìš° ì—…ë°ì´íŠ¸
         await pb.collection('likeList').update(existingLikeList.id, {
           owner: userId,
           costumeCard: likeList,
         });
-        console.log('likeListê°€ ì„±ê³µì ìœ¼ë¡œ ì—…ë°ì´íŠ¸ë˜ì—ˆìŠµë‹ˆë‹¤.');
+        console.log('likeList°¡ ¼º°øÀûÀ¸·Î ¾÷µ¥ÀÌÆ®µÇ¾ú½À´Ï´Ù.');
       } else {
-        // ìƒˆë¡œìš´ ë¦¬ìŠ¤íŠ¸ ìƒì„±
         await pb.collection('likeList').create({
           owner: userId,
           costumeCard: likeList,
         });
-        console.log('ìƒˆë¡œìš´ likeListê°€ ìƒì„±ë˜ì—ˆìŠµë‹ˆë‹¤.');
+        console.log('»õ·Î¿î likeList°¡ »ý¼ºµÇ¾ú½À´Ï´Ù.');
       }
     } catch (error) {
-      console.error('likeList ë™ê¸°í™”ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤:', error);
+      console.error('likeList µ¿±âÈ­¿¡ ½ÇÆÐÇß½À´Ï´Ù:', error);
     }
-  };
-
-  useEffect(() => {
-    if (!userId) return; // userIdê°€ ì—†ìœ¼ë©´ ë™ê¸°í™”í•˜ì§€ ì•ŠìŒ
-
-    const handleBeforeUnload = () => {
-      syncLikesToServer();
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [likeList, userId]);
+  }, [userId, likeList]);
 
   return { syncLikesToServer };
 };

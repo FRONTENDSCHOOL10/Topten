@@ -4,7 +4,7 @@ import Weather from './../components/Main/Weather';
 import Product from './../components/Main/Product';
 import LookBook from './../components/Main/LookBook';
 import CostumeCardManager from '@/components/CostumeCardManager/CostumeCardManager';
-import pb from '@/api/pocketbase'; // PocketBase 인스턴스 가져오기
+import pb from '@/api/pocketbase';
 
 function MainPage(props) {
   const [user, setUser] = useState(null);
@@ -16,7 +16,16 @@ function MainPage(props) {
     if (pbAuth) {
       try {
         const parsedUser = JSON.parse(pbAuth);
-        setUser(parsedUser);
+        // console.log('parsedUser:', parsedUser);
+
+        // user 객체
+        setUser({
+          id: parsedUser.token.id,
+          email: parsedUser.token.email,
+          nickname: parsedUser.token.userNickName,
+          photo: parsedUser.token.userPhoto,
+          // 필요에 따라 추가 정보도 설정
+        });
       } catch (error) {
         console.error('Error parsing user data from sessionStorage:', error);
       }

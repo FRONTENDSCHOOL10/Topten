@@ -1,6 +1,6 @@
 // 좋아요리스트 상태를 관리하고, 좋아요 토글 기능만을 담당하는 Zustand 상태
-import create from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 const useLikeStore = create(
   persist(
@@ -16,7 +16,7 @@ const useLikeStore = create(
     }),
     {
       name: 'like-storage', // localStorage 키 이름
-      getStorage: () => localStorage, // 상태를 localStorage에 저장
+      storage: createJSONStorage(() => localStorage), // 상태를 localStorage에 저장
     }
   )
 );
