@@ -1,8 +1,9 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLikeSync } from '@/hooks/useLikeSync'; // useLikeSync 커스텀 훅 가져오기
-import NavigationBar from '@/components/NavigationBar/NavigationBar';
 import Header from '@/components/Header/Header';
+import NavigationBar from '@/components/NavigationBar/NavigationBar';
+import ToTopButton from '@/components/ToTopButton/ToTopButton';
 import useLikeStore from '@/stores/likeStore'; // Zustand로 상태 관리
 
 const RootLayout = ({ user }) => {
@@ -29,6 +30,7 @@ const RootLayout = ({ user }) => {
       <main style={{ paddingBottom: hideHeaderAndNav ? '0' : '60px' }}>
         <Outlet />
       </main>
+      <ToTopButton />
       {!hideHeaderAndNav && <NavigationBar />}
     </>
   );

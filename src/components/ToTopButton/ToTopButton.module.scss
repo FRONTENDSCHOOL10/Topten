@@ -1,0 +1,29 @@
+.toTopButton {
+  display: none;
+  opacity: 0;
+
+  width: 48px;
+  height: 48px;
+
+  position: fixed;
+  bottom: 120px;
+  right: 40px;
+
+  border: 1px solid var(--gray-custom-300);
+  border-radius: 50%;
+  background-color: var(--white);
+
+  color: var(--black);
+
+  cursor: pointer;
+  z-index: 1000;
+
+  &:hover {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+
+  &.visible {
+    display: block;
+  }
+}
