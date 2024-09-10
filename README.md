@@ -258,3 +258,5 @@
     - style: 룩북 레이아웃 수정
     - refactor: 룩북 컴포넌트 스타일링 리팩토링
     - style: 룩북 컴포넌트 관련 상품 스와이퍼 위치 조정
+  - CostumeCard 컴포넌트
+    - fix: CostumeCard 컴포넌트 레이아웃 상세 수정
