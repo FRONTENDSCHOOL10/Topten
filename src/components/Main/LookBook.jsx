@@ -1,12 +1,9 @@
-import Button from './../Button/Button';
+import { useState, useEffect } from 'react';
 import styles from './LookBook.module.scss';
 import pb from './../../api/pocketbase';
 import getPbImageURL from './../../api/getPbImageURL';
-
-// CostumeCard 컴포넌트
-// import initialCards from '@/data/test.js';
-import { useState, useEffect } from 'react';
 import CostumeCardManager from '@/components/CostumeCardManager/CostumeCardManager';
+import Button from './../Button/Button';
 
 function LookBook() {
   // CostumeCard 컴포넌트의 좋아요 기능 --------------------
@@ -39,6 +36,7 @@ function LookBook() {
 
         console.log(seasonItems);
 
+
         // 해당 계절 중 랜덤으로 하나 선택
         if (seasonItems.length > 0) {
           const randomItem = seasonItems[Math.floor(Math.random() * seasonItems.length)];
@@ -47,7 +45,8 @@ function LookBook() {
 
           console.log('선택된 착용샷:', randomItem);
 
-          // randomItem의 items 배열을 관련 상품으로 설정
+          
+          // 착장샷의 items 배열을 관련 상품으로 설정
           if (randomItem.items && randomItem.items.length > 0) {
             const allCostumeCards = await pb.collection('costumeCard').getFullList();
 
@@ -58,10 +57,12 @@ function LookBook() {
             );
 
             setRelatedItems(filteredItems);
+
           } else {
             // 관련 상품이 없을 때
             setRelatedItems([]);
           }
+
         } else {
           console.log('해당 계절에 맞는 아이템이 없습니다.');
         }
@@ -91,7 +92,7 @@ function LookBook() {
 
       <div className={styles.productContainer}>
         <section id="page">
-          <h3>관련 상품</h3>
+          <h3 className={styles.productTitle}>관련 상품</h3>
           <CostumeCardManager viewType="리스트" costumeCards={relatedItems} />
         </section>
       </div>
