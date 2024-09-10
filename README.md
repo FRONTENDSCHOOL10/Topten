@@ -236,3 +236,9 @@
 
   - 위로가기 버튼컴포넌트
     - 구현 완료
+
+- 권보령
+  - 룩북 컴포넌트
+    - update: 착용샷 관련 상품의 id로 정보 가져오기
+    - update: CostumeCardManager 컴포넌트 사용
+    - style: 룩북 레이아웃 수정
