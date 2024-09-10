@@ -49,7 +49,15 @@ function LookBook() {
 
           // randomItem의 items 배열을 관련 상품으로 설정
           if (randomItem.items && randomItem.items.length > 0) {
-            setRelatedItems(randomItem.items);
+            const allCostumeCards = await pb.collection('costumeCard').getFullList();
+
+            const costumeCardIds = randomItem.items;
+            
+            const filteredItems = allCostumeCards.filter((card) =>
+              costumeCardIds.includes(card.id)
+            );
+            
+            setRelatedItems(filteredItems);
           } else {
             // 관련 상품이 없을 때
             setRelatedItems([]);
@@ -90,9 +98,9 @@ function LookBook() {
                 <CostumeCard
                   key={index}
                   record={{
-                    costumeTitle: item.title || '제목 없음',
-                    costumeBrand: item.brand || '브랜드 없음',
-                    costumeLink: { url: item.link || '#' },
+                    costumeTitle: item.costumeTitle || '제목 없음',
+                    costumeBrand: item.costumeBrand || '브랜드 없음',
+                    costumeLink: { url: item.costumeLink?.url || '#' },
                     // 링크가 없을 경우 기본값
                   }}
                   imageUrl={getPbImageURL(item, 'costumeImage')}
