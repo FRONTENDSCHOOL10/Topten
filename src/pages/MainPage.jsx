@@ -69,7 +69,7 @@ function MainPage(props) {
       <Weather />
       <Product />
       {/* costumeCards를 CostumeCardManager로 전달 */}
-      <CostumeCardManager user={user} viewType="리스트" costumeCards={costumeCards} />
+      <CostumeCardManager viewType="리스트" costumeCards={costumeCards} />
       <LookBook />
     </div>
   );
