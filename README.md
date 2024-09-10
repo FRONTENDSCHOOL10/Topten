@@ -232,6 +232,20 @@
 
 ### 9월 10일
 
+
+- 곽승헌
+
+  - feature/register-re/ksh
+
+    1. Input_kbr.jsx
+       - 비밀번호 표시 유무 기능 구현
+       - 비밀번호 표시 유무 버튼 스타일링
+    2. RegisterPage.jsx
+       - 비밀번호 표시 유뮤 사용 props 추가
+       - Input type 재정의
+       - 회원가입 완료, 이메일 중복 결과 표시 위한 토스트 추가
+       - 토스트 api 생성
+
 - 황선우
 
   - 위로가기 버튼컴포넌트
@@ -242,3 +256,4 @@
     - update: 착용샷 관련 상품의 id로 정보 가져오기
     - update: CostumeCardManager 컴포넌트 사용
     - style: 룩북 레이아웃 수정
+

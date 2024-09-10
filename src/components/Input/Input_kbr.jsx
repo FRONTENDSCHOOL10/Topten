@@ -1,7 +1,9 @@
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import styles from './Input.module.scss';
 import clsx from 'clsx';
 import PropTypes, { string, func, bool, oneOf, oneOfType, object, element } from 'prop-types';
+import { IoEyeSharp } from 'react-icons/io5';
+import { BsFillEyeSlashFill } from 'react-icons/bs';
 
 Input.propTypes = {
   text: string.isRequired, // 버튼 텍스트
@@ -17,16 +19,47 @@ Input.propTypes = {
   onButtonClick: func, // 버튼 클릭 시 호출
   warningText: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]), // 경고 문구
   warningStyle: object, // 경고 문구 스타일
+  activeVisible: bool, // 비밀번호 표시 감춤 사용여부
 };
 
 function Input(props) {
+  const [type, setType] = useState(() => 'password');
+  const [visible, setVisible] = useState(false);
+
+  const handleToggle = () => {
+    console.log('aa');
+    if (visible) {
+      setVisible(false);
+      setType('password');
+    } else {
+      setVisible(true);
+      setType('text');
+    }
+  };
+
+  let visibleButton = null;
+  const visibleText = visible ? '비밀번호 표시' : '비밀번호 숨김';
+  if ((props.type === 'password' || props.type === 'text') && props.activeVisible) {
+    visibleButton = (
+      <button
+        className={styles.visibleButton}
+        aria-label={visibleText}
+        title={visibleText}
+        type="button"
+        onClick={handleToggle}
+      >
+        {visible ? <IoEyeSharp /> : <BsFillEyeSlashFill />}
+      </button>
+    );
+  }
+
   const id = useId();
 
   const inputClass = clsx({
-    [styles.input]: true, 
+    [styles.input]: true,
     [styles.inputWithButton]: props.text === '이메일' && props.active,
   });
-  
+
   return (
     <div className={styles.inputComponent}>
       <label className={styles.label} htmlFor={id}>
@@ -38,7 +71,7 @@ function Input(props) {
         <div className={styles.inputWrapper2}>
           <input
             className={inputClass}
-            type={props.type || 'text'}
+            type={props.activeVisible ? type : props.type || 'text'}
             placeholder={props.description}
             value={props.value}
             onChange={props.onChange}
@@ -58,6 +91,7 @@ function Input(props) {
             {props.buttonText ?? '확인'}
           </button>
         )}
+        {visibleButton}
       </div>
     </div>
   );
