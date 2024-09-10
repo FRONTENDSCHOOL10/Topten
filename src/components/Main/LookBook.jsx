@@ -36,7 +36,6 @@ function LookBook() {
 
         console.log(seasonItems);
 
-
         // 해당 계절 중 랜덤으로 하나 선택
         if (seasonItems.length > 0) {
           const randomItem = seasonItems[Math.floor(Math.random() * seasonItems.length)];
@@ -45,7 +44,6 @@ function LookBook() {
 
           console.log('선택된 착용샷:', randomItem);
 
-          
           // 착장샷의 items 배열을 관련 상품으로 설정
           if (randomItem.items && randomItem.items.length > 0) {
             const allCostumeCards = await pb.collection('costumeCard').getFullList();
@@ -57,12 +55,10 @@ function LookBook() {
             );
 
             setRelatedItems(filteredItems);
-
           } else {
             // 관련 상품이 없을 때
             setRelatedItems([]);
           }
-
         } else {
           console.log('해당 계절에 맞는 아이템이 없습니다.');
         }
@@ -93,7 +89,9 @@ function LookBook() {
       <div className={styles.productContainer}>
         <section id="page">
           <h3 className={styles.productTitle}>관련 상품</h3>
-          <CostumeCardManager viewType="리스트" costumeCards={relatedItems} />
+          <div className={styles.productSwiper}>
+            <CostumeCardManager viewType="리스트" costumeCards={relatedItems} />
+          </div>
         </section>
       </div>
 
