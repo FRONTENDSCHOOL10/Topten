@@ -40,36 +40,41 @@ function Product() {
   }));
 
   // 랜더링 시 전체 프로덕트 아이템을 받아옴
-  const [productItems, setProductItems] = useState(initialCards);
+  const [productItems] = useState(initialCards);
 
-  //다음 추천을 위한 index
-  const [nextIndex, setNextIndex] = useState(0);
+  // 해당 상태 값 true, false에 따라서 아이템을 랜덤으로 리턴
+  const [activeRandom, setActiveRandom] = useState(0);
 
   // 버튼 클릭시 해당 기온으로 temperature를 업데이트
   const handleClick = (e) => {
     const { innerText } = e.target;
+    setActiveRandom((prev) => (prev = 0));
     setTemperature({ current: innerText });
   };
 
   // 파생된 상태, 기온에 맞게 상의 하의를 필터링
-  const filteredUpper = productItems
-    .filter(
+  const makeFilteredItem = (category) => {
+    //기온과 카테고리에 맞게 1차 필터링
+    const filteredItems = productItems.filter(
       ({ costumeTemperature: t, upperCategory }) =>
-        upperCategory === '상의' && t.includes(temperature.current)
-    )
-    .slice(0 + nextIndex, 2 + nextIndex);
-  const filteredLower = productItems
-    .filter(
-      ({ costumeTemperature: t, upperCategory }) =>
-        upperCategory === '하의' && t.includes(temperature.current)
-    )
-    .slice(0 + nextIndex, 2 + nextIndex);
+        upperCategory === category && t.includes(temperature.current)
+    );
 
-  // 새로고침 버튼 클릭 시 index를 증가시켜 다음 아이템으로 새로고침
+    // activeRandom이 ture면 아이템을 랜덤하게 리턴
+    if (activeRandom) {
+      return filteredItems.sort(() => 0.5 - Math.random()).slice(0, 2);
+    }
+
+    // activeRandom이 false라면 기본 배열의 index로 아이템을 리턴
+    return filteredItems.slice(0, 2);
+  };
+
+  const filteredUpper = makeFilteredItem('상의');
+  const filteredLower = makeFilteredItem('하의');
+
+  // 새로고침 버튼 클릭 시 다음 아이템으로 새로고침
   const refreshProductItem = () => {
-    nextIndex === productItems.length - 2
-      ? setNextIndex((prev) => (prev = 0))
-      : setNextIndex((prev) => prev + 2);
+    setActiveRandom((prev) => prev + 1);
   };
 
   return (
@@ -110,7 +115,7 @@ function Product() {
         style={{ marginTop: '30px' }}
         text="다른 스타일 추천해드릴까요?"
         onClick={refreshProductItem}
-        active="ture"
+        active={true}
         icon={<IoRefreshSharp />}
       />
     </div>
