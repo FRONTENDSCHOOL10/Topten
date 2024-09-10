@@ -5,15 +5,9 @@
   margin-top: 60px;
 
   .title {
-    color: var(--black, #000);
-    font-family: Pretendard;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    @include font-style(18px, 600, $--black);
 
-    margin-top: 30px;
-    margin-bottom: 14px;
+    margin: 30px 0 14px;
   }
 
   .outfitContainer {
@@ -34,6 +28,10 @@
 
     .productTitle {
       margin-bottom: -77px;
+    }
+
+    .productSwiper {
+      margin-left: -17px;
     }
   }
 

@@ -256,4 +256,5 @@
     - update: 착용샷 관련 상품의 id로 정보 가져오기
     - update: CostumeCardManager 컴포넌트 사용
     - style: 룩북 레이아웃 수정
-
+    - refactor: 룩북 컴포넌트 스타일링 리팩토링
+    - style: 룩북 컴포넌트 관련 상품 스와이퍼 위치 조정
