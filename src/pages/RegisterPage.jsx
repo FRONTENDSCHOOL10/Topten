@@ -1,19 +1,17 @@
 import styles from '../styles/pages/RegisterPage.module.scss';
 import Form from '../components/Form/Form';
 import Input from './../components/Input/Input_kbr';
-import { useState } from 'react';
-import RegisterCheckbox from '../components/RegisterCheckbox/RegisterCheckbox';
-import { useEffect } from 'react';
 import Button from './../components/Button/Button';
-import { useNavigate } from 'react-router-dom';
-import { createUser } from '../api/createUser';
-import { COLORS, GENDER, POLICY, SIZE, INITCHECKED, INITUSER, WRANING } from '../data/constant';
-import { getData } from '../api/getData';
-import { validateEmail, validateName, validatePassword } from '../api/validation';
 import Select from '../components/Select/Select';
+import { useState, useEffect } from 'react';
+import RegisterCheckbox from '../components/RegisterCheckbox/RegisterCheckbox';
+import { createUser } from '../api/createUser';
+import { validateEmail, validateName, validatePassword } from '../api/validation';
+import { getData } from '../api/getData';
+import loadToast from '../api/loadToast';
 import { Helmet } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
-import loadToast from '../api/loadToast';
+import { COLORS, GENDER, POLICY, SIZE, INITCHECKED, INITUSER, WRANING } from '../data/constant';
 
 function RegisterPage(props) {
   // const navigate = useNavigate();
@@ -190,7 +188,7 @@ function RegisterPage(props) {
             warningText={emailWarn}
             onButtonClick={checkEmail}
             buttonText="중복확인"
-            active="true"
+            active={true}
           />
           <Input
             text={'비밀번호'}
@@ -200,6 +198,7 @@ function RegisterPage(props) {
             onChange={handleChange}
             onBlur={handleBlur}
             warningText={passwordWarn}
+            activeVisible={true}
           />
           <Input
             text={'비밀번호 확인'}
@@ -209,6 +208,7 @@ function RegisterPage(props) {
             onChange={handleChange}
             onBlur={handleBlur}
             warningText={passwordCheckWarn}
+            activeVisible={true}
           />
           <Input
             text={'닉네임'}
