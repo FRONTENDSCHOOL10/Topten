@@ -232,7 +232,6 @@
 
 ### 9월 10일
 
-
 - 곽승헌
 
   - feature/register-re/ksh
@@ -245,6 +244,9 @@
        - Input type 재정의
        - 회원가입 완료, 이메일 중복 결과 표시 위한 토스트 추가
        - 토스트 api 생성
+    3. Product.jsx
+       - 카드 아이템 랜덤 출력 로직 재구성
+       - product 컴포넌트 스타일링
 
 - 황선우
 
@@ -256,4 +258,3 @@
     - update: 착용샷 관련 상품의 id로 정보 가져오기
     - update: CostumeCardManager 컴포넌트 사용
     - style: 룩북 레이아웃 수정
-
