@@ -180,6 +180,7 @@
 - 황선우
 
   - fix/Button/hsw
+
     1. 야무쌤의 도움으로 button에 type 속성이 빠진 것을 확인하고 수정
     2. type을 reset, submit, button 3가지로 전달할 수 있도록 수정
 
@@ -201,6 +202,7 @@
        - 최상단에서 페이지 이동 감지 및 좋아요리스트 동기화 처리하도록 변경
 
 - 권보령
+
   - Input 컴포넌트
     - fix: Input 컴포넌트 입력칸 범위 지정
       - 비밀번호 페이지 이메일 입력칸
@@ -213,6 +215,7 @@
     - style: 룩북 컴포넌트 레이아웃 조정
 
 - 곽승헌
+
   - feature/product/ksh
     1. product 컴포넌트 생성 및 스타일링
     2. 버튼 클릭 시 기온, 카테고리에 맞는 아이템 랜더링 로직 작성
@@ -227,3 +230,36 @@
   - 유효성검사 : 패스워드 제한 글자수 수정 및 특수문자 추가 (src/api/validation.js)
   - 인풋 스타일 수정 : 미세한 간격 등 수정 (src/components/Input/Input.module.scss)
 
+### 9월 10일
+
+
+- 곽승헌
+
+  - feature/register-re/ksh
+
+    1. Input_kbr.jsx
+       - 비밀번호 표시 유무 기능 구현
+       - 비밀번호 표시 유무 버튼 스타일링
+    2. RegisterPage.jsx
+       - 비밀번호 표시 유뮤 사용 props 추가
+       - Input type 재정의
+       - 회원가입 완료, 이메일 중복 결과 표시 위한 토스트 추가
+       - 토스트 api 생성
+
+- 황선우
+
+  - 위로가기 버튼컴포넌트
+    - 구현 완료
+
+- 권보령
+  - 룩북 컴포넌트
+    - update: 착용샷 관련 상품의 id로 정보 가져오기
+    - update: CostumeCardManager 컴포넌트 사용
+    - style: 룩북 레이아웃 수정
+    - refactor: 룩북 컴포넌트 스타일링 리팩토링
+    - style: 룩북 컴포넌트 관련 상품 스와이퍼 위치 조정
+  - CostumeCard 컴포넌트
+    - fix: CostumeCard 컴포넌트 레이아웃 상세 수정
+    - fix: 상품 이미지 크기에 따라 카드 너비가 움직이는 문제 해결
+  - NavigationBar 컴포넌트
+    - fix: 상품 카드가 하단 네비게이션 바를 침범하는 오류 해결
