@@ -1,12 +1,24 @@
-import create from 'zustand';
+// 좋아요리스트 상태를 관리하고, 좋아요 토글 기능만을 담당하는 Zustand 상태
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-// Zustand 스토어 생성
-export const useLikeStore = create((set) => ({
-  likeList: [], // 좋아요된 costumeCard의 ID 목록
-  addLike: (id) => set((state) => ({ likeList: [...state.likeList, id] })), // 좋아요 추가
-  removeLike: (id) =>
-    set((state) => ({
-      likeList: state.likeList.filter((likeId) => likeId !== id), // 좋아요 제거
-    })),
-  setLikeList: (likeList) => set({ likeList }), // 초기 좋아요 리스트 설정
-}));
+const useLikeStore = create(
+  persist(
+    (set) => ({
+      likeList: [],
+      toggleLike: (id) =>
+        set((state) => ({
+          likeList: state.likeList.includes(id)
+            ? state.likeList.filter((likeId) => likeId !== id) // 좋아요 해제
+            : [...state.likeList, id], // 좋아요 추가
+        })),
+      setLikeList: (likeList) => set({ likeList }), // 서버에서 불러온 좋아요 리스트 설정
+    }),
+    {
+      name: 'like-storage', // localStorage 키 이름
+      storage: createJSONStorage(() => localStorage), // 상태를 localStorage에 저장
+    }
+  )
+);
+
+export default useLikeStore;
