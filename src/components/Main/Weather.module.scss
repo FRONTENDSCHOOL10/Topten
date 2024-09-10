@@ -1,0 +1,47 @@
+@import '../../styles/utils/theme';
+@import '../../styles/utils/utils';
+
+.weatherWrap{
+  display:flex;
+  flex-direction: column;
+  gap:18px;
+
+  margin-bottom:60px;
+}
+
+.weatherLocation{
+  @include font-style(16px, 500, $--black);
+}
+
+.icon{
+  width:16px;
+}
+
+.currentWeather{
+  display:flex;
+  justify-content:space-between;
+}
+
+.weatherInfo{
+  display:flex;
+  flex-direction: column;
+  gap:12px;
+}
+
+.weatherDetail{
+  display:flex;
+  flex-direction: column;
+  gap:8px;
+}
+
+.nowTMP{
+  @include font-style(36px, 800, $--black);
+}
+
+.nowWeather{
+  @include font-style(16px, 700, $--black);
+}
+
+.nowWeatherSpan{
+  padding-left:10px;
+}
