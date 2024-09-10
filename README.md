@@ -260,3 +260,5 @@
     - style: 룩북 컴포넌트 관련 상품 스와이퍼 위치 조정
   - CostumeCard 컴포넌트
     - fix: CostumeCard 컴포넌트 레이아웃 상세 수정
+  - NavigationBar 컴포넌트
+    - fix: 상품 카드가 하단 네비게이션 바를 침범하는 오류 해결
