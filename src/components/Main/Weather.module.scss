@@ -25,7 +25,7 @@
 .weatherInfo{
   display:flex;
   flex-direction: column;
-  gap:12px;
+  gap:20px;
 }
 
 .weatherDetail{
@@ -44,4 +44,12 @@
 
 .nowWeatherSpan{
   padding-left:10px;
+}
+
+.iconWeatherLg{
+  width:120px;
+}
+
+.iconWeatherSm{
+  width:16px;
 }

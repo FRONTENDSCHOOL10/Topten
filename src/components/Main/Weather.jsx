@@ -15,6 +15,12 @@ function Weather() {
   const [feelsLikeTemp, setFeelsLikeTemp] = useState(null);
   const [windSpeed, setWindSpeed] = useState(null);  // 풍속 상태 추가
 
+
+  const getPlainSkyCondition = (condition) => {
+    // "(낮)", "(밤)"을 제거하는 정규식
+    return condition.replace(/\(낮\)|\(밤\)/g, '');
+  };
+
   const getBaseTime = () => {
     const now = new Date();
     const hour = now.getHours();
@@ -325,18 +331,6 @@ function Weather() {
   return (
     <div className={styles.weatherWrap}>
       <h2 className={styles.a11yHidden}>현재 날씨</h2>
-      {error && <p>{error}</p>}
-      {weatherData ? (
-        <ul>
-          {weatherData.map((item, index) => (
-            <li key={index}>
-              <strong>{item.category}</strong>: {item.fcstValue}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>날씨 정보를 불러오는 중...</p>
-      )}
 
       {/* 현재 위치에 따른 날씨 영역 */}
       <div className={styles.currentWeather}>
@@ -354,10 +348,6 @@ function Weather() {
               {/* 어제와 비교한 기온 */}
               {getTemperatureComparison()}
             </div>
-            <p className={styles.nowWeather}>{skyCondition || '날씨 정보를 불러오는 중...'}</p>
-            <p className={styles.nowWeather}>
-              <span>{highTemp !== null ? `${highTemp}°` : '정보 없음'}</span> / <span>{lowTemp !== null ? `${lowTemp}°` : '정보 없음'}</span>  <span className={styles.nowWeatherSpan}>체감온도</span> <span>{feelsLikeTemp !== null ? `${feelsLikeTemp}°` : '정보 없음'}</span>
-            </p>
           </div>
         </div>
 
@@ -365,13 +355,32 @@ function Weather() {
           <img 
             src={getWeatherIcon(skyCondition).src} 
             alt={getWeatherIcon(skyCondition).alt} 
-            className={styles.iconWeather} 
+            className={styles.iconWeatherLg} 
           />
         </div>
       </div>
+      <div>
+        {/* 낮/밤 구분 없는 날씨 상태 출력 */}
+        <p className={styles.nowWeather}>{getPlainSkyCondition(skyCondition) || '날씨 정보를 불러오는 중...'}</p>
+    
+        <p className={styles.nowWeather}>
+          <span>{highTemp !== null ? `${highTemp}°` : '정보 없음'}</span> / <span>{lowTemp !== null ? `${lowTemp}°` : '정보 없음'}</span>  <span className={styles.nowWeatherSpan}>체감온도</span> <span>{feelsLikeTemp !== null ? `${feelsLikeTemp}°` : '정보 없음'}</span>
+        </p>
+      </div>
 
       <div className={styles.hourlyWeather}>
-        시간대별 날씨 영역
+        <ul>
+          <li>
+            <p>오후 5시</p>
+            <img src="/icon/icon-sm-clear-day.png" alt="맑음(낮)" className={styles.iconWeatherSm}  />
+            <p>30°</p>
+          </li>
+          <li>
+            <p>오후 6시</p>
+            <img src="/icon/icon-sm-clear-night.png" alt="맑음(밤)" className={styles.iconWeatherSm}  />
+            <p>29°</p>
+          </li>
+        </ul>
       </div>
     </div>
   );
