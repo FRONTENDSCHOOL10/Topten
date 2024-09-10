@@ -6,7 +6,7 @@ import getPbImageURL from './../../api/getPbImageURL';
 // CostumeCard 컴포넌트
 // import initialCards from '@/data/test.js';
 import { useState, useEffect } from 'react';
-import CostumeCard from '@/components/CostumeCard/CostumeCard';
+import CostumeCardManager from '@/components/CostumeCardManager/CostumeCardManager';
 
 function LookBook() {
   // CostumeCard 컴포넌트의 좋아요 기능 --------------------
@@ -52,11 +52,11 @@ function LookBook() {
             const allCostumeCards = await pb.collection('costumeCard').getFullList();
 
             const costumeCardIds = randomItem.items;
-            
+
             const filteredItems = allCostumeCards.filter((card) =>
               costumeCardIds.includes(card.id)
             );
-            
+
             setRelatedItems(filteredItems);
           } else {
             // 관련 상품이 없을 때
@@ -92,26 +92,7 @@ function LookBook() {
       <div className={styles.productContainer}>
         <section id="page">
           <h3>관련 상품</h3>
-          <div className={styles.product}>
-            {relatedItems.length > 0 ? (
-              relatedItems.map((item, index) => (
-                <CostumeCard
-                  key={index}
-                  record={{
-                    costumeTitle: item.costumeTitle || '제목 없음',
-                    costumeBrand: item.costumeBrand || '브랜드 없음',
-                    costumeLink: { url: item.costumeLink?.url || '#' },
-                    // 링크가 없을 경우 기본값
-                  }}
-                  imageUrl={getPbImageURL(item, 'costumeImage')}
-                  isLiked={likeList.includes(item.id)} // 좋아요 상태 전달
-                  onLikeToggle={() => toggleLike(item.id)} // 좋아요 토글 함수 전달
-                />
-              ))
-            ) : (
-              <p>관련 상품이 없습니다.</p>
-            )}
-          </div>
+          <CostumeCardManager viewType="리스트" costumeCards={relatedItems} />
         </section>
       </div>
 
