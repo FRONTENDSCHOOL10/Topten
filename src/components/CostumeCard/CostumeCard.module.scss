@@ -1,3 +1,4 @@
+@import '@/styles/utils/_utils.scss';
 .card {
   display: flex;
   flex-direction: column;
@@ -35,7 +36,6 @@
     color: var(--primary-color); /* 에러 아이콘의 색상 */
     object-fit: contain;
   }
-
 }
 
 .infoWrapper {
@@ -43,6 +43,13 @@
 
   .title {
     font-weight: 700;
+  }
+
+  .description {
+    @include ellipsis(1, 1.2em); /* 한 줄만 표시하고 나머지는 숨김 */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap; /* 텍스트를 한 줄로 제한 */
   }
 
   .link {

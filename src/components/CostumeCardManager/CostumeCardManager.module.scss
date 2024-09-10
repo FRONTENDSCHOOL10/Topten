@@ -1,6 +1,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 두 열에 하나씩 배치 */
+  grid-template-rows: repeat(2, 450px);
   gap: 20px;
   padding: 20px;
 }
