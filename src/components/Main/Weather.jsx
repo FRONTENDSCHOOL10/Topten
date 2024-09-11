@@ -8,12 +8,13 @@ function Weather() {
   const [location, setLocation] = useState({ lat: null, lon: null });
   const [address, setAddress] = useState('');
   const [temperature, setTemperature] = useState(null);
-  const [yesterdayTemperature, setYesterdayTemperature] = useState(null); // 어제 기온
+  const [yesterdayTemperature, setYesterdayTemperature] = useState(null);
   const [skyCondition, setSkyCondition] = useState('');
   const [highTemp, setHighTemp] = useState(null);
   const [lowTemp, setLowTemp] = useState(null);
   const [feelsLikeTemp, setFeelsLikeTemp] = useState(null);
   const [windSpeed, setWindSpeed] = useState(null);
+  const [hourlyWeatherData, setHourlyWeatherData] = useState([]);
 
   // 현재 위치 정보와 날씨 데이터를 디버깅용으로 출력
   useEffect(() => {
@@ -73,6 +74,7 @@ function Weather() {
             getAddress(lat, lon); // 위치 정보를 이용하여 주소를 받아옴
             fetchWeatherData(lat, lon); // 오늘의 날씨 데이터를 받아옴
             fetchYesterdayWeatherData(lat, lon); // 어제의 날씨 데이터를 받아옴
+            fetchHourlyWeatherData(lat, lon); // 24시간 날씨 데이터를 받아옴
           },
           (err) => {
             console.error('위치 가져오기 오류:', err);
@@ -113,7 +115,7 @@ function Weather() {
   // 오늘의 날씨 데이터를 받아오는 함수 (초단기예보 API)
   const fetchWeatherData = async (lat, lon) => {
     const { nx, ny } = convertToGrid(lat, lon); // 좌표 변환
-    const API_KEY = import.meta.env.VITE_WEATHER_API_KEY; // 기상청 API 키
+    const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
     const url = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'; // 기상청 초단기예보 API URL
 
     const today = new Date();
@@ -169,17 +171,17 @@ function Weather() {
 
   // 어제의 날씨 데이터를 받아오는 함수 (단기예보 API)
   const fetchYesterdayWeatherData = async (lat, lon) => {
-    const { nx, ny } = convertToGrid(lat, lon); // 좌표 변환
-    const API_KEY = import.meta.env.VITE_WEATHER_API_KEY; // 기상청 API 키
+    const { nx, ny } = convertToGrid(lat, lon);
+    const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
     const url = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst'; // 기상청 단기예보 API URL
 
     const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1); // 어제 날짜로 설정
+    yesterday.setDate(yesterday.getDate() - 1);
     const year = yesterday.getFullYear();
     const month = String(yesterday.getMonth() + 1).padStart(2, '0');
     const day = String(yesterday.getDate()).padStart(2, '0');
     const baseDate = `${year}${month}${day}`;
-    const baseTime = '0500'; // 기상청 단기예보 기준 시간
+    const baseTime = '0500';
 
     const params = {
       serviceKey: API_KEY,
@@ -194,7 +196,7 @@ function Weather() {
 
     try {
       const response = await axios.get(url, { params });
-      console.log('Yesterday Weather API Response:', response.data); // 어제의 데이터 확인
+      console.log('Yesterday Weather API Response:', response.data);
       if (response.data.response?.body?.items?.item) {
         const data = response.data.response.body.items.item;
         const temperatureData = data.find((item) => item.category === 'TMP');
@@ -206,6 +208,65 @@ function Weather() {
     } catch (error) {
       console.error('Yesterday Weather API Error:', error);
       setError('어제의 날씨 데이터를 불러오는 데 실패했습니다.');
+    }
+  };
+
+  // 24시간 날씨 데이터를 받아오는 함수 (단기예보 API)
+  const fetchHourlyWeatherData = async (lat, lon) => {
+    const { nx, ny } = convertToGrid(lat, lon);
+    const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+    const url = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
+  
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const baseDate = `${year}${month}${day}`;
+    const baseTime = '0500';
+  
+    const params = {
+      serviceKey: API_KEY,
+      numOfRows: 1000,
+      pageNo: 1,
+      dataType: 'JSON',
+      base_date: baseDate,
+      base_time: baseTime,
+      nx,
+      ny,
+    };
+  
+    try {
+      const response = await axios.get(url, { params });
+      if (response.data.response?.body?.items?.item) {
+        const data = response.data.response.body.items.item;
+        const hourlyData = [];
+  
+        const currentHour = new Date().getHours();
+        const filteredData = data.filter(
+          (item) =>
+            (item.category === 'TMP' || item.category === 'SKY' || item.category === 'PTY') &&
+            (parseInt(item.fcstTime, 10) > currentHour || item.fcstDate > baseDate)
+        );
+  
+        // 시간대별 데이터 구성
+        for (let i = 0; i < filteredData.length && hourlyData.length < 24; i += 3) {
+          const tempData = filteredData.find((item) => item.category === 'TMP' && item.fcstTime === filteredData[i].fcstTime);
+          const skyData = filteredData.find((item) => item.category === 'SKY' && item.fcstTime === filteredData[i].fcstTime);
+          const ptyData = filteredData.find((item) => item.category === 'PTY' && item.fcstTime === filteredData[i].fcstTime);
+          const isDayTime = parseInt(tempData.fcstTime, 10) >= 600 && parseInt(tempData.fcstTime, 10) < 1800;
+  
+          hourlyData.push({
+            time: tempData.fcstTime,
+            temperature: tempData.fcstValue,
+            weatherCondition: getWeatherCondition(skyData?.fcstValue, ptyData?.fcstValue, isDayTime),
+          });
+        }
+  
+        setHourlyWeatherData(hourlyData);
+      }
+    } catch (error) {
+      console.error('Hourly Weather API Error:', error);
+      setError('시간별 날씨 데이터를 불러오는 데 실패했습니다.');
     }
   };
 
@@ -237,22 +298,17 @@ function Weather() {
   };
 
   // 날씨 상태를 반환하는 함수
-  const getWeatherCondition = (skyValue, ptyValue) => {
-    if (ptyValue === 1) return '비';
-    if (ptyValue === 2) return '비 또는 눈';
-    if (ptyValue === 3) return '눈';
-    if (ptyValue === 4) return '소나기';
+  const getWeatherCondition = (skyValue, ptyValue, isDayTime) => {
+    if (ptyValue === '1') return '비';
+    if (ptyValue === '2') return '비 또는 눈';
+    if (ptyValue === '3') return '눈';
+    if (ptyValue === '4') return '소나기';
 
-    switch (skyValue) {
-      case '1':
-        return '맑음';
-      case '3':
-        return '구름조금';
-      case '4':
-        return '구름많음';
-      default:
-        return '흐림';
-    }
+    if (skyValue === '1') return isDayTime ? '맑음(낮)' : '맑음(밤)';
+    if (skyValue === '3') return isDayTime ? '구름조금(낮)' : '구름조금(밤)';
+    if (skyValue === '4') return isDayTime ? '구름많음(낮)' : '구름많음(밤)';
+
+    return '흐림';
   };
 
   // 어제와 비교된 기온 출력 함수
@@ -281,17 +337,19 @@ function Weather() {
 
   // 날씨 아이콘을 반환하는 함수
   const getWeatherIcon = (condition) => {
-    if (!condition) {
-      return { src: '/icon/icon-lg-default.png', alt: '날씨 정보 없음' };
-    }
-
     switch (condition) {
-      case '맑음':
-        return { src: '/icon/icon-lg-clear-day.png', alt: '맑음' };
-      case '구름조금':
-        return { src: '/icon/icon-lg-cloud-little-day.png', alt: '구름조금' };
-      case '구름많음':
-        return { src: '/icon/icon-lg-cloud-lot-day.png', alt: '구름많음' };
+      case '맑음(낮)':
+        return { src: '/icon/icon-lg-clear-day.png', alt: '맑음(낮)' };
+      case '맑음(밤)':
+        return { src: '/icon/icon-lg-clear-night.png', alt: '맑음(밤)' };
+      case '구름조금(낮)':
+        return { src: '/icon/icon-lg-cloud-little-day.png', alt: '구름조금(낮)' };
+      case '구름조금(밤)':
+        return { src: '/icon/icon-lg-cloud-little-night.png', alt: '구름조금(밤)' };
+      case '구름많음(낮)':
+        return { src: '/icon/icon-lg-cloud-lot-day.png', alt: '구름많음(낮)' };
+      case '구름많음(밤)':
+        return { src: '/icon/icon-lg-cloud-lot-night.png', alt: '구름많음(밤)' };
       case '흐림':
         return { src: '/icon/icon-lg-cloudy.png', alt: '흐림' };
       case '비':
@@ -347,9 +405,9 @@ function Weather() {
       {/* 시간대별 날씨 정보 */}
       <div className={styles.hourlyWeather}>
         <ul>
-          {weatherData && weatherData.map((item, index) => (
+          {hourlyWeatherData && hourlyWeatherData.map((item, index) => (
             <li key={index} className={styles.hourlyWeatherLi}>
-              <p dangerouslySetInnerHTML={{ __html: formatTime(item.time) }}></p> {/* 시간 변환 */}
+              <p dangerouslySetInnerHTML={{ __html: formatTime(item.time) }}></p>
               <img
                 src={getWeatherIcon(item.weatherCondition).src}
                 alt={getWeatherIcon(item.weatherCondition).alt}
