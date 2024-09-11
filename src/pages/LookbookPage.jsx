@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Button from './../components/Button/Button';
+import styles from './../styles/pages/LookbookPage.module.scss';
 
 import pb from './../api/pocketbase';
 import getPbImageURL from './../api/getPbImageURL';
@@ -11,7 +12,6 @@ import { Pagination, Scrollbar, A11y, Keyboard } from 'swiper/modules';
 import 'swiper/scss';
 import 'swiper/scss/pagination';
 
-import styles from './../styles/pages/LookbookPage.module.scss';
 
 // 아이콘
 import { GoChevronLeft } from 'react-icons/go';
