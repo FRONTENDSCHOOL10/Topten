@@ -297,9 +297,18 @@
 ### 9월 11일
 
 - 황선우
-  - Input 컴포넌트 통합 및 경로 수정
+
+  - Input 컴포넌트
+    - fix: 통합 및 경로 수정
+  - feature/likeList/hsw
+    - 좋아요 리스트 관리 구조 재설계
+      - Git의 관리를 모방하여 좋아요 리스트 관리하도록 재구성함.
+    - init : likeStore.js, useLikeSync.js 재구성
+    - fix : 재구성된 커스텀훅, zustand 상태에 따른 적용 변화
+      - 해당 페이지 : MainPage.jsx, MyPage.jsx, CostumeCardManager.jsx
 
 - 권보령
+
   - router 파일
     - update: 룩북 상세 페이지 경로 추가
     - fix: 룩북 상세 페이지 파일명 수정
@@ -313,5 +322,3 @@
     - style: 룩북 스와이퍼 네비게이션 버튼 스타일링
   - 룩북 상세 페이지
     - update: 룩북 상세 페이지 초기 설정
-
-
