@@ -251,9 +251,25 @@
 - 황선우
 
   - 위로가기 버튼컴포넌트
+
     - 구현 완료
 
+  - feat: 로딩 상태표시 구현
+
+    - Loader.jsx 구현
+
+  - 경로 단순화를 위한 index.js 설정
+
+  - fix: CostumeCardManager 및 연관된 로직 변경
+
+    - CostumeCardManager.jsx : 주석 변경 및 에러 확인용 코드 추가
+    - useLikeSync.js : 좋아요 리스트 동기화 로직수정, 로그아웃 시 동기화 진행하지 않음.
+    - MainPage.jsx : 다른 요소 임시 비활성화. 바꾸고 커밋해야하는데 깜빡해서 이후 커밋에서 바로 바꾸겠음.
+    - likeStore.js: 좋아요 리스트 초기화 메소드 추가
+    - RootLayout.jsx : 동기화 트리거 및 로딩상태 추가
+
 - 권보령
+
   - 룩북 컴포넌트
     - update: 착용샷 관련 상품의 id로 정보 가져오기
     - update: CostumeCardManager 컴포넌트 사용
