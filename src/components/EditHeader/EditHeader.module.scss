@@ -1,0 +1,52 @@
+.editHeader {
+  font-family: Pretendard;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 24px 0;
+
+    .icon {
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      transform: rotate(180deg);
+
+      img {
+        display: block;
+      }
+    }
+
+    .navText {
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: normal;
+    }
+  }
+
+  .mainText {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .description {
+    color: var(--gray-600, #919191);
+    font-family: Pretendard;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 110%;
+    letter-spacing: -0.48px;
+    padding: 12px 0 30px 0;
+  }
+}
+
+// <div className={S.editHeader}>
+// <div>
+//   <span className={S.icon}>아이콘</span>
+//   <h2 className={S.navText}>{navText}</h2>
+// </div>
+// <h1 className={S.mainText}>{mainText}</h1>
+// <p className={S.description}>{description}</p>
+// </div>
