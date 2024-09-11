@@ -1,0 +1,20 @@
+.NavList {
+  /* font-md-light */
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: normal;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--gray-custom-600);
+
+  padding: 24px 0;
+
+  img {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+  }
+}
