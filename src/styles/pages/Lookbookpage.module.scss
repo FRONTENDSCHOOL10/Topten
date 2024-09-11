@@ -1,0 +1,35 @@
+@import './../utils/theme';
+@import './../utils/utils';
+
+.wrapComponent {
+  margin-top: -23px;
+
+  .title {
+    @include font-style(18px, 600, $--black);
+    line-height: 19.8px;
+
+    margin: 30px 0 14px;
+  }
+
+  .weatherIcon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid red; // 임시
+  }
+
+  .description {
+    @include font-style(18px, 300, $--black);
+
+    margin-top: 16px;
+  }
+
+  .outfitSwiper {
+    margin-top: 17px;
+
+    .outfit {
+      width: 238px;
+      height: 355px;
+      border: 1px solid red; // 임시
+    }
+  }
+}
