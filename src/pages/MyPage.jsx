@@ -1,27 +1,38 @@
 import pb from '@/api/pocketbase';
 import { Link } from 'react-router-dom';
-import useLikeStore from '@/stores/likeStore'; // likeList 상태를 초기화하기 위해 import
+import { useLikeSync } from '@/hooks/useLikeSync'; // useLikeSync import
+import { useEffect, useState } from 'react';
 
 pb.authStore.clear = () => {
-  console.log('pb.authStore.clear에서 실행');
   sessionStorage.removeItem('pb_auth');
   localStorage.removeItem('pb_auth');
-  localStorage.removeItem('like-storage'); // like-storage만 로컬 스토리지에서 삭제
 };
 
-function MyPage(props) {
-  const { resetLikeList } = useLikeStore(); // likeList 초기화 메서드
+function MyPage() {
+  const [userId, setUserId] = useState(null); // userId 상태 추가
 
-  const logout = () => {
-    alert('로그아웃되었습니다.');
-    pb.authStore.clear(); // 로컬 스토리지에서만 pb_auth 삭제
-    resetLikeList(); // Zustand의 likeList 상태 초기화
+  // 로그인된 사용자 정보 가져오기
+  useEffect(() => {
+    const authData = sessionStorage.getItem('pb_auth') || localStorage.getItem('pb_auth');
+    if (authData) {
+      const parsedAuth = JSON.parse(authData);
+      if (parsedAuth && parsedAuth.token) {
+        setUserId(parsedAuth.token.id); // userId 설정
+      }
+    }
+  }, []);
+
+  const { syncLikeLocalToOriginAndServer } = useLikeSync(userId); // userId 전달
+
+  const logout = async () => {
+    await syncLikeLocalToOriginAndServer(); // 로그아웃 시 서버에 like-origin 업데이트
+    console.log('syncLikeL어쩌구 마이페이지에서 실행 완료');
+    pb.authStore.clear(); // 로그아웃 시 스토리지에서 pb_auth 삭제
   };
 
   return (
     <>
       <div className="wrapComponent">
-        마이
         <Link to="/">
           <button type="button" onClick={logout}>
             로그아웃
