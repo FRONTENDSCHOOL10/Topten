@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Button from './../components/Button/Button';
-import styles from './../styles/pages/LookbookPage.module.scss';
+import styles from './../styles/pages/Lookbookpage.module.scss';
 
 import pb from './../api/pocketbase';
 import getPbImageURL from './../api/getPbImageURL';
