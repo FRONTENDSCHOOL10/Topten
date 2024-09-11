@@ -49,37 +49,46 @@ function LookbookPage(props) {
       </p>
 
       <div className={styles.outfitSwiper}>
-        <div className={styles.outfit}>
-          <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y]}
-            spaceBetween={20}
-            slidesPerView={1.2}
-            navigation
-            pagination={{ clickable: true }}
-            width={100}
-            style={{
-              "--swiper-pagination-color": "#990000",
-              "--swiper-navigation-color": "#55EE00",
-            }}
-            // onSlideChange={() => console.log('slide change')}
-            // onSwiper={(swiper) => console.log(swiper)}
-          >
-            {lookBookItems.length > 0 ? (
-              lookBookItems.map((item) => (
-                <SwiperSlide key={item.id}>
-                  <img
-                    src={getPbImageURL(item, 'outfitImage')}
-                    alt={item.lookBookTitle}
-                    className={styles.outfitImage}
-                  />
-                  <p className={styles.itemTitle}>{item.lookBookTitle}</p>
-                </SwiperSlide>
-              ))
-            ) : (
-              <SwiperSlide>계절에 맞는 착용샷이 없습니다.</SwiperSlide>
-            )}
-          </Swiper>
-        </div>
+        <Swiper
+          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          spaceBetween={20}
+          slidesPerView={1.2}
+          navigation
+          pagination={{ clickable: true }}
+          width={280}
+          height={200}
+          style={{
+            '--swiper-navigation-size': '30px',
+            '--swiper-navigation-top-offset': '10px',
+            '--swiper-navigation-sides-offset': '10px',
+            '--swiper-navigation-color': '#000',
+
+            // 페이지
+            '--swiper-pagination-progressbar-size': '80px',
+            '--swiper-pagination-progressbar-size': '40px',
+
+            '--swiper-pagination-bullet-width': '7px',
+            '--swiper-pagination-bullet-height': '7px',
+            '--swiper-pagination-bottom': '3px',
+            '--swiper-pagination-color': '#000',
+          }}
+          // onSlideChange={() => console.log('slide change')}
+          // onSwiper={(swiper) => console.log(swiper)}
+        >
+          {lookBookItems.length > 0 ? (
+            lookBookItems.map((item) => (
+              <SwiperSlide key={item.id}>
+                <img
+                  src={getPbImageURL(item, 'outfitImage')}
+                  alt={item.lookBookTitle}
+                  className={styles.outfitImage}
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide>계절에 맞는 착용샷이 없습니다.</SwiperSlide>
+          )}
+        </Swiper>
       </div>
     </div>
   );
