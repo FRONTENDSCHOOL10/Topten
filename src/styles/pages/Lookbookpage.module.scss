@@ -26,10 +26,51 @@
   .outfitSwiper {
     margin-top: 17px;
 
-    .outfit {
+    width: 280px; // 임시
+    border: 1px solid rgb(160, 24, 181); // 임시
+
+    .outfitImage {
       width: 238px;
       height: 355px;
       border: 1px solid red; // 임시
+
+      object-fit: cover;
     }
   }
+}
+
+/* Swiper 기본 스타일 변수 */
+.swiper {
+  --swiper-navigation-size: 30px;
+  --swiper-navigation-top-offset: 5px;
+  --swiper-navigation-sides-offset: 10px;
+  --swiper-navigation-color: #000;
+
+  /* 페이지 네이션 스타일 */
+  --swiper-pagination-bullet-width: 7px;
+  --swiper-pagination-bullet-height: 7px;
+  --swiper-pagination-bottom: 3px;
+  --swiper-pagination-color: #000;
+}
+
+/* 네비게이션 */
+.swiper-button-next,
+.swiper-button-prev {
+  width: var(--swiper-navigation-size);
+  height: var(--swiper-navigation-size);
+  color: var(--swiper-navigation-color);
+  top: var(--swiper-navigation-top-offset);
+  transform: translateX(var(--swiper-navigation-sides-offset));
+  z-index: 1004;
+}
+
+/* 페이지네이션 */
+.swiper-pagination {
+  bottom: var(--swiper-pagination-bottom);
+}
+
+.swiper-pagination-bullet {
+  width: var(--swiper-pagination-bullet-width);
+  height: var(--swiper-pagination-bullet-height);
+  background-color: var(--swiper-pagination-color);
 }

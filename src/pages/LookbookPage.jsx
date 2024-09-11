@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import Button from './../components/Button/Button';
-import styles from './../styles/pages/LookbookPage.module.scss';
+
 import pb from './../api/pocketbase';
 import getPbImageURL from './../api/getPbImageURL';
 
 // 스와이퍼
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Navigation, Pagination, Scrollbar, A11y, Keyboard } from 'swiper/modules';
 
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import 'swiper/scss/pagination';
+
+import styles from './../styles/pages/LookbookPage.module.scss';
 
 function LookbookPage(props) {
   // 착용샷
@@ -50,27 +52,17 @@ function LookbookPage(props) {
 
       <div className={styles.outfitSwiper}>
         <Swiper
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          className={styles.swiper}
+          modules={[Navigation, Pagination, Scrollbar, A11y, Keyboard]}
           spaceBetween={20}
           slidesPerView={1.2}
+          keyboard={{ enabled: true }}
           navigation
           pagination={{ clickable: true }}
-          width={280}
-          height={200}
-          style={{
-            '--swiper-navigation-size': '30px',
-            '--swiper-navigation-top-offset': '10px',
-            '--swiper-navigation-sides-offset': '10px',
-            '--swiper-navigation-color': '#000',
-
-            // 페이지
-            '--swiper-pagination-progressbar-size': '80px',
-            '--swiper-pagination-progressbar-size': '40px',
-
-            '--swiper-pagination-bullet-width': '7px',
-            '--swiper-pagination-bullet-height': '7px',
-            '--swiper-pagination-bottom': '3px',
-            '--swiper-pagination-color': '#000',
+          a11y={{
+            prevSlideMessage: '이전 슬라이드',
+            nextSlideMessage: '다음 슬라이드',
+            paginationBulletMessage: '페이지 {{index}}',
           }}
           // onSlideChange={() => console.log('slide change')}
           // onSwiper={(swiper) => console.log(swiper)}
