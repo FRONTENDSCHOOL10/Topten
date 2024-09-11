@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Button from './../components/Button/Button';
 import styles from './../styles/pages/Lookbookpage.module.scss';
+import { useNavigate } from 'react-router-dom'; //
 
 import pb from './../api/pocketbase';
 import getPbImageURL from './../api/getPbImageURL';
@@ -53,6 +54,14 @@ function LookbookPage(props) {
     swiperRef.current.swiper.slidePrev();
   };
 
+  // 착용샷 클릭 시 상세 페이지 이동 -------------------
+  const navigate = useNavigate();
+
+  const handleImageClick = (itemId) => {
+    navigate('/lookbookdetailpage');
+  };
+
+
   return (
     <div className={styles.wrapComponent}>
       <h2 className={styles.title}>Look Book : OOTD</h2>
@@ -90,8 +99,6 @@ function LookbookPage(props) {
             paginationBulletMessage: '페이지 {{index}}',
           }}
           ref={swiperRef}
-          // onSlideChange={() => console.log('slide change')}
-          // onSwiper={(swiper) => console.log(swiper)}
         >
           {lookBookItems.length > 0 ? (
             lookBookItems.map((item) => (
@@ -100,6 +107,7 @@ function LookbookPage(props) {
                   src={getPbImageURL(item, 'outfitImage')}
                   alt={item.lookBookTitle}
                   className={styles.outfitImage}
+                  onClick={() => handleImageClick(item.id)}
                 />
               </SwiperSlide>
             ))
