@@ -25,7 +25,7 @@ const RootLayout = ({ user }) => {
   return (
     <>
       {!hideHeaderAndNav && <Header />}
-      <main style={{ paddingBottom: hideHeaderAndNav ? '0' : '60px' }}>
+      <main>
         {state === 'loading' ? (
           <div>
             <Loader />
