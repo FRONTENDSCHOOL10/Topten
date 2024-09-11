@@ -305,7 +305,7 @@
       - Git의 관리를 모방하여 좋아요 리스트 관리하도록 재구성함.
     - init : likeStore.js, useLikeSync.js 재구성
     - fix : 재구성된 커스텀훅, zustand 상태에 따른 적용 변화
-      - 해당 페이지 : MainPage.jsx, MyPage.jsx, CostumeCardManager.jsx
+      - 해당 페이지 : MainPage.jsx, MyPage.jsx, CostumeCardManager.jsx, RootLayout.jsx
 
 - 권보령
 
