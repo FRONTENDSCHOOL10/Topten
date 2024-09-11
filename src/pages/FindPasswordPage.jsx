@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import Input from '@/components/Input/Input_kbr';
-import Button from './../components/Button/Button';
+import { Input, Button, Form } from '@/components';
 import styles from './../styles/pages/FindPasswordPage.module.scss';
-import Form from './../components/Form/Form';
 import pb from './../api/pocketbase';
 import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
@@ -166,11 +164,7 @@ function FindPasswordPage(props) {
 
         {isEmailVerified && (
           <div className={styles.successMessage}>
-            <Button
-              text="로그인 하러 가기"
-              type='button'
-              linkTo="/login"
-            />
+            <Button text="로그인 하러 가기" type="button" linkTo="/login" />
           </div>
         )}
       </div>
