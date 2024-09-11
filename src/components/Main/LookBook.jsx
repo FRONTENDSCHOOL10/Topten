@@ -5,7 +5,7 @@ import getPbImageURL from './../../api/getPbImageURL';
 import CostumeCardManager from '@/components/CostumeCardManager/CostumeCardManager';
 import Button from './../Button/Button';
 
-function LookBook() {
+function LookBook({ item }) {
   // CostumeCard 컴포넌트의 좋아요 기능 --------------------
   const [likeList, setLikeList] = useState([]);
 
@@ -24,51 +24,74 @@ function LookBook() {
   const [relatedItems, setRelatedItems] = useState([]);
 
   useEffect(() => {
-    const fetchLookBookItems = async () => {
-      try {
-        const items = await pb.collection('lookBook').getFullList();
+    // 룩북 상세 페이지에서 룩북
+    if (item) {
+      // 저장된(클릭한) 착용샷을 착용샷 state로 저장
+      setLookBookItems(item);
 
-        // 임시!!! ----------------------------------
-        const weather = '가을';
+      const fetchRelatedItems = async () => {
+        try {
+          const allCostumeCards = await pb.collection('costumeCard').getFullList();
 
-        // 계절에 맞는 아이템 필터링
-        const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather));
+          // 저장된(클릭한) 착용샷 관련 상품 저장
+          const costumeCardIds = item.items || [];
 
-        console.log(seasonItems);
+          const filteredItems = allCostumeCards.filter((card) => costumeCardIds.includes(card.id));
 
-        // 해당 계절 중 랜덤으로 하나 선택
-        if (seasonItems.length > 0) {
-          const randomItem = seasonItems[Math.floor(Math.random() * seasonItems.length)];
-
-          setLookBookItems(randomItem);
-
-          console.log('선택된 착용샷:', randomItem);
-
-          // 착장샷의 items 배열을 관련 상품으로 설정
-          if (randomItem.items && randomItem.items.length > 0) {
-            const allCostumeCards = await pb.collection('costumeCard').getFullList();
-
-            const costumeCardIds = randomItem.items;
-
-            const filteredItems = allCostumeCards.filter((card) =>
-              costumeCardIds.includes(card.id)
-            );
-
-            setRelatedItems(filteredItems);
-          } else {
-            // 관련 상품이 없을 때
-            setRelatedItems([]);
-          }
-        } else {
-          console.log('해당 계절에 맞는 아이템이 없습니다.');
+          setRelatedItems(filteredItems);
+        } catch (error) {
+          console.error('관련 상품 데이터를 가져오는 중 에러 발생:', error);
         }
-      } catch (error) {
-        console.error('LookBook 데이터를 가져오는 중 에러 발생:', error);
-      }
-    };
+      };
 
-    fetchLookBookItems();
-  }, []);
+      fetchRelatedItems();
+      
+    } else {
+      // 메인 페이지 룩북
+      const fetchLookBookItems = async () => {
+        try {
+          const items = await pb.collection('lookBook').getFullList();
+
+          // 임시!!! ----------------------------------
+          const weather = '가을';
+
+          // 계절에 맞는 아이템 필터링
+          const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather));
+
+          console.log(seasonItems);
+
+          // 해당 계절 중 랜덤으로 하나 선택
+          if (seasonItems.length > 0) {
+            const randomItem = seasonItems[Math.floor(Math.random() * seasonItems.length)];
+
+            setLookBookItems(randomItem);
+
+            console.log('선택된 착용샷:', randomItem);
+
+            // 착장샷의 items 배열을 관련 상품으로 설정
+            if (randomItem.items && randomItem.items.length > 0) {
+              const allCostumeCards = await pb.collection('costumeCard').getFullList();
+
+              const costumeCardIds = randomItem.items;
+
+              const filteredItems = allCostumeCards.filter((card) =>
+                costumeCardIds.includes(card.id)
+              );
+
+              setRelatedItems(filteredItems);
+            } else {
+              // 관련 상품이 없을 때
+              setRelatedItems([]);
+            }
+          }
+        } catch (error) {
+          console.error('LookBook 데이터를 가져오는 중 에러 발생:', error);
+        }
+      };
+
+      fetchLookBookItems();
+    }
+  }, [item]);
 
   return (
     <div className={styles.container}>
