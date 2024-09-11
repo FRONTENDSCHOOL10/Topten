@@ -306,6 +306,8 @@
     - init : likeStore.js, useLikeSync.js 재구성
     - fix : 재구성된 커스텀훅, zustand 상태에 따른 적용 변화
       - 해당 페이지 : MainPage.jsx, MyPage.jsx, CostumeCardManager.jsx, RootLayout.jsx
+  - PR템플릿 수정
+
 
 - 권보령
 
