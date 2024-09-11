@@ -1,0 +1,88 @@
+@import './../utils/theme';
+@import './../utils/utils';
+
+.wrapComponent {
+  margin-top: -23px;
+
+  .title {
+    @include font-style(18px, 600, $--black);
+    line-height: 19.8px;
+
+    margin: 30px 0 14px;
+  }
+
+  .weatherIcon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid red; // 임시
+  }
+
+  .subTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+
+    // border: 1px solid rgb(63, 26, 227); // 임시
+
+    .description {
+      @include font-style(18px, 300, $--black);
+
+      width: 242px;
+      margin-top: 16px;
+
+      // border: 1px solid rgb(63, 26, 227); // 임시
+    }
+
+    .swiperBtn {
+      display: flex;
+      flex-direction: row;
+
+      width: 43px;
+      height: 18px;
+
+      // border: 1px solid red; // 임시
+
+      .goPrev,
+      .goNext {
+        all: unset;
+      }
+      .goPrev {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .outfitSwiper {
+    width: 280px;
+    
+    margin-top: 17px;
+
+
+    border: 1px solid rgb(160, 24, 181); // 임시
+
+    .swiper {
+      --swiper-pagination-bullet-width: 7px;
+      --swiper-pagination-bullet-height: 7px;
+      --swiper-pagination-bottom: 3px;
+      --swiper-pagination-color: #000;
+
+      .swiper-pagination {
+        bottom: var(--swiper-pagination-bottom);
+      }
+
+      .swiper-pagination-bullet {
+        width: var(--swiper-pagination-bullet-width);
+        height: var(--swiper-pagination-bullet-height);
+        background-color: var(--swiper-pagination-color);
+      }
+    }
+
+    .outfitImage {
+      width: 238px;
+      height: 355px;
+      border: 1px solid red; // 임시
+
+      object-fit: cover;
+    }
+  }
+}

@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage'; // Static import for now
 import FindPasswordPage from './pages/FindPasswordPage'; // Static import for now
 import MainPage from './pages/MainPage'; // Static import for now
 import LookbookPage from './pages/LookbookPage'; // Static import for now
+import LookBookDetailPage from './pages/LookBookDetailPage'; // Static import for now
 import CalendarPage from './pages/CalendarPage'; // Static import for now
 import LikedPage from './pages/LikedPage'; // Static import for now
 import MyPage from './pages/MyPage'; // Static import for now
@@ -46,6 +47,12 @@ const navigation = [
     text: '룩북페이지',
     path: '/lookbook',
     element: <LookbookPage />, // Static component for now
+    // lazy: () => import('./pages/LookbookPage'),
+  },
+  {
+    text: '룩북상세페이지',
+    path: '/lookbookdetailpage',
+    element: <LookBookDetailPage />, // Static component for now
     // lazy: () => import('./pages/LookbookPage'),
   },
   {
