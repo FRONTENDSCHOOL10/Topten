@@ -7,7 +7,7 @@ import RegisterPage from './pages/RegisterPage'; // Static import for now
 import FindPasswordPage from './pages/FindPasswordPage'; // Static import for now
 import MainPage from './pages/MainPage'; // Static import for now
 import LookbookPage from './pages/LookbookPage'; // Static import for now
-import LookBookDetailPage from './pages/LookbookDetailPage'; // Static import for now
+import LookBookDetailPage from './pages/LookBookDetailPage'; // Static import for now
 import CalendarPage from './pages/CalendarPage'; // Static import for now
 import LikedPage from './pages/LikedPage'; // Static import for now
 import MyPage from './pages/MyPage'; // Static import for now
