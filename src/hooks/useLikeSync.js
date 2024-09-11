@@ -1,10 +1,10 @@
-import { useCallback } from 'react';
+import { useEffect } from 'react';
 import pb from '@/api/pocketbase';
 
 export const useLikeSync = (userId, likeList) => {
-  const syncLikesToServer = useCallback(async () => {
+  const syncLikesToServer = async () => {
     if (!userId) {
-      console.log('·Î±×ÀÎÇÏÁö ¾ÊÀº »óÅÂ·Î ¼­¹ö µ¿±âÈ­´Â ÁøÇàÇÏÁö ¾Ê½À´Ï´Ù.');
+      console.log('ë¡œê·¸ì¸í•˜ì§€ ì•Šì€ ìƒíƒœë¡œ ì„œë²„ ë™ê¸°í™”ëŠ” ì§„í–‰í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.');
       return;
     }
 
@@ -18,18 +18,25 @@ export const useLikeSync = (userId, likeList) => {
           owner: userId,
           costumeCard: likeList,
         });
-        console.log('likeList°¡ ¼º°øÀûÀ¸·Î ¾÷µ¥ÀÌÆ®µÇ¾ú½À´Ï´Ù.');
+        console.log('likeListê°€ ì„±ê³µì ìœ¼ë¡œ ì—…ë°ì´íŠ¸ë˜ì—ˆìŠµë‹ˆë‹¤.');
       } else {
         await pb.collection('likeList').create({
           owner: userId,
           costumeCard: likeList,
         });
-        console.log('»õ·Î¿î likeList°¡ »ı¼ºµÇ¾ú½À´Ï´Ù.');
+        console.log('ìƒˆë¡œìš´ likeListê°€ ìƒì„±ë˜ì—ˆìŠµë‹ˆë‹¤.');
       }
     } catch (error) {
-      console.error('likeList µ¿±âÈ­¿¡ ½ÇÆĞÇß½À´Ï´Ù:', error);
+      console.error('likeList ë™ê¸°í™”ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤:', error);
     }
-  }, [userId, likeList]);
+  };
+
+  // í˜ì´ì§€ ì´ë™ ì‹œ ë™ê¸°í™” ì‹¤í–‰
+  useEffect(() => {
+    if (!userId || userId === 'LOGOUT') return; // ë¡œê·¸ì•„ì›ƒ ì‹œ ë™ê¸°í™”í•˜ì§€ ì•ŠìŒ
+
+    syncLikesToServer(); // ì¦‰ì‹œ ë™ê¸°í™” ì‹¤í–‰
+  }, [likeList, userId]);
 
   return { syncLikesToServer };
 };

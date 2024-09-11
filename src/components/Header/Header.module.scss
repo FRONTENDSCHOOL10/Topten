@@ -3,6 +3,9 @@
   position: fixed;
   background-color: black; // 배경색을 검은색으로 설정
   z-index: 1000;
+
+  top: 0;
+  left: 0;
 }
 
 .header {
