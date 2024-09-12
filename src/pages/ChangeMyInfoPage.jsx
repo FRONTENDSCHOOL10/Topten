@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import EditHeader from '../components/EditHeader/EditHeader';
-import S from './../styles/pages/ChangePage.module.scss';
+import S from './../styles/pages/changePage.module.scss';
 import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
