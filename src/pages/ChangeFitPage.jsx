@@ -39,7 +39,9 @@ const ChangeFitPage = () => {
       <div className={S.select__container}>
         <Select name="bottomSize" text="하의 사이즈" items={SIZE} onChange={handleChange} />
       </div>
-      <Button text="변경하기" onClick={handleClick} />
+      <div className={S.button__container}>
+        <Button text="변경하기" onClick={handleClick} />
+      </div>
     </div>
   );
 };

@@ -34,7 +34,9 @@ const ChangeMyInfoPage = () => {
         description="닉네임 등 회원정보를 변경할 수 있어요"
       />
       <Input text="닉네임" onChange={handleChange} />
-      <Button text="회원정보 변경" onClick={handleClick} />
+      <div className={S.button__container}>
+        <Button text="회원정보 변경" onClick={handleClick} />
+      </div>
       <Toaster />
     </div>
   );

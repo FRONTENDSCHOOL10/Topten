@@ -33,7 +33,9 @@ const ChangeColorPage = () => {
         description="퍼스널컬러에 맞는 옷으로 추천해드릴게요 언젠가는.."
       />
       <Select name="userColor" text="퍼스널 컬러" items={COLORS} onChange={handleChange} />
-      <Button text="변경하기" onClick={handleClick} />
+      <div className={S.button__container}>
+        <Button text="변경하기" onClick={handleClick} />
+      </div>
     </div>
   );
 };
