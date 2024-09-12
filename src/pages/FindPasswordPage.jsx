@@ -118,7 +118,7 @@ function FindPasswordPage(props) {
     <>
       <Helmet>
         <title>비밀번호 찾기 | StyleCast - 나만의 스타일 캐스트</title>
-        <meta name="description" content="Stylecast의 introPage" />
+        <meta name="description" content="Stylecast의 비밀번호 찾기 페이지" />
         <meta property="og:title" content="StyleCast - 비밀번호 찾기" />
         <meta property="twitter:title" content="StyleCast - 비밀번호 찾기" />
         <meta property="og:type" content="site" />
