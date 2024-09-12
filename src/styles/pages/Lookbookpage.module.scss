@@ -4,17 +4,31 @@
 .wrapComponent {
   margin-top: -23px;
 
-  .title {
-    @include font-style(18px, 600, $--black);
-    line-height: 19.8px;
+  .topWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-    margin: 30px 0 14px;
+    .title {
+      @include font-style(18px, 600, $--black);
+      line-height: 19.8px;
+
+      margin: 30px 0 14px;
+    }
+
+    .refreshBtn {
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      border: 1px solid #e5e5e5;
+      
+      margin: 30px 0 0 95px;
+    }
   }
 
   .weatherIcon {
     width: 40px;
     height: 40px;
-    // border: 1px solid red; // 임시
   }
 
   .subTitle {
@@ -22,15 +36,11 @@
     flex-direction: row;
     align-items: end;
 
-    // border: 1px solid rgb(63, 26, 227); // 임시
-
     .description {
       @include font-style(18px, 300, $--black);
 
       width: 242px;
       margin-top: 16px;
-
-      // border: 1px solid rgb(63, 26, 227); // 임시
     }
 
     .swiperBtn {
@@ -39,8 +49,6 @@
 
       width: 43px;
       height: 18px;
-
-      // border: 1px solid red; // 임시
 
       .goPrev,
       .goNext {
@@ -54,11 +62,8 @@
 
   .outfitSwiper {
     width: 280px;
-    
+
     margin-top: 17px;
-
-
-    // border: 1px solid rgb(160, 24, 181); // 임시
 
     .swiper {
       --swiper-pagination-bullet-width: 7px;
@@ -80,7 +85,6 @@
     .outfitImage {
       width: 238px;
       height: 355px;
-      // border: 1px solid red; // 임시
 
       object-fit: cover;
     }

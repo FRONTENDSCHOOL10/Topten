@@ -33,3 +33,12 @@ export const INITCHECKED = {
   1: false,
   2: false,
 };
+
+export const NAV = [
+  { text: '나의 체형', path: '/changefit' },
+  { text: '나의 퍼스널 컬러', path: '/changecolor' },
+  { text: '회원정보 변경', path: '/changeinfo' },
+  { text: '비밀번호 변경', path: '/changepassword' },
+  { text: '고객센터', path: '/cs' },
+  { text: '로그아웃', path: '/cs' },
+];

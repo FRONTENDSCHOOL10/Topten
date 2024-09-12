@@ -1,4 +1,43 @@
 @import './../utils/theme';
 @import './../utils/utils';
 
+.wrapComponent {
+  margin-top: -23px;
 
+  .topWrapper {
+    display: flex;
+    align-items: center;
+
+    .goPrev {
+      all: unset;
+      height: 18px;
+      margin: 14px 9px 0 0;
+    }
+
+    .title {
+      @include font-style(18px, 600, $--black);
+      line-height: 19.8px;
+
+      margin: 30px 0 14px;
+    }
+  }
+
+  .weatherIcon {
+    width: 40px;
+    height: 40px;
+
+    border: 1px solid red; // 임시
+  }
+
+  .subTitle {
+    .description {
+      @include font-style(18px, 300, $--black);
+
+      width: 242px;
+      margin-top: 16px;
+    }
+  }
+  .product {
+    margin: -38px 0 -30px;
+  }
+}
