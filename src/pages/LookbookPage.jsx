@@ -1,39 +1,32 @@
 import { useState, useEffect, useRef } from 'react';
 import Button from './../components/Button/Button';
 import styles from './../styles/pages/Lookbookpage.module.scss';
-
+import { useNavigate } from 'react-router-dom';
 import pb from './../api/pocketbase';
 import getPbImageURL from './../api/getPbImageURL';
-
-// 스와이퍼
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Scrollbar, A11y, Keyboard } from 'swiper/modules';
-
 import 'swiper/scss';
 import 'swiper/scss/pagination';
-
-
-// 아이콘
-import { GoChevronLeft } from 'react-icons/go';
-import { GoChevronRight } from 'react-icons/go';
+import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 
 function LookbookPage(props) {
-  // 착용샷 -----------------------
   const [lookBookItems, setLookBookItems] = useState([]);
+  const swiperRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLookBookItems = async () => {
       try {
+        // 착용샷 가져오기 --------------------------
         const items = await pb.collection('lookBook').getFullList();
 
-        // 임시
-        const weather = '가을';
+        const weather = '여름';
 
-        // 계절에 맞는 아이템 필터링
         const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather));
 
-        // 필터링된 아이템들을 상태에 저장
         setLookBookItems(seasonItems);
+
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -42,9 +35,8 @@ function LookbookPage(props) {
     fetchLookBookItems();
   }, []);
 
-  // 착용샷 슬라이드 버튼 -----------------------
-  const swiperRef = useRef(null);
-
+  
+  // 스와이퍼 네비게이션 버튼 -----------------------
   const goNext = () => {
     swiperRef.current.swiper.slideNext();
   };
@@ -52,6 +44,15 @@ function LookbookPage(props) {
   const goPrev = () => {
     swiperRef.current.swiper.slidePrev();
   };
+
+
+  // 착용샷 클릭 시 로컬에 저장 & 상세 페이지 이동 ------
+  const handleImageClick = (item) => {
+    localStorage.setItem('selectedItemId', item.id);
+
+    navigate('/lookbookdetailpage');
+  };
+
 
   return (
     <div className={styles.wrapComponent}>
@@ -90,8 +91,6 @@ function LookbookPage(props) {
             paginationBulletMessage: '페이지 {{index}}',
           }}
           ref={swiperRef}
-          // onSlideChange={() => console.log('slide change')}
-          // onSwiper={(swiper) => console.log(swiper)}
         >
           {lookBookItems.length > 0 ? (
             lookBookItems.map((item) => (
@@ -100,6 +99,7 @@ function LookbookPage(props) {
                   src={getPbImageURL(item, 'outfitImage')}
                   alt={item.lookBookTitle}
                   className={styles.outfitImage}
+                  onClick={() => handleImageClick(item)}
                 />
               </SwiperSlide>
             ))
