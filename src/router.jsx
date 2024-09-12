@@ -55,7 +55,6 @@ const navigation = [
     // lazy: () => import('./pages/LookbookPage'),
     // children: [],
   },
-
   {
     text: '룩북상세페이지',
     path: '/lookbookdetailpage',
