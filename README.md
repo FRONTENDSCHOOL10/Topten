@@ -354,3 +354,4 @@
     - svg파일 삭제
     - 라우터 수정
     - Test.md 삭제
+    - eslint.config.js 파일 수정(야무쌤 코드 제공받음)
