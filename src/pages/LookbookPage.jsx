@@ -12,14 +12,29 @@ import 'swiper/scss/pagination';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { IoRefreshSharp } from 'react-icons/io5';
 
-function LookbookPage(props) {
-  const [lookBookItems, setLookBookItems] = useState([]);
-  const swiperRef = useRef(null);
+function LookbookPage() {
   const navigate = useNavigate();
+  const swiperRef = useRef(null);
+
+  // 전체 착용샷
+  const [lookBookItems, setLookBookItems] = useState([]);
+
+  // 현재 착용샷
+  const [currentSeasonItems, setCurrentSeasonItems] = useState([]);
 
   useEffect(() => {
     const fetchLookBookItems = async () => {
       try {
+        // 세션에서 상태 복원 ----------------------
+        // - 상세 페이지에서 돌아올 시 착용샷 유지
+        const savedLookBookItems = sessionStorage.getItem('lookBookItems');
+
+        if (savedLookBookItems) {
+          setLookBookItems(JSON.parse(savedLookBookItems));
+
+          return;
+        }
+
         // 착용샷 가져오기 --------------------------
         const items = await pb.collection('lookBook').getFullList();
 
@@ -28,16 +43,27 @@ function LookbookPage(props) {
         // 계절용 룩북 (2개)
         const seasonItems = items
           .filter((item) => item.lookBookSeason.includes(weather))
-          .slice(0, 2);
+          .sort(() => 0.5 - Math.random()).slice(0, 2);
 
-        // 범용(사계절) 룩북 (3개)
-        const allSeasonItems = items.filter((item) =>
-          ['봄', '여름', '가을', '겨울'].every((season) => item.lookBookSeason.includes(season))
+        // 범용 룩북 (3개)
+        const allSeasonItems = items
+          .filter((item) => item.lookBookSeason.includes('범용'))
+          .sort(() => 0.5 - Math.random()).slice(0, 3);
+
+
+        // 현재 착용샷 - 업데이트 
+        setCurrentSeasonItems({ seasonItems, allSeasonItems });
+
+        // 전체 챡용샷 - 업데이트
+        setLookBookItems([...seasonItems, ...allSeasonItems]);
+
+
+        // 전체 착용샷 - 세션에 저장 --------------------------
+        sessionStorage.setItem(
+          'lookBookItems',
+          JSON.stringify([...seasonItems, ...allSeasonItems])
         );
 
-        const combinedItems = [...seasonItems, ...allSeasonItems];
-
-        setLookBookItems(combinedItems);
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -63,8 +89,44 @@ function LookbookPage(props) {
   };
 
   // 새로고침 기능 -----------------------------
-  const handleRefresh = {
-    // 새로고침
+  const handleRefresh = async () => {
+    try {
+      const items = await pb.collection('lookBook').getFullList();
+
+      const weather = '가을';
+
+      // 현재 착용샷의 id 배열로 만듦(중복 방지)
+      const currentSeasonItemIds = lookBookItems.map(item => item.id);
+
+
+      // 계절용 - 새로운 아이템(중복 X)
+      const newSeasonItems = items
+        .filter(item => item.lookBookSeason.includes(weather) && !currentSeasonItemIds.includes(item.id))
+        .sort(() => 0.5 - Math.random()).slice(0, 2);
+
+      // 범용 - 새로운 아이템(중복 X)
+      const newAllSeasonItems = items
+        .filter(item => item.lookBookSeason.includes('범용') && !currentSeasonItemIds.includes(item.id))
+        .sort(() => 0.5 - Math.random()).slice(0, 3);
+
+
+      // 새로운 착용샷(계절용 + 범용)
+      const newLookBookItems = [...newSeasonItems, ...newAllSeasonItems];
+
+      setLookBookItems(newLookBookItems);
+
+      
+      // 새로운 착용샷 세션에 저장
+      sessionStorage.setItem('lookBookItems', JSON.stringify(newLookBookItems));
+
+
+      if (swiperRef.current && swiperRef.current.swiper) {
+        swiperRef.current.swiper.slideTo(0);
+      }
+
+    } catch (error) {
+      console.error('새로고침 중 에러 발생:', error);
+    }
   };
 
   return (
@@ -83,24 +145,23 @@ function LookbookPage(props) {
 
       <div className={styles.wrapComponent}>
         <div className={styles.topWrapper}>
+          <h2 className={styles.title}>Look Book : OOTD</h2>
 
-        <h2 className={styles.title}>Look Book : OOTD</h2>
-
-        <div className={styles.refreshBtn}>
-          <Button
-            icon={<IoRefreshSharp />}
-            active={true}
-            onClick={handleRefresh}
-            style={{
-              backgroundColor: 'transparent',
-              border: 'none',
-              width: '31px',
-              height: '31px',
-              marginLeft: '-8px',
-            }}
+          <div className={styles.refreshBtn}>
+            <Button
+              icon={<IoRefreshSharp />}
+              active={true}
+              onClick={handleRefresh}
+              style={{
+                backgroundColor: 'transparent',
+                border: 'none',
+                width: '31px',
+                height: '31px',
+                marginLeft: '-8px',
+              }}
             />
+          </div>
         </div>
-            </div>
 
         <div className={styles.weatherIcon}>날씨</div>
 
