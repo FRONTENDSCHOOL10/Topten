@@ -1,12 +1,17 @@
 @import '../../styles/utils/theme';
 @import '../../styles/utils/utils';
 
+.sectionArea{
+  padding-bottom:30px;
+  border-bottom:1px solid $--gray-custom-300;
+}
+
 .weatherWrap{
   display:flex;
   flex-direction: column;
   gap:18px;
 
-  margin-bottom:60px;
+  margin-bottom:30px;
 }
 
 .weatherLocation{
@@ -52,4 +57,38 @@
 
 .iconWeatherSm{
   width:16px;
+}
+
+.hourlyWeather{
+  
+  ul{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap:4px;
+    overflow:hidden;
+    overflow-x:scroll;
+    text-align:center;
+  }
+
+  .hourlyWeatherLi{
+    min-width:26px;
+    padding-bottom:18px;
+  }
+
+  p{
+    @include font-style(12px, 400, $--black);
+    
+    line-height:1.2;
+  }
+}
+
+.iconLoading{
+  width:18px;
+  animation: __loading__ 1s infinite linear;
+}
+
+@keyframes __loading__{
+	0%{transform:rotate(0deg);}
+	100%{transform:rotate(360deg);}
 }
