@@ -20,7 +20,7 @@ function MyPage(props) {
           <p className={S.size}>Size: {size}</p>
           <p className={S.personal__color}>Personal color {userColor}</p>
         </div>
-        <img className={S.profile__img} src={profileImageUrl} alt="프로필 이미지" />
+        <img className={S.profile__img} src={profileImageUrl} alt="프로필 이미지" /
       </div>
       <ul>
         {NAV.map(({ text, path }, index) => (
@@ -32,21 +32,3 @@ function MyPage(props) {
 }
 
 export default MyPage;
-
-// pb.authStore.clear = () => {
-//   console.log('pb.authStore.clear에서 실행');
-//   sessionStorage.removeItem('pb_auth');
-//   localStorage.removeItem('pb_auth');
-// };
-{
-  /* 마이
-      <Link to="/">
-        <button type="button" onClick={logout}>
-          로그아웃
-        </button>
-      </Link> */
-}
-// const logout = () => {
-//   alert('로그아웃되었습니다.');
-//   pb.authStore.clear();
-// };
