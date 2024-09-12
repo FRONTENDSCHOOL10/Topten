@@ -308,7 +308,6 @@
       - 해당 페이지 : MainPage.jsx, MyPage.jsx, CostumeCardManager.jsx, RootLayout.jsx
   - PR템플릿 수정
 
-
 - 권보령
 
   - router 파일
@@ -325,7 +324,6 @@
   - 룩북 상세 페이지
     - update: 룩북 상세 페이지 초기 설정
 
-
 - 함정민
 
   - 메인 페이지 날씨 컴포넌트
@@ -338,6 +336,7 @@
       - 날씨에 따른 아이콘 동적으로 출력
 
 ### 9월 11일
+
 - 권보령
   - 룩북 페이지
     - update: 착용샷 클릭 시 상세 페이지 이동
@@ -345,3 +344,14 @@
   - 룩북 상세 페이지
     - update: 룩북 상세 페이지 로직 추가
     - update: 룩북 상세 페이지 클릭된 착용샷 전달 로직 추가
+
+### 9월 12일
+
+- 황선우
+  - fix: 야무썜 2차 피드백 기반 수정
+    - manifest경로 수정
+    - vite.config.js 에서 resolve 통일
+    - svg파일 삭제
+    - 라우터 수정
+    - Test.md 삭제
+    - eslint.config.js 파일 수정(야무쌤 코드 제공받음)
