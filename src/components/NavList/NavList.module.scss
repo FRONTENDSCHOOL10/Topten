@@ -11,9 +11,12 @@
   border-bottom: 1px solid var(--gray-custom-600);
 
   padding: 24px 0;
-
+  button {
+    margin: 0;
+    background-color: transparent;
+    border: none;
+  }
   img {
-    cursor: pointer;
     width: 18px;
     height: 18px;
   }
