@@ -2,6 +2,7 @@ import pb from '@/api/pocketbase';
 import { Link } from 'react-router-dom';
 import { useLikeSync } from '@/hooks/useLikeSync'; // useLikeSync import
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 pb.authStore.clear = () => {
   sessionStorage.removeItem('pb_auth');
@@ -32,6 +33,17 @@ function MyPage() {
 
   return (
     <>
+      <Helmet>
+        <title>마이페이지 | StyleCast - 나만의 스타일 캐스트</title>
+        <meta name="description" content="마이페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="og:title" content="마이페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="twitter:title" content="마이페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="og:type" content="site" />
+        <meta property="og:url" content="https://stylecast.netlify.app/" />
+        <meta property="og:description" content="마이페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="og:image" content="https://stylecast.netlify.app/og-sc.png" />
+        <meta property="og:site:author" content="TopTen" />
+      </Helmet>
       <div className="wrapComponent">
         <Link to="/">
           <button type="button" onClick={logout}>

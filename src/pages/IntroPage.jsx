@@ -36,14 +36,14 @@ const IntroPage = () => {
   return (
     <>
       <Helmet>
-        <title>StyleCast - 나만의 스타일캐스트</title>
-        <meta name="description" content="Stylecast의 introPage" />
-        <meta property="og:title" content="StyleCast - 나만의 스타일캐스트" />
-        <meta property="twitter:title" content="StyleCast - 나만의 스타일캐스트" />
+        <title> StyleCast - 나만의 스타일 캐스트</title>
+        <meta name="description" content=" StyleCast - 나만의 스타일 캐스트" />
+        <meta property="og:title" content=" StyleCast - 나만의 스타일 캐스트" />
+        <meta property="twitter:title" content=" StyleCast - 나만의 스타일 캐스트" />
         <meta property="og:type" content="site" />
-        <meta property="og:url" content="" />
-        <meta property="og:description" content="StyleCast - 나만의 스타일캐스트" />
-        <meta property="og:image" content="" />
+        <meta property="og:url" content="https://stylecast.netlify.app/" />
+        <meta property="og:description" content="IntroPage | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="og:image" content="https://stylecast.netlify.app/og-sc.png" />
         <meta property="og:site:author" content="TopTen" />
       </Helmet>
       <section id="page">
