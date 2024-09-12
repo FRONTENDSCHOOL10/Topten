@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import EditHeader from '../components/EditHeader/EditHeader';
 import S from './../styles/pages/ChangePasswordPage.module.scss';
 import Form from '../components/Form/Form';
-import Input from '../components/Input/Input_kbr';
+import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 const ChangePasswordPage = () => {
