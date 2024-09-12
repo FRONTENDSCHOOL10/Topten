@@ -348,10 +348,14 @@
 ### 9월 12일
 
 - 황선우
+
   - fix: 야무썜 2차 피드백 기반 수정
+
     - manifest경로 수정
     - vite.config.js 에서 resolve 통일
     - svg파일 삭제
     - 라우터 수정
     - Test.md 삭제
     - eslint.config.js 파일 수정(야무쌤 코드 제공받음)
+
+  - fix: 페이지에 Helmet 적용
