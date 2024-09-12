@@ -10,6 +10,7 @@ import { Pagination, Scrollbar, A11y, Keyboard } from 'swiper/modules';
 import 'swiper/scss';
 import 'swiper/scss/pagination';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
+import { IoRefreshSharp } from 'react-icons/io5';
 
 function LookbookPage(props) {
   const [lookBookItems, setLookBookItems] = useState([]);
@@ -22,11 +23,19 @@ function LookbookPage(props) {
         // 착용샷 가져오기 --------------------------
         const items = await pb.collection('lookBook').getFullList();
 
-        const weather = '여름';
+        const weather = '가을';
 
-        const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather));
+        // 계절용 룩북 (2개)
+        const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather)).slice(0, 2);
 
-        setLookBookItems(seasonItems);
+        // 범용(사계절) 룩북 (3개)
+        const allSeasonItems = items.filter((item) => ['봄', '여름', '가을', '겨울'].every((season) => item.lookBookSeason.includes(season))
+        );
+
+        const combinedItems = [...seasonItems, ...allSeasonItems];
+
+        setLookBookItems(combinedItems);
+        
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -51,6 +60,9 @@ function LookbookPage(props) {
     navigate('/lookbookdetailpage');
   };
 
+  // 새로고침 기능 -----------------------------
+  const handleRefresh = {};
+
   return (
     <>
       <Helmet>
@@ -67,6 +79,10 @@ function LookbookPage(props) {
 
       <div className={styles.wrapComponent}>
         <h2 className={styles.title}>Look Book : OOTD</h2>
+
+        <button className={styles.refreshBtn} type="button" onClick={handleRefresh}>
+          <IoRefreshSharp />
+        </button>
 
         <div className={styles.weatherIcon}>날씨</div>
 
