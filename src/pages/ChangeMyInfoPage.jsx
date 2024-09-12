@@ -6,7 +6,7 @@ import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 import loadToast from '../api/loadToast';
 import { Toaster } from 'react-hot-toast';
-
+//잠시 커밋 확인 위한 주석
 const ChangeMyInfoPage = () => {
   const [userNickName, setUserNickName] = useState('');
   const user = JSON.parse(sessionStorage.getItem('pb_auth')).token;
