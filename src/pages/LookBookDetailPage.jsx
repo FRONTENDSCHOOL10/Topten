@@ -35,18 +35,19 @@ function LookBookDetailPage() {
 
   return (
     <>
-      <Helmet>
-        <title>OOTD 룩북 상세 페이지 | StyleCast - 나만의 스타일 캐스트</title>
-        <meta name="description" content="Stylecast의 OOTD 룩북 상세 페이지" />
-        <meta property="og:title" content="StyleCast - OOTD 룩북 상세 페이지" />
-        <meta property="twitter:title" content="StyleCast - OOTD 룩북 상세 페이지" />
-        <meta property="og:type" content="site" />
-        <meta property="og:url" content="" />
-        <meta property="og:description" content="StyleCast의 OOTD 룩북 상세 페이지" />
-        <meta property="og:image" content="" />
+ <Helmet>
+        <title>룩북 상세 페이지 | StyleCast - 나만의 스타일 캐스트</title>
+        <meta property="og:title" content="룩북 상세 페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="twitter:title" content="룩북 상세 페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta name="description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta property="og:description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta name="keywords" content="날씨, 기온, 옷차림, 뭐입지, 입을옷, 의류, 기상정보, 룩북, 체형, 퍼스널컬러" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://stylecast.netlify.app/image/og-sc.png" />
+        <meta property="og:url" content="https://stylecast.netlify.app/" />
         <meta property="og:site:author" content="TopTen" />
+        <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
-
       <div className={styles.wrapComponent}>
         <div className={styles.topWrapper}>
           <button className={styles.goPrev} type="button" onClick={() => navigate(-1)}>
