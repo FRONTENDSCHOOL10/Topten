@@ -12,7 +12,7 @@ const users = [
     email: 'test123@gmail.com',
     github: 'test123@gmail.com',
   },
-  { name: '황선우', Role: '스크럼마스터', email: 'test123@gmail.com', github: 'test123@gmail.com' },
+  { name: '황선우', role: '스크럼마스터', email: 'test123@gmail.com', github: 'test123@gmail.com' },
 ];
 
 const CustomerServicePage = () => {
