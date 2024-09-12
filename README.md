@@ -362,12 +362,12 @@
       isOpen: bool.isRequired, // 모달이 열렸는지 여부
       onClose: func.isRequired, // 모달을 닫는 함수
       title: string.isRequired, // 모달 제목
-      firstActionText: string.isRequired, // 주요 버튼 텍스트
-      firstActionLink: string, // 주요 버튼이 이동할 경로 (선택 사항)
-      secondActionText: string.isRequired, // 부차적 버튼 텍스트
-      secondActionLink: string, // 부차적 버튼이 이동할 경로 (선택 사항)
-      onFirstAction: func, // 주요 버튼 클릭 시 실행할 함수 (선택 사항)
-      onSecondAction: func, // 부차적 버튼 클릭 시 실행할 함수 (선택 사항)
+      firstActionText: string.isRequired, // 왼쪽 버튼 텍스트
+      firstActionLink: string, // 왼쪽 버튼이 이동할 경로 (선택 사항)
+      secondActionText: string.isRequired, // 오른쪽 버튼 텍스트
+      secondActionLink: string, // 오른쪽 버튼이 이동할 경로 (선택 사항)
+      onFirstAction: func, // 왼쪽 버튼 클릭 시 실행할 함수 (선택 사항)
+      onSecondAction: func, // 오른쪽 버튼 클릭 시 실행할 함수 (선택 사항)
     };
     ```
     - style: 모달 컴포넌트 스타일링
