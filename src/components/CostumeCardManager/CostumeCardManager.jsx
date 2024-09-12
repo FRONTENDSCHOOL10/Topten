@@ -7,7 +7,8 @@ import S from './CostumeCardManager.module.scss';
 import getPbImageURL from '@/api/getPbImageURL'; // PocketBase 이미지 URL 생성 함수
 
 const CostumeCardManager = ({ user, viewType, costumeCards }) => {
-  const { likeList, toggleLike } = useLikeStore();
+  // 수정된 부분: likeList를 likeLocal로 변경하고 toggleLike를 toggleLikeLocal로 변경
+  const { likeLocal, toggleLikeLocal } = useLikeStore();
 
   console.log('CostumeCardManager props - user:', user);
   console.log('CostumeCardManager props - viewType:', viewType);
@@ -23,13 +24,13 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
           <CostumeCard
             record={record}
             imageUrl={imageUrl}
-            isLiked={likeList.includes(record.id)} // 좋아요 상태 전달
-            onLikeToggle={() => toggleLike(record.id)} // 좋아요 토글 함수 전달
+            isLiked={likeLocal.includes(record.id)} // 수정된 부분: likeLocal로 좋아요 상태 전달
+            onLikeToggle={() => toggleLikeLocal(record.id)} // 수정된 부분: toggleLikeLocal로 토글 함수 전달
           />
         </SwiperSlide>
       );
     });
-  }, [costumeCards, likeList]);
+  }, [costumeCards, likeLocal]); // 수정된 부분: likeLocal을 의존성 배열에 추가
 
   if (!costumeCards.length) {
     return <div>Loading...</div>;
