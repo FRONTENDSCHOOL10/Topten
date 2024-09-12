@@ -2,9 +2,67 @@
 @import './../utils/utils';
 
 .wrapComponent {
-  div {
-    // border: 1px solid red; // 임시 확인용
+  font-family: Pretendard;
+  position: relative;
+  .profile {
+    display: flex;
+    justify-content: space-between;
+  }
+  .profile__info {
+    font-style: normal;
+    line-height: normal;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .email {
+      color: var(--gray-600, #919191);
+      font-size: 14px;
+      padding: 12px 0 18px 0;
+    }
+
+    .size {
+      padding-bottom: 12px;
+    }
+    .personal__color {
+    }
+  }
+
+  .profile__img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 2px solid var(--gray-custom-600);
+    z-index: -1;
   }
 }
 
+// <div class={S.profile}>
+// <div class={S.profile__info}>
+//   <h2>고통받는_고길동동동</h2>
+//   <p class={S.email}>gildong-go86@gmail.com</p>
+//   <p class={S.size}>Size: 77 | L</p>
+//   <p class={S.personal__color}>Personal color: 여름 쿨</p>
+// </div>
+// <img src="profile-image.png" alt="프로필 이미지" />
+// </div>
 
+.modal__outer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+}
+
+.modal {
+  border: 1px solid;
+  width: 250px;
+  height: 100px;
+  border-radius: 12px;
+  text-align: center;
+  background-color: white;
+}

@@ -1,45 +1,46 @@
-import pb from '@/api/pocketbase';
-import { Link } from 'react-router-dom';
-import { useLikeSync } from '@/hooks/useLikeSync'; // useLikeSync import
-import { useEffect, useState } from 'react';
+import S from './../styles/pages/MainPage.module.scss';
+import NavList from '../components/NavList/NavList';
+import getPbImageURL from './../api/getPbImageURL';
+import useGetUserInfo from '../hooks/useGetUserInfo';
+import { NAV } from '../data/constant';
+import defaultImg from '/image/happiness.png';
+import { useNavigate } from 'react-router-dom';
 
-pb.authStore.clear = () => {
-  sessionStorage.removeItem('pb_auth');
-  localStorage.removeItem('pb_auth');
-};
+function MyPage(props) {
+  const navigate = useNavigate();
+  const { user } = useGetUserInfo();
+  const profileImageUrl = user.isUser ? getPbImageURL(user, 'userPhoto') : defaultImg;
+  const { userNickName, email, userSize: size, userColor } = user;
 
-function MyPage() {
-  const [userId, setUserId] = useState(null); // userId 상태 추가
-
-  // 로그인된 사용자 정보 가져오기
-  useEffect(() => {
-    const authData = sessionStorage.getItem('pb_auth') || localStorage.getItem('pb_auth');
-    if (authData) {
-      const parsedAuth = JSON.parse(authData);
-      if (parsedAuth && parsedAuth.token) {
-        setUserId(parsedAuth.token.id); // userId 설정
-      }
-    }
-  }, []);
-
-  const { syncLikeLocalToOriginAndServer } = useLikeSync(userId); // userId 전달
-
-  const logout = async () => {
-    await syncLikeLocalToOriginAndServer(); // 로그아웃 시 서버에 like-origin 업데이트
-    console.log('syncLikeL어쩌구 마이페이지에서 실행 완료');
-    pb.authStore.clear(); // 로그아웃 시 스토리지에서 pb_auth 삭제
-  };
+  //임시 모달
+  const modal = !user.isUser && (
+    <div className={S.modal__outer}>
+      <div className={S.modal}>
+        <h1>로그인 ㄴㄴ 임시 모달</h1>
+        <button onClick={() => navigate('/login')}>로그인 버튼</button>
+      </div>
+    </div>
+  );
+  //////////////로딩 구현
 
   return (
-    <>
-      <div className="wrapComponent">
-        <Link to="/">
-          <button type="button" onClick={logout}>
-            로그아웃
-          </button>
-        </Link>
+    <div className={S.wrapComponent}>
+      {modal}
+      <div className={S.profile}>
+        <div className={S.profile__info}>
+          <h2>{user.isUser ? userNickName : '환영해요'}</h2>
+          <p className={S.email}>{user.isUser ? email : 'E-mail'}</p>
+          <p className={S.size}>Size: {user.isUser ? size : ''}</p>
+          <p className={S.personal__color}>Personal color {user.isUser ? userColor : ''}</p>
+        </div>
+        <img className={S.profile__img} src={profileImageUrl} alt="프로필 이미지" />
       </div>
-    </>
+      <ul>
+        {user.isUser
+          ? NAV.map(({ text, path }, index) => <NavList key={index} text={text} link={path} />)
+          : ''}
+      </ul>
+    </div>
   );
 }
 
