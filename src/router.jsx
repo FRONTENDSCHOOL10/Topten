@@ -11,6 +11,11 @@ import LookBookDetailPage from './pages/LookBookDetailPage'; // Static import fo
 import CalendarPage from './pages/CalendarPage'; // Static import for now
 import LikedPage from './pages/LikedPage'; // Static import for now
 import MyPage from './pages/MyPage'; // Static import for now
+import ChangeColorPage from './pages/ChangeColorPage';
+import ChangeFitPage from './pages/ChangeFitPage';
+import ChangeMyInfoPage from './pages/ChangeMyInfoPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
+import CustomerServicePage from './pages/CustomerServicePage';
 
 /**@type {import('react-router-dom').RouteObject[]} */
 const navigation = [
@@ -48,14 +53,13 @@ const navigation = [
     path: '/lookbook',
     element: <LookbookPage />, // Static component for now
     // lazy: () => import('./pages/LookbookPage'),
-    children: [
-      {
-        text: '룩북상세페이지',
-        path: ':id',
-        element: <LookBookDetailPage />, // Static component for now
-        // lazy: () => import('./pages/LookbookPage'),
-      },
-    ],
+    // children: [],
+  },
+  {
+    text: '룩북상세페이지',
+    path: '/lookbookdetailpage',
+    element: <LookBookDetailPage />, // Static component for now
+    // lazy: () => import('./pages/LookbookPage'),
   },
   {
     text: '달력페이지',
@@ -73,6 +77,37 @@ const navigation = [
     text: '마이페이지',
     path: '/myinfo',
     element: <MyPage />, // Static component for now
+    // lazy: () => import('./pages/MyPage'),
+  },
+  ///////
+  {
+    text: '퍼스널컬러변경',
+    path: '/changecolor',
+    element: <ChangeColorPage />, // Static component for now
+    // lazy: () => import('./pages/MyPage'),
+  },
+  {
+    text: '체형변경',
+    path: '/changefit',
+    element: <ChangeFitPage />, // Static component for now
+    // lazy: () => import('./pages/MyPage'),
+  },
+  {
+    text: '정보변경',
+    path: '/changeinfo',
+    element: <ChangeMyInfoPage />, // Static component for now
+    // lazy: () => import('./pages/MyPage'),
+  },
+  {
+    text: '비밀번호변경',
+    path: '/changepassword',
+    element: <ChangePasswordPage />, // Static component for now
+    // lazy: () => import('./pages/MyPage'),
+  },
+  {
+    text: '고객센터',
+    path: '/cs',
+    element: <CustomerServicePage />, // Static component for now
     // lazy: () => import('./pages/MyPage'),
   },
 ];
