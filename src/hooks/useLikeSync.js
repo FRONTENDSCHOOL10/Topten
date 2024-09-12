@@ -1,35 +1,57 @@
-import { useCallback } from 'react';
 import pb from '@/api/pocketbase';
+import useLikeStore from '@/stores/likeStore';
 
-export const useLikeSync = (userId, likeList) => {
-  const syncLikesToServer = useCallback(async () => {
-    if (!userId) {
-      console.log('·Î±×ÀÎÇÏÁö ¾ÊÀº »óÅÂ·Î ¼­¹ö µ¿±âÈ­´Â ÁøÇàÇÏÁö ¾Ê½À´Ï´Ù.');
-      return;
-    }
+export const useLikeSync = (userId) => {
+  const { likeLocal, initLikeOrigin, resetLikeLists } = useLikeStore();
 
+  // ë¡œê·¸ì¸ ì‹œ ì„œë²„ì—ì„œ likeListë¥¼ ê°€ì ¸ì˜´
+  const fetchLikeListFromServer = async () => {
+    if (!userId) return;
     try {
+      const likeListResponse = await pb.collection('likeList').getFullList({
+        filter: `owner = "${userId}"`,
+      });
+      console.log('likeListResponse in useLikeSync:', likeListResponse);
+      const likedIds = likeListResponse.map((item) => item.costumeCard);
+      initLikeOrigin(likedIds); // ì„œë²„ì—ì„œ ë°›ì•„ì˜¨ ë¦¬ìŠ¤íŠ¸ë¥¼ like-originì— ì €ì¥
+    } catch (error) {
+      console.error('Failed to fetch likeList from server:', error);
+    }
+  };
+
+  // ë¡œê·¸ì•„ì›ƒ ì‹œ like-localì„ like-originì— ì—…ë°ì´íŠ¸í•˜ê³ , ì„œë²„ì— ì €ì¥
+  const syncLikeLocalToOriginAndServer = async () => {
+    console.log('syncLikeLocalToOriginAndServerê°€ ì‹¤í–‰ë¨');
+    if (!userId) return;
+    try {
+      // like-localì„ like-originì— ë®ì–´ì“°ê¸°
+      const updatedLikeList = [...new Set(likeLocal)]; // ì¤‘ë³µ ì œê±° í›„ ì²˜ë¦¬
+
+      // ì„œë²„ì— ì—…ë°ì´íŠ¸
       const existingLikeList = await pb
         .collection('likeList')
         .getFirstListItem(`owner="${userId}"`);
-
+      console.log('existingLikeList in syncLikeì–´ì©Œêµ¬', existingLikeList);
       if (existingLikeList) {
         await pb.collection('likeList').update(existingLikeList.id, {
           owner: userId,
-          costumeCard: likeList,
+          costumeCard: updatedLikeList,
         });
-        console.log('likeList°¡ ¼º°øÀûÀ¸·Î ¾÷µ¥ÀÌÆ®µÇ¾ú½À´Ï´Ù.');
+        console.log('updatedLikeList in syncLikeì–´ì©Œêµ¬', updatedLikeList);
       } else {
         await pb.collection('likeList').create({
           owner: userId,
-          costumeCard: likeList,
+          costumeCard: updatedLikeList,
         });
-        console.log('»õ·Î¿î likeList°¡ »ı¼ºµÇ¾ú½À´Ï´Ù.');
       }
-    } catch (error) {
-      console.error('likeList µ¿±âÈ­¿¡ ½ÇÆĞÇß½À´Ï´Ù:', error);
-    }
-  }, [userId, likeList]);
 
-  return { syncLikesToServer };
+      initLikeOrigin(updatedLikeList); // ì—…ë°ì´íŠ¸ëœ likeLocalì„ likeOriginìœ¼ë¡œ ì €ì¥
+      resetLikeLists(); // ìƒíƒœ ì´ˆê¸°í™” (likeLocal, likeOrigin)
+      console.log('likeList successfully synced and reset.');
+    } catch (error) {
+      console.error('Failed to sync likeList to server:', error);
+    }
+  };
+
+  return { fetchLikeListFromServer, syncLikeLocalToOriginAndServer };
 };

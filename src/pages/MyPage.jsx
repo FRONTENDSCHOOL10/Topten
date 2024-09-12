@@ -33,7 +33,7 @@ function MyPage(props) {
           <p className={S.size}>Size: {user.isUser ? size : ''}</p>
           <p className={S.personal__color}>Personal color {user.isUser ? userColor : ''}</p>
         </div>
-        <img className={S.profile__img} src={profileImageUrl} alt="프로필 이미지" />
+        <img className={S.profile__img} src={profileImageUrl} alt="프로필 이미지" /
       </div>
       <ul>
         {user.isUser

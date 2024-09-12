@@ -1,13 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Form from './../components/Form/Form';
-import Input from '@/components/Input/Input_kbr';
-import Button from '@/components/Button/Button';
+import { useState, useRef, useEffect } from 'react';
+import { Input, Button, Form } from '@/components';
 import pb from './../api/pocketbase';
 import { Helmet } from 'react-helmet-async';
 import styles from '@/styles/pages/Login.module.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { validatePassword, validateEmail } from './../api/validation';
-
 
 pb.authStore.save = (model, token, expiration) => {
   const authData = { model, token, expiration };
@@ -83,7 +80,7 @@ function LoginPage() {
       try {
         const sessionAuth = sessionStorage.getItem('pb_auth');
         const localAuth = localStorage.getItem('pb_auth');
-        
+
         const authData = sessionAuth || localAuth; // 세션 스토리지가 우선, 없으면 로컬 스토리지
         if (authData) {
           const parsedAuth = JSON.parse(authData);
@@ -99,7 +96,7 @@ function LoginPage() {
         console.error('로그인 상태 확인 실패:', error);
       }
     };
-  
+
     checkLoginStatus();
   }, [navigate]);
 
@@ -116,7 +113,7 @@ function LoginPage() {
         <meta property="og:image" content="https://stylecast.netlify.app/og-sc.png" />
         <meta property="og:site:author" content="TopTen" />
       </Helmet>
-      
+
       <div className="wrapComponent">
         <div className={styles['top__title']}>
           <h2 className={styles['top__title--big']}>
@@ -135,7 +132,11 @@ function LoginPage() {
         {redirecting && (
           <div className={styles.redirecting}>
             <div className={styles.pop}>
-              <p>😮 오! 이미 로그인 되어있어요.<br />메인페이지로 이동할게요.</p>
+              <p>
+                😮 오! 이미 로그인 되어있어요.
+                <br />
+                메인페이지로 이동할게요.
+              </p>
             </div>
           </div>
         )}
@@ -173,22 +174,15 @@ function LoginPage() {
                 비밀번호 보기
               </label>
             </div>
-            <Button 
-              type="submit"
-              text="로그인"
-              onClick={handleLogin}
-              active={true}
-            />
+            <Button type="submit" text="로그인" onClick={handleLogin} active={true} />
           </Form>
         )}
         <div className={styles.joinGroup}>
-          <NavLink to="/findpassword">
-            비밀번호 찾기
-          </NavLink>
-          <span aria-hidden="true" className={styles.distinguished}>|</span>
-          <NavLink to="/register">
-            회원가입
-          </NavLink>
+          <NavLink to="/findpassword">비밀번호 찾기</NavLink>
+          <span aria-hidden="true" className={styles.distinguished}>
+            |
+          </span>
+          <NavLink to="/register">회원가입</NavLink>
         </div>
       </div>
     </>

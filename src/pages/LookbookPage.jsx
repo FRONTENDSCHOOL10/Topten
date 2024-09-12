@@ -1,21 +1,114 @@
+import { useState, useEffect, useRef } from 'react';
+import Button from './../components/Button/Button';
+import styles from './../styles/pages/Lookbookpage.module.scss';
+import { useNavigate } from 'react-router-dom';
+import pb from './../api/pocketbase';
+import getPbImageURL from './../api/getPbImageURL';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Scrollbar, A11y, Keyboard } from 'swiper/modules';
+import 'swiper/scss';
+import 'swiper/scss/pagination';
+import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
+
 function LookbookPage(props) {
+  const [lookBookItems, setLookBookItems] = useState([]);
+  const swiperRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchLookBookItems = async () => {
+      try {
+        // 착용샷 가져오기 --------------------------
+        const items = await pb.collection('lookBook').getFullList();
+
+        const weather = '여름';
+
+        const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather));
+
+        setLookBookItems(seasonItems);
+
+      } catch (error) {
+        console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
+      }
+    };
+
+    fetchLookBookItems();
+  }, []);
+
+  
+  // 스와이퍼 네비게이션 버튼 -----------------------
+  const goNext = () => {
+    swiperRef.current.swiper.slideNext();
+  };
+
+  const goPrev = () => {
+    swiperRef.current.swiper.slidePrev();
+  };
+
+
+  // 착용샷 클릭 시 로컬에 저장 & 상세 페이지 이동 ------
+  const handleImageClick = (item) => {
+    localStorage.setItem('selectedItemId', item.id);
+
+    navigate('/lookbookdetailpage');
+  };
+
+
   return (
-    <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <div>룩북</div>;
-    </>
+    <div className={styles.wrapComponent}>
+      <h2 className={styles.title}>Look Book : OOTD</h2>
+
+      <div className={styles.weatherIcon}>날씨</div>
+
+      <div className={styles.subTitle}>
+        <p className={styles.description}>
+          오늘 날씨엔 <br />
+          이런 스타일 어때요?
+        </p>
+
+        <div className={styles.swiperBtn}>
+          <button className={styles.goPrev} type="button" onClick={goPrev}>
+            <GoChevronLeft />
+          </button>
+          <button className={styles.goNext} type="button" onClick={goNext}>
+            <GoChevronRight />
+          </button>
+        </div>
+      </div>
+
+      <div className={styles.outfitSwiper}>
+        <Swiper
+          className={styles.swiper}
+          modules={[Pagination, Scrollbar, A11y, Keyboard]}
+          spaceBetween={20}
+          slidesPerView={1.2}
+          loop={lookBookItems.length > 1}
+          keyboard={{ enabled: true }}
+          pagination={{ clickable: true }}
+          a11y={{
+            prevSlideMessage: '이전 슬라이드',
+            nextSlideMessage: '다음 슬라이드',
+            paginationBulletMessage: '페이지 {{index}}',
+          }}
+          ref={swiperRef}
+        >
+          {lookBookItems.length > 0 ? (
+            lookBookItems.map((item) => (
+              <SwiperSlide key={item.id}>
+                <img
+                  src={getPbImageURL(item, 'outfitImage')}
+                  alt={item.lookBookTitle}
+                  className={styles.outfitImage}
+                  onClick={() => handleImageClick(item)}
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide>계절에 맞는 착용샷이 없습니다.</SwiperSlide>
+          )}
+        </Swiper>
+      </div>
+    </div>
   );
 }
 

@@ -1,7 +1,5 @@
 import styles from '../styles/pages/RegisterPage.module.scss';
-import Form from '../components/Form/Form';
-import Input from './../components/Input/Input_kbr';
-import Button from './../components/Button/Button';
+import { Input, Button, Form } from '@/components';
 import Select from '../components/Select/Select';
 import { useState, useEffect } from 'react';
 import RegisterCheckbox from '../components/RegisterCheckbox/RegisterCheckbox';
