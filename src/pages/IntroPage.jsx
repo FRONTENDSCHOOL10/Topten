@@ -37,15 +37,21 @@ const IntroPage = () => {
     <>
       <Helmet>
         <title> StyleCast - 나만의 스타일 캐스트</title>
-        <meta name="description" content=" StyleCast - 나만의 스타일 캐스트" />
-        <meta property="og:title" content=" StyleCast - 나만의 스타일 캐스트" />
-        <meta property="twitter:title" content=" StyleCast - 나만의 스타일 캐스트" />
-        <meta property="og:type" content="site" />
+        <meta property="og:title" content="StyleCast - 나만의 스타일 캐스트" />
+        <meta property="twitter:title" content="StyleCast - 나만의 스타일 캐스트" />
+        <meta name="description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta property="og:description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta
+          name="keywords"
+          content="날씨, 기온, 옷차림, 뭐입지, 입을옷, 의류, 기상정보, 룩북, 체형, 퍼스널컬러"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://stylecast.netlify.app/image/og-sc.png" />
         <meta property="og:url" content="https://stylecast.netlify.app/" />
-        <meta property="og:description" content="IntroPage | StyleCast - 나만의 스타일 캐스트" />
-        <meta property="og:image" content="https://stylecast.netlify.app/og-sc.png" />
         <meta property="og:site:author" content="TopTen" />
+        <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
+
       <section id="page">
         <div className={classes.logoWrapper}>
           {/* logoCloud 이미지 */}
