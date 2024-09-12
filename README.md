@@ -353,3 +353,4 @@
     - vite.config.js 에서 resolve 통일
     - svg파일 삭제
     - 라우터 수정
+    - Test.md 삭제
