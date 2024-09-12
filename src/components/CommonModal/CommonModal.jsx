@@ -47,17 +47,17 @@ const CommonModal = ({
               {firstActionText}
             </Link>
           ) : (
-            <button className={S.firstButton} onClick={onFirstAction}>
+            <button type="button" className={S.firstButton} onClick={onFirstAction}>
               {firstActionText}
             </button>
           )}
-          <p>|</p>
+          <span aria-hidden="true">&#124;</span>
           {secondActionLink ? (
             <Link to={secondActionLink} className={S.secondButton}>
               {secondActionText}
             </Link>
           ) : (
-            <button className={S.secondButton} onClick={onSecondAction}>
+            <button type="button" className={S.secondButton} onClick={onSecondAction}>
               {secondActionText}
             </button>
           )}

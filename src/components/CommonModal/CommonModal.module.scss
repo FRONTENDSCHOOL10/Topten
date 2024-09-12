@@ -35,8 +35,8 @@
   margin-top: 20px;
 }
 
-.secondaryButton,
-.primaryButton {
+.secondButton,
+.firstButton {
   background: none;
   border: none;
   color: #000;
@@ -46,7 +46,7 @@
   text-decoration: none;
 }
 
-.secondaryButton:hover,
-.primaryButton:hover {
+.secondButton:hover,
+.firstButton:hover {
   color: var(--primary-color);
 }
