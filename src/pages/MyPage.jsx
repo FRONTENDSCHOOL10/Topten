@@ -1,5 +1,5 @@
 import S from './../styles/pages/MainPage.module.scss';
-import NavList from '../components/navList/navList';
+import NavList from '../components/NavList/NavList';
 import getPbImageURL from './../api/getPbImageURL';
 import useGetUserInfo from '../hooks/useGetUserInfo';
 import { NAV } from '../data/constant';
