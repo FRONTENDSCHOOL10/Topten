@@ -26,16 +26,18 @@ function LookbookPage(props) {
         const weather = '가을';
 
         // 계절용 룩북 (2개)
-        const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather)).slice(0, 2);
+        const seasonItems = items
+          .filter((item) => item.lookBookSeason.includes(weather))
+          .slice(0, 2);
 
         // 범용(사계절) 룩북 (3개)
-        const allSeasonItems = items.filter((item) => ['봄', '여름', '가을', '겨울'].every((season) => item.lookBookSeason.includes(season))
+        const allSeasonItems = items.filter((item) =>
+          ['봄', '여름', '가을', '겨울'].every((season) => item.lookBookSeason.includes(season))
         );
 
         const combinedItems = [...seasonItems, ...allSeasonItems];
 
         setLookBookItems(combinedItems);
-        
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -61,7 +63,9 @@ function LookbookPage(props) {
   };
 
   // 새로고침 기능 -----------------------------
-  const handleRefresh = {};
+  const handleRefresh = {
+    // 새로고침
+  };
 
   return (
     <>
@@ -78,11 +82,25 @@ function LookbookPage(props) {
       </Helmet>
 
       <div className={styles.wrapComponent}>
+        <div className={styles.topWrapper}>
+
         <h2 className={styles.title}>Look Book : OOTD</h2>
 
-        <button className={styles.refreshBtn} type="button" onClick={handleRefresh}>
-          <IoRefreshSharp />
-        </button>
+        <div className={styles.refreshBtn}>
+          <Button
+            icon={<IoRefreshSharp />}
+            active={true}
+            onClick={handleRefresh}
+            style={{
+              backgroundColor: 'transparent',
+              border: 'none',
+              width: '31px',
+              height: '31px',
+              marginLeft: '-8px',
+            }}
+            />
+        </div>
+            </div>
 
         <div className={styles.weatherIcon}>날씨</div>
 

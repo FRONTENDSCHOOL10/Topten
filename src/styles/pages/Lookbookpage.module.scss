@@ -4,11 +4,26 @@
 .wrapComponent {
   margin-top: -23px;
 
-  .title {
-    @include font-style(18px, 600, $--black);
-    line-height: 19.8px;
+  .topWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-    margin: 30px 0 14px;
+    .title {
+      @include font-style(18px, 600, $--black);
+      line-height: 19.8px;
+
+      margin: 30px 0 14px;
+    }
+
+    .refreshBtn {
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      border: 1px solid #e5e5e5;
+      
+      margin: 30px 0 0 95px;
+    }
   }
 
   .weatherIcon {
@@ -47,7 +62,7 @@
 
   .outfitSwiper {
     width: 280px;
-    
+
     margin-top: 17px;
 
     .swiper {
@@ -70,7 +85,7 @@
     .outfitImage {
       width: 238px;
       height: 355px;
-      
+
       object-fit: cover;
     }
   }
