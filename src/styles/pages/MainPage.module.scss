@@ -1,9 +1,16 @@
 @import './../utils/theme';
 @import './../utils/utils';
 
+button {
+  margin: 0;
+  background-color: transparent;
+  border: none;
+}
+
 .wrapComponent {
   font-family: Pretendard;
   position: relative;
+
   .profile {
     display: flex;
     justify-content: space-between;
@@ -51,6 +58,45 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+  }
+
+  .profile__change__popup {
+    visibility: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 81px;
+    border: 1px solid black;
+    border-radius: 6px 6px 0 0;
+    padding: 12px;
+    background-color: white;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+
+      h2 {
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+
+    li {
+      margin: 20px 0;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: normal;
+      cursor: pointer;
+    }
+
+    &.active {
+      visibility: visible;
     }
   }
 }
