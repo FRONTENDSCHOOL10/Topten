@@ -85,7 +85,7 @@ function LookbookPage() {
   const handleImageClick = (item) => {
     localStorage.setItem('selectedItemId', item.id);
 
-    navigate('/lookbookdetailpage');
+    navigate(`/lookbook/${item.id}`);
   };
 
   // 새로고침 기능 -----------------------------
