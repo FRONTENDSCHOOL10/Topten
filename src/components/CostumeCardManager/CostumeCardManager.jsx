@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import CostumeCard from '@/components/CostumeCard/CostumeCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Grid } from 'swiper/modules';
+import 'swiper/css/grid';
 import 'swiper/css';
 import useLikeStore from '@/stores/likeStore'; // Zustand store
 import S from './CostumeCardManager.module.scss';
@@ -33,7 +35,7 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
   }, [costumeCards, likeLocal]); // 수정된 부분: likeLocal을 의존성 배열에 추가
 
   if (!costumeCards.length) {
-    return <div>Loading...</div>;
+    return <div>저장된 제품이 없는것 같아요...</div>;
   }
 
   if (viewType === '리스트') {
@@ -47,7 +49,20 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
   }
 
   if (viewType === '앨범') {
-    return <div className={S.grid}>{memoizedCards}</div>;
+    return (
+      <div className="wrapComponent">
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={2}
+          grid={{
+            rows: 3,
+          }}
+          modules={[Grid]}
+        >
+          {memoizedCards}
+        </Swiper>
+      </div>
+    );
   }
 
   return null;
