@@ -308,7 +308,6 @@
       - 해당 페이지 : MainPage.jsx, MyPage.jsx, CostumeCardManager.jsx, RootLayout.jsx
   - PR템플릿 수정
 
-
 - 권보령
 
   - router 파일
@@ -325,7 +324,6 @@
   - 룩북 상세 페이지
     - update: 룩북 상세 페이지 초기 설정
 
-
 - 함정민
 
   - 메인 페이지 날씨 컴포넌트
@@ -338,6 +336,7 @@
       - 날씨에 따른 아이콘 동적으로 출력
 
 ### 9월 11일
+
 - 권보령
   - 룩북 페이지
     - update: 착용샷 클릭 시 상세 페이지 이동
@@ -345,3 +344,81 @@
   - 룩북 상세 페이지
     - update: 룩북 상세 페이지 로직 추가
     - update: 룩북 상세 페이지 클릭된 착용샷 전달 로직 추가
+
+### 9월 12일
+
+- 황선우
+
+  - fix: 야무썜 2차 피드백 기반 수정
+    - manifest경로 수정
+    - vite.config.js 에서 resolve 통일
+    - svg파일 삭제
+    - 라우터 수정
+    - Test.md 삭제
+    - eslint.config.js 파일 수정(야무쌤 코드 제공받음)
+  - 룩북페이지, 룩북 상세페이지 라우팅
+    - fix : 룩북페이지에서 룩북이미지 클릭 시 상세페이지로 이동할 수 있도록 코드 수정
+
+  - 모달 컴포넌트
+    - feat: 공통적으로 사용할 수 있는 모달컴포넌트 제작
+    ```jsx
+    CommonModal.propTypes = {
+      isOpen: bool.isRequired, // 모달이 열렸는지 여부
+      onClose: func.isRequired, // 모달을 닫는 함수
+      title: string.isRequired, // 모달 제목
+      firstActionText: string.isRequired, // 왼쪽 버튼 텍스트
+      firstActionLink: string, // 왼쪽 버튼이 이동할 경로 (선택 사항)
+      secondActionText: string.isRequired, // 오른쪽 버튼 텍스트
+      secondActionLink: string, // 오른쪽 버튼이 이동할 경로 (선택 사항)
+      onFirstAction: func, // 왼쪽 버튼 클릭 시 실행할 함수 (선택 사항)
+      onSecondAction: func, // 오른쪽 버튼 클릭 시 실행할 함수 (선택 사항)
+    };
+    ```
+    - style: 모달 컴포넌트 스타일링
+    - fix: 컴포넌트의 index.js 경로 추가
+
+- 권보령
+
+  - 룩북 페이지
+
+    - update: 룩북 페이지 로직 추가 및 수정
+    - update: 룩북 디테일 페이지 클릭된 착용샷 전달 로직 추가
+    - style: 룩북 상세 페이지 전체 레이아웃 구성
+    - style: 룩북 상세 페이지 스타일링 상세 조정
+    - update: 룩북 페이지 helmet 추가
+    - stlye: 룩북 페이지 스타일링 주석 제거
+    - update: 뒤로가기 시 페이지 유지 기능 추가
+    - update: 랜덤 출력 로직 수정
+    - update: 새로고침 기능 추가
+    - update: 룩북 목록 출력 개수 제한
+      - 계절 별 2벌 + 범용(4계절용) 3벌
+    - style: 새로고침 버튼 스타일링
+    - fix: helmet 수정
+
+  - 룩북 상세 페이지
+
+    - update: 뒤로가기 버튼 추가
+    - helmet 추가
+    - style: 스타일링 코드 추가
+    - fix: 룩북 상세 페이지 네비게이션 수정
+
+  - 룩북 컴포넌트
+
+    - update: 룩북 상세 페이지에서의 사용을 위한 조건부 UI
+
+  - 비밀번호 찾기 페이지
+    - fix: 비밀번호 찾기 페이지 helmet 수정
+    - fix: helmet 수정
+
+
+### 9월 13일
+
+- 황선우
+  - feat: 좋아요 페이지 구현 및 스타일링
+    - 좋아요 페이지에 필요한 포맷으로 CostumeCardManager 출력 내용 수정
+    - 좋아요페이지 마크업
+    - 좋아요페이지 스타일링
+    - 기온, 의상카테고리 데이터 constant.js에 추가
+  - CostumeCardManager
+    - 앨범 스타일 변경
+

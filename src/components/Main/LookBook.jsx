@@ -95,7 +95,11 @@ function LookBook({ item }) {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Look Book : OOTD</h2>
+      {!item && (
+        <>
+          <h2 className={styles.title}>Look Book : OOTD</h2>
+        </>
+      )}
 
       <div className={styles.outfitContainer}>
         {lookBookItem ? (
@@ -118,9 +122,13 @@ function LookBook({ item }) {
         </section>
       </div>
 
-      <div className={styles.btnContainer}>
-        <Button text="더 많은 룩북 보기" type="button" linkTo="/lookbook" />
-      </div>
+      {!item && (
+        <>
+          <div className={styles.btnContainer}>
+            <Button text="더 많은 룩북 보기" type="button" linkTo="/lookbook" />
+          </div>
+        </>
+      )}
     </div>
   );
 }

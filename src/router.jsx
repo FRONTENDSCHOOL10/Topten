@@ -53,13 +53,16 @@ const navigation = [
     path: '/lookbook',
     element: <LookbookPage />, // Static component for now
     // lazy: () => import('./pages/LookbookPage'),
+    children: [
+      {
+        text: '룩북상세페이지',
+        path: ':id',
+        element: <LookBookDetailPage />, // Static component for now
+        // lazy: () => import('./pages/LookbookPage'),
+      },
+    ],
   },
-  {
-    text: '룩북상세페이지',
-    path: '/lookbookdetailpage',
-    element: <LookBookDetailPage />, // Static component for now
-    // lazy: () => import('./pages/LookbookPage'),
-  },
+
   {
     text: '달력페이지',
     path: '/calendar',

@@ -1,16 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'node:path';
-import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
-  // src 폴더를 루트 디렉토리로 설정
-  // root: 'src',
   publicDir: resolve(__dirname, 'public'),
   resolve: {
     // @ 기호를 사용하여 src 폴더의 경로를 별칭으로 설정
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': resolve(__dirname, 'src'), // fileURLToPath와 URL을 제거하고 resolve로 통일
     },
   },
   build: {
