@@ -3,6 +3,7 @@ import S from './../styles/pages/MainPage.module.scss';
 import { Weather, Product, LookBook, CostumeCardManager } from '@/components';
 import pb from '@/api/pocketbase';
 import useLikeStore from '@/stores/likeStore';
+import { Helmet } from 'react-helmet-async';
 
 function MainPage(props) {
   const [user, setUser] = useState(null);
@@ -43,7 +44,7 @@ function MainPage(props) {
         console.error('Error parsing user data from sessionStorage:', error);
       }
     }
-  }, [initLikeOrigin, initLikeLocal]);
+  }, []);
 
   // CostumeCard 리스트를 서버에서 불러와 sessionStorage와 localStorage에 저장
   useEffect(() => {
@@ -68,12 +69,30 @@ function MainPage(props) {
   }, []);
 
   return (
-    <div className={S.wrapComponent}>
-      <Weather />
-      <Product />
-      <CostumeCardManager user={user} viewType="리스트" costumeCards={costumeCards} />
-      <LookBook />
-    </div>
+    <>
+      <Helmet>
+        <title> 메인페이지 | StyleCast - 나만의 스타일 캐스트</title>
+        <meta property="og:title" content="메인페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="twitter:title" content="메인페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta name="description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta property="og:description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta
+          name="keywords"
+          content="날씨, 기온, 옷차림, 뭐입지, 입을옷, 의류, 기상정보, 룩북, 체형, 퍼스널컬러"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://stylecast.netlify.app/image/og-sc.png" />
+        <meta property="og:url" content="https://stylecast.netlify.app/" />
+        <meta property="og:site:author" content="TopTen" />
+        <link rel="canonical" href="https://stylecast.netlify.app/" />
+      </Helmet>
+      <div className={S.wrapComponent}>
+        <Weather />
+        <Product />
+        <CostumeCardManager user={user} viewType="리스트" costumeCards={costumeCards} />
+        <LookBook />
+      </div>
+    </>
   );
 }
 
