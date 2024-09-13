@@ -1,10 +1,14 @@
-import S from './../styles/pages/MainPage.module.scss';
+import { useLikeSync } from '@/hooks/useLikeSync.js';
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link, useNavigate } from 'react-router-dom';
+import pb from '../api/pocketbase';
 import NavList from '../components/NavList/NavList';
-import getPbImageURL from './../api/getPbImageURL';
-import useGetUserInfo from '../hooks/useGetUserInfo';
 import { NAV } from '../data/constant';
+import useGetUserInfo from '../hooks/useGetUserInfo';
+import getPbImageURL from './../api/getPbImageURL';
+import S from './../styles/pages/MainPage.module.scss';
 import defaultImg from '/image/happiness.png';
-import { useNavigate } from 'react-router-dom';
 
 function MyPage(props) {
   const navigate = useNavigate();
@@ -44,6 +48,9 @@ function MyPage(props) {
     await syncLikeLocalToOriginAndServer(); // 로그아웃 시 서버에 like-origin 업데이트
     console.log('syncLikeL어쩌구 마이페이지에서 실행 완료');
     pb.authStore.clear(); // 로그아웃 시 스토리지에서 pb_auth 삭제
+    // sessionStorage와 localStorage에서 pb_auth 삭제
+    sessionStorage.removeItem('pb_auth');
+    localStorage.removeItem('pb_auth');
   };
 
   /***************************************************** */
