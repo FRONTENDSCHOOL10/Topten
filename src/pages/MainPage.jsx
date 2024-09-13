@@ -1,13 +1,22 @@
 import { useEffect, useState } from 'react';
 import S from './../styles/pages/MainPage.module.scss';
-import { Weather, Product, LookBook, CostumeCardManager } from '@/components';
+import { Weather, Product, LookBook, CostumeCardManager, CommonModal } from '@/components';
 import pb from '@/api/pocketbase';
 import useLikeStore from '@/stores/likeStore';
+import { Helmet } from 'react-helmet-async';
 
 function MainPage(props) {
   const [user, setUser] = useState(null);
   const [costumeCards, setCostumeCards] = useState([]);
   const { initLikeOrigin, initLikeLocal } = useLikeStore(); // Zustand에서 가져온 초기화 함수들
+
+  // 모달창 관련 상태
+  const [isModalOpen, setModalOpen] = useState(true);
+
+  // 모달창 활성화 하는 함수
+  const activateModal = () => {
+    setModalOpen(true);
+  };
 
   // sessionStorage에서 pb_auth 정보를 가져옴
   useEffect(() => {
@@ -25,6 +34,7 @@ function MainPage(props) {
             try {
               const likeListResponse = await pb.collection('likeList').getFullList({
                 filter: `owner = "${parsedUser.token.id}"`,
+                autoCancel: import.meta.env.VITE_PB_AUTO_CANCEL === 'false' ? false : undefined,
               });
               console.log('likeListResponse in MainPage:', likeListResponse);
 
@@ -55,7 +65,9 @@ function MainPage(props) {
         } else {
           const records = await pb.collection('costumeCard').getFullList({
             sort: '-created',
+            autoCancel: import.meta.env.VITE_PB_AUTO_CANCEL === 'false' ? false : undefined,
           });
+
           setCostumeCards(records);
           sessionStorage.setItem('costumeCards', JSON.stringify(records));
           localStorage.setItem('costumeCards', JSON.stringify(records));
@@ -68,12 +80,44 @@ function MainPage(props) {
   }, []);
 
   return (
-    <div className={S.wrapComponent}>
-      <Weather />
-      <Product />
-      <CostumeCardManager user={user} viewType="리스트" costumeCards={costumeCards} />
-      <LookBook />
-    </div>
+    <>
+      <Helmet>
+        <title> 메인페이지 | StyleCast - 나만의 스타일 캐스트</title>
+        <meta property="og:title" content="메인페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="twitter:title" content="메인페이지 | StyleCast - 나만의 스타일 캐스트" />
+        <meta name="description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta property="og:description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta
+          name="keywords"
+          content="날씨, 기온, 옷차림, 뭐입지, 입을옷, 의류, 기상정보, 룩북, 체형, 퍼스널컬러"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://stylecast.netlify.app/image/og-sc.png" />
+        <meta property="og:url" content="https://stylecast.netlify.app/" />
+        <meta property="og:site:author" content="TopTen" />
+        <link rel="canonical" href="https://stylecast.netlify.app/" />
+      </Helmet>
+      <div className={S.wrapComponent}>
+        <button type="button" onClick={activateModal}>
+          모달창 키기
+        </button>
+        <br />
+        <CommonModal
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          title={['로그인 후', <br />, '이용해보세요!']}
+          firstActionText="회원가입인척 하는 로그인"
+          firstActionLink="/login"
+          secondActionText="회원가입"
+          secondActionLink="/register"
+        />
+
+        <Weather />
+        <Product />
+        <CostumeCardManager user={user} viewType="리스트" costumeCards={costumeCards} />
+        <LookBook />
+      </div>
+    </>
   );
 }
 

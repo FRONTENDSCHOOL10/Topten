@@ -359,6 +359,24 @@
   - 룩북페이지, 룩북 상세페이지 라우팅
     - fix : 룩북페이지에서 룩북이미지 클릭 시 상세페이지로 이동할 수 있도록 코드 수정
 
+  - 모달 컴포넌트
+    - feat: 공통적으로 사용할 수 있는 모달컴포넌트 제작
+    ```jsx
+    CommonModal.propTypes = {
+      isOpen: bool.isRequired, // 모달이 열렸는지 여부
+      onClose: func.isRequired, // 모달을 닫는 함수
+      title: string.isRequired, // 모달 제목
+      firstActionText: string.isRequired, // 왼쪽 버튼 텍스트
+      firstActionLink: string, // 왼쪽 버튼이 이동할 경로 (선택 사항)
+      secondActionText: string.isRequired, // 오른쪽 버튼 텍스트
+      secondActionLink: string, // 오른쪽 버튼이 이동할 경로 (선택 사항)
+      onFirstAction: func, // 왼쪽 버튼 클릭 시 실행할 함수 (선택 사항)
+      onSecondAction: func, // 오른쪽 버튼 클릭 시 실행할 함수 (선택 사항)
+    };
+    ```
+    - style: 모달 컴포넌트 스타일링
+    - fix: 컴포넌트의 index.js 경로 추가
+
 - 권보령
 
   - 룩북 페이지
@@ -392,6 +410,7 @@
     - fix: 비밀번호 찾기 페이지 helmet 수정
     - fix: helmet 수정
 
+
 ### 9월 13일
 
 - 황선우
@@ -402,3 +421,4 @@
     - 기온, 의상카테고리 데이터 constant.js에 추가
   - CostumeCardManager
     - 앨범 스타일 변경
+
