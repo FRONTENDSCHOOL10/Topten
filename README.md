@@ -391,3 +391,14 @@
   - 비밀번호 찾기 페이지
     - fix: 비밀번호 찾기 페이지 helmet 수정
     - fix: helmet 수정
+
+### 9월 13일
+
+- 황선우
+  - feat: 좋아요 페이지 구현 및 스타일링
+    - 좋아요 페이지에 필요한 포맷으로 CostumeCardManager 출력 내용 수정
+    - 좋아요페이지 마크업
+    - 좋아요페이지 스타일링
+    - 기온, 의상카테고리 데이터 constant.js에 추가
+  - CostumeCardManager
+    - 앨범 스타일 변경
