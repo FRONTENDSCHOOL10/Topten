@@ -27,6 +27,8 @@ export const useLikeSync = (userId) => {
     try {
       const updatedLikeList = [...new Set(likeLocal)]; // 중복 제거 후 처리
 
+      initLikeOrigin(updatedLikeList); // 업데이트된 likeLocal을 likeOrigin으로 저장
+
       // 서버에 업데이트
       const existingLikeList = await pb
         .collection('likeList')
@@ -45,7 +47,6 @@ export const useLikeSync = (userId) => {
         });
       }
 
-      initLikeOrigin(updatedLikeList); // 업데이트된 likeLocal을 likeOrigin으로 저장
       resetLikeLists(); // 상태 초기화 (likeLocal, likeOrigin)
       console.log('likeList successfully synced and reset.');
     } catch (error) {

@@ -11,7 +11,7 @@ function MainPage(props) {
   const { initLikeOrigin, initLikeLocal } = useLikeStore(); // Zustand에서 가져온 초기화 함수들
 
   // 모달창 관련 상태
-  const [isModalOpen, setModalOpen] = useState(true);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   // 모달창 활성화 하는 함수
   const activateModal = () => {
