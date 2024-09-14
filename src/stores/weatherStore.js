@@ -127,6 +127,8 @@ fetchWeatherData: async (lat, lon) => {
       highTemp: highTempData?.fcstValue,
       lowTemp: lowTempData?.fcstValue,
       windSpeed: windSpeedData?.fcstValue,
+      location: { lat, lon }, // 위치 추가
+      address: (JSON.parse(localStorage.getItem('weatherData')) || {}).address || "" // 기존 저장된 주소 또는 빈 문자열
     };
     
     localStorage.setItem('weatherData', JSON.stringify(weatherData));
