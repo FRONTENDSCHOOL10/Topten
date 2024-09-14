@@ -38,12 +38,15 @@ button {
 
   .img__container {
     position: relative;
-    .profile__img {
+
+    div {
       width: 90px;
       height: 90px;
       border-radius: 50%;
       border: 2px solid var(--gray-custom-600);
       z-index: -1;
+    }
+    .profile__img {
     }
 
     .camera__button {
