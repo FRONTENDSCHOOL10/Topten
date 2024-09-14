@@ -66,3 +66,10 @@ export const categoryList = {
   '원피스/스커트': [],
   악세사리: [],
 };
+
+export const BUTTONSTYLE = {
+  width: '66px',
+  height: '22px',
+  fontSize: '12px',
+  fontWeight: 400,
+};
