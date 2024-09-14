@@ -448,3 +448,12 @@
       2. Weather.jsx 파일 분할 및 수정
         * /src/utils/weatherIcons.js : 날씨 아이콘 유틸리티 함수 분리
         /src/components/Main/Weather.jsx : 분리된 상태 관리 스토어와 연동하여 데이터를 제대로 가져올 수 있도록 수정
+
+
+
+
+### 9월 14일
+
+- 함정민
+  - fix: 시간대별 날씨 정보 코드 오류 수정
+  - feat: 메인페이지 접근시 마다 해당 시간을 로컬스토리지에 저장
