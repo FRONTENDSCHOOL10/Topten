@@ -1,7 +1,7 @@
 import Button from '../Button/Button';
 import StarRate from '../StarRate/StarRate';
 import S from './/BookmarkModal.module.scss';
-const BookmarkModal = ({ address, skyCondition, onClick, onChange, onEdit }) => {
+const BookmarkModal = ({ address, weatherText, onClick, onChange, onEdit }) => {
   return (
     <div className={S.modalOverlay}>
       <div className={S.BookmarkModal}>
@@ -10,7 +10,7 @@ const BookmarkModal = ({ address, skyCondition, onClick, onChange, onEdit }) => 
           <button onClick={() => onClick?.()}>X</button>
         </div>
         <p className={S.location}>{address}</p>
-        <p className={S.weather}>{skyCondition}</p>
+        <p className={S.weather}>{weatherText}</p>
         <div className={S.comment__rate__container}>
           <label htmlFor="comment">Comment</label>
           <StarRate />
