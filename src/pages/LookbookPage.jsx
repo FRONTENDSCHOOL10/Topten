@@ -12,6 +12,7 @@ import pb from './../api/pocketbase';
 import Button from './../components/Button/Button';
 import styles from './../styles/pages/Lookbookpage.module.scss';
 import { getWeatherIcon } from './../utils/weatherIcons';
+import { getSeason } from './../data/constant';
 
 function LookbookPage() {
   const navigate = useNavigate();
@@ -31,6 +32,20 @@ function LookbookPage() {
   const location = useLocation();
   const isDetailPage = location.pathname.startsWith('/lookbook/');
 
+  // 기온 ------------------------------------
+  const temperatureStr = localStorage.getItem('temperature');
+  const temperature = parseInt(temperatureStr, 10);
+
+  // 월
+  const monthStr = localStorage.getItem('lastAccessTime').split('.')[1];
+  const month = parseInt(monthStr, 10);
+
+  // 계절 판별
+  const season = getSeason(month, temperature);
+
+  console.log('현재 계절은 ' + season + '입니다.');
+
+
   useEffect(() => {
     const fetchLookBookItems = async () => {
       try {
@@ -47,12 +62,9 @@ function LookbookPage() {
         // 착용샷 가져오기 --------------------------
         const items = await pb.collection('lookBook').getFullList();
 
-        // 임시!!!!
-        const weather = '가을';
-
         // 계절용 룩북 (2개)
         const seasonItems = items
-          .filter((item) => item.lookBookSeason.includes(weather))
+          .filter((item) => item.lookBookSeason.includes(season))
           .sort(() => 0.5 - Math.random())
           .slice(0, 2);
 
@@ -61,6 +73,7 @@ function LookbookPage() {
           .filter((item) => item.lookBookSeason.includes('범용'))
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
+
 
         // 현재 착용샷 - 업데이트
         setCurrentSeasonItems({ seasonItems, allSeasonItems });
@@ -75,13 +88,14 @@ function LookbookPage() {
           'lookBookItems',
           JSON.stringify([...seasonItems, ...allSeasonItems])
         );
+
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
     };
 
     fetchLookBookItems();
-  }, []);
+  }, [season]);
 
 
   // 스와이퍼 네비게이션 버튼 -----------------------
@@ -105,16 +119,13 @@ function LookbookPage() {
     try {
       const items = await pb.collection('lookBook').getFullList();
 
-      // 임시!!!
-      const weather = '가을';
-
       // 현재 착용샷의 id 배열로 만듦(중복 방지)
       const currentSeasonItemIds = lookBookItems.map((item) => item.id);
 
       // 계절용 - 새로운 아이템(중복 X)
       const newSeasonItems = items
         .filter(
-          (item) => item.lookBookSeason.includes(weather) && !currentSeasonItemIds.includes(item.id)
+          (item) => item.lookBookSeason.includes(season) && !currentSeasonItemIds.includes(item.id)
         )
         .sort(() => 0.5 - Math.random())
         .slice(0, 2);
@@ -138,7 +149,7 @@ function LookbookPage() {
       // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
       sessionStorage.setItem('lookBookItems', JSON.stringify(newLookBookItems));
 
-      
+
       // 첫 번째 슬라이드로 돌아오기
       if (swiperRef.current && swiperRef.current.swiper) {
         swiperRef.current.swiper.slideTo(0);
@@ -149,6 +160,7 @@ function LookbookPage() {
     }
   };
 
+  
   return isDetailPage ? (
     <Outlet />
   ) : (
