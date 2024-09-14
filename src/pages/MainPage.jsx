@@ -6,6 +6,7 @@ import useLikeStore from '@/stores/likeStore';
 import { Helmet } from 'react-helmet-async';
 
 function MainPage(props) {
+  // pb.autoCancellation(false);
   const [user, setUser] = useState(null);
   const [costumeCards, setCostumeCards] = useState([]);
   const { initLikeOrigin, initLikeLocal } = useLikeStore(); // Zustand에서 가져온 초기화 함수들
@@ -34,7 +35,6 @@ function MainPage(props) {
             try {
               const likeListResponse = await pb.collection('likeList').getFullList({
                 filter: `owner = "${parsedUser.token.id}"`,
-                autoCancel: import.meta.env.VITE_PB_AUTO_CANCEL === 'false' ? false : undefined,
               });
               console.log('likeListResponse in MainPage:', likeListResponse);
 
@@ -59,15 +59,20 @@ function MainPage(props) {
   useEffect(() => {
     const fetchCostumeCards = async () => {
       try {
+        // 세션에 저장된 costumeCards를 가져옴
         const cachedCostumeCards = sessionStorage.getItem('costumeCards');
-        if (cachedCostumeCards) {
+
+        // 세션에 데이터가 존재하고, 빈 배열이 아닌 경우 상태에 저장
+        if (cachedCostumeCards && JSON.parse(cachedCostumeCards).length > 0) {
           setCostumeCards(JSON.parse(cachedCostumeCards));
-        } else {
+        }
+        // 세션에 데이터가 없거나 빈 배열일 경우 서버에서 데이터를 가져옴
+        else {
           const records = await pb.collection('costumeCard').getFullList({
             sort: '-created',
-            autoCancel: import.meta.env.VITE_PB_AUTO_CANCEL === 'false' ? false : undefined,
           });
 
+          // 가져온 데이터를 상태에 저장하고, 로컬 및 세션에 저장
           setCostumeCards(records);
           sessionStorage.setItem('costumeCards', JSON.stringify(records));
           localStorage.setItem('costumeCards', JSON.stringify(records));
@@ -76,6 +81,7 @@ function MainPage(props) {
         console.error('Failed to fetch costumeCards:', error);
       }
     };
+
     fetchCostumeCards();
   }, []);
 
