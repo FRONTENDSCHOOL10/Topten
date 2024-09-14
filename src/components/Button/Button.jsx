@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom/dist';
  * @param {string} props.text - 버튼에 표시될 텍스트 (필수)
  * @param {string} props.type - 사용할 버튼 타입 (선택)
  * @param {boolean} [props.active=false] - 버튼이 활성화된 상태인지 여부 (선택)
+ * @param {boolean} [props.TemperButton=false] - 작은버튼(온도버튼으로 설정) (선택)
  * @param {JSX.Element|null} [props.icon=null] - 버튼에 표시될 아이콘 컴포넌트 (선택)
  * @param {object} [props.iconAnimation={}] - 아이콘에 적용할 애니메이션 설정 객체 (선택)
  * @param {string} [props.linkTo=''] - 클릭 시 이동할 경로 (선택)
@@ -29,6 +30,7 @@ function Button({
   icon = null, // 기본 아이콘은 null, JSX 형태로 전달해야함.
   iconAnimation = {}, // 아이콘 애니메이션 설정
   linkTo = '', //이동할 경로
+  TemperButton = false,
   ...props
 }) {
   const buttonRef = useRef(null); // 버튼을 참조하기 위한 ref
@@ -74,7 +76,7 @@ function Button({
     <button
       type={type}
       ref={buttonRef}
-      className={clsx(S.button, { [S.active]: active })} // active 클래스 동적 할당
+      className={clsx(S.button, { [S.active]: active, [S.TemperButton]: TemperButton })} // active 클래스 동적 할당
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
@@ -94,12 +96,13 @@ function Button({
 
 // propTypes 정의
 Button.propTypes = {
-  text: string.isRequired, // 필수 문자열
+  text: string, // 필수 문자열
   type: oneOf(['button', 'submit', 'reset']), //사용할 버튼 타입
   active: bool, // active 여부
   icon: element, // 아이콘으로 JSX 요소 전달
   iconAnimation: object, // 아이콘에 적용할 애니메이션 설정
   linkTo: string, // 이동해야할 링크
+  TemperButton: bool, //온도버튼으로 전환
 };
 
 export default Button;
