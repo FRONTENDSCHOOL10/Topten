@@ -468,3 +468,20 @@
   - fix: 시간대별 날씨 출력되는 시간 기준 수정
   - fix: 현재기온 출력 시간 기준(baseTime) 수정
 
+- 권보령
+  - 룩북 컴포넌트
+    - update: 룩북 컴포넌트 타입 검사 추가
+    - update: 현재 월과 기온에 따른 계절 판별 로직 추가
+    - fix: null값 에러 처리
+  - 룩북 상세 페이지
+    - refactor: 룩북 상세 페이지 코드 정리
+    - update: 날씨 아이콘 추가
+  - constant.js
+    - update: 계절 데이터 및 계절 판별 함수 추가
+  - 룩북 페이지
+    - refactor: 룩북 페이지 코드 리팩토링
+    - fix: CostumeCard 컴포넌트의 임시 좋아요 코드 삭제
+    - update: 날씨 아이콘 추가
+    - update: 현재 월과 기온에 따른 계절 판별 로직 추가
+    - fix: null값 에러 처리
+
