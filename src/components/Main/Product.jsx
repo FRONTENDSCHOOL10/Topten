@@ -4,6 +4,7 @@ import initialCards from '@/data/test.js';
 import CostumeCard from '@/components/CostumeCard/CostumeCard';
 import Button from '../Button/Button';
 import { IoRefreshSharp } from 'react-icons/io5';
+import { FaBookmark } from 'react-icons/fa6';
 
 const temperatureList = [
   '4° ↓',
@@ -79,7 +80,10 @@ function Product() {
 
   return (
     <div className={styles.product__component}>
-      <h2 className={styles.title}>오늘 날씨엔?</h2>
+      <div className={styles.product__title__button}>
+        <h2 className={styles.title}>오늘 날씨엔?</h2>
+        <Button text="OOTD 저장" icon={<FaBookmark className={styles.icon} />} />
+      </div>
       <div className={styles.buttons}>
         {temperatureList.map((text, index) => (
           <Button style={BUTTONSTYLE} key={index} text={text} onClick={handleClick} />

@@ -1,11 +1,30 @@
 .product__component {
   font-family: Pretendard;
-
-  .title {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: normal;
+  .product__title__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding-top: 30px;
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: normal;
+    }
+
+    button {
+      font-size: 12px;
+      width: 92px;
+      height: 26px;
+      margin: 0px;
+      padding: 0 5px;
+      background: var(--gray-100, #f5f5f5);
+      border: 1px solid var(--gray-300, #bdbdbd);
+    }
+
+    .icon {
+      color: var(--primary-color);
+    }
   }
 
   .buttons {
