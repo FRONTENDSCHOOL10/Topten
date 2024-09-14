@@ -4,29 +4,18 @@ import pb from './../../api/pocketbase';
 import getPbImageURL from './../../api/getPbImageURL';
 import CostumeCardManager from '@/components/CostumeCardManager/CostumeCardManager';
 import Button from './../Button/Button';
-import PropTypes, { string, func, bool, oneOf, oneOfType, object, element } from 'prop-types';
+import PropTypes from 'prop-types';
 
 LookBook.propTypes = {
   item: PropTypes.shape({
     lookBookTitle: PropTypes.string, // 착용샷 이름
     lookBookSeason: PropTypes.string, // 착용샷 계절
     items: PropTypes.arrayOf(PropTypes.string), // 관련 상품
-    outfitImage: PropTypes.string // 착용샷 이미지
+    outfitImage: PropTypes.string, // 착용샷 이미지
   }),
 };
 
 function LookBook({ item }) {
-  // CostumeCard 컴포넌트의 좋아요 기능 --------------------
-  const [likeList, setLikeList] = useState([]);
-
-  const toggleLike = (id) => {
-    if (likeList.includes(id)) {
-      setLikeList(likeList.filter((likeId) => likeId !== id)); // 좋아요 해제
-    } else {
-      setLikeList([...likeList, id]); // 좋아요 추가
-    }
-  };
-
   // 착용샷
   const [lookBookItem, setLookBookItems] = useState(null);
 
@@ -34,9 +23,9 @@ function LookBook({ item }) {
   const [relatedItems, setRelatedItems] = useState([]);
 
   useEffect(() => {
-    // 룩북 상세 페이지에서 룩북
+    // 룩북 상세 페이지의 룩북
     if (item) {
-      // 저장된(클릭한) 착용샷을 착용샷 state로 저장
+      // 룩북 페이지에서 클릭한 착용샷을 착용샷 state로 저장
       setLookBookItems(item);
 
       const fetchRelatedItems = async () => {
@@ -55,9 +44,10 @@ function LookBook({ item }) {
       };
 
       fetchRelatedItems();
+
       
     } else {
-      // 메인 페이지 룩북
+      // 메인 페이지의 룩북
       const fetchLookBookItems = async () => {
         try {
           const items = await pb.collection('lookBook').getFullList();
@@ -142,8 +132,5 @@ function LookBook({ item }) {
     </div>
   );
 }
-
-
-
 
 export default LookBook;
