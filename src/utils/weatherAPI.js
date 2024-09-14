@@ -60,16 +60,17 @@ export const fetchYesterdayWeatherDataFromAPI = async (lat, lon) => {
 };
 
 // 시간별 날씨 데이터를 API로부터 받아오는 함수
-export const fetchHourlyWeatherDataFromAPI = async (lat, lon) => {
+// weatherAPI.js에서 API 응답을 확인하는 로그 추가
+export const fetchHourlyWeatherDataFromAPI = async (lat, lon, baseDate = null) => {
   const { nx, ny } = convertToGrid(lat, lon);
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
   const url = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
 
   const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  const baseDate = `${year}${month}${day}`;
+  const year = baseDate ? baseDate.slice(0, 4) : today.getFullYear();
+  const month = baseDate ? baseDate.slice(4, 6) : String(today.getMonth() + 1).padStart(2, '0');
+  const day = baseDate ? baseDate.slice(6, 8) : String(today.getDate()).padStart(2, '0');
+  const finalBaseDate = `${year}${month}${day}`;
   const baseTime = '0500';
 
   const params = {
@@ -77,12 +78,15 @@ export const fetchHourlyWeatherDataFromAPI = async (lat, lon) => {
     numOfRows: 1000,
     pageNo: 1,
     dataType: 'JSON',
-    base_date: baseDate,
+    base_date: finalBaseDate,
     base_time: baseTime,
     nx,
     ny,
   };
 
   const response = await axios.get(url, { params });
-  return response.data.response.body.items.item;  // 시간별 데이터 반환
+
+  console.log('API 응답 데이터:', response.data.response.body.items.item);  // 데이터를 로그로 확인
+  return response.data.response.body.items.item;
 };
+

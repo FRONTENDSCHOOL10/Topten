@@ -18,6 +18,20 @@ function MainPage(props) {
     setModalOpen(true);
   };
 
+  // 현재 시간을 'YYYY.MM.DD HH:mm:ss' 형식으로 반환하는 함수
+  const getCurrentFormattedTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
+  };
+
+
   // sessionStorage에서 pb_auth 정보를 가져옴
   useEffect(() => {
     const pbAuth = sessionStorage.getItem('pb_auth');
@@ -54,6 +68,13 @@ function MainPage(props) {
       }
     }
   }, []);
+
+  // 로컬스토리지에 접근 시간을 저장하는 useEffect
+  useEffect(() => {
+    const currentTime = getCurrentFormattedTime();
+    localStorage.setItem('lastAccessTime', currentTime);
+    console.log(`접근 시간 저장: ${currentTime}`);
+  }, []);  // 빈 배열이므로 페이지가 로드될 때마다 실행
 
   // CostumeCard 리스트를 서버에서 불러와 sessionStorage와 localStorage에 저장
   useEffect(() => {
