@@ -16,27 +16,21 @@ function LookbookPage() {
   const navigate = useNavigate();
   const swiperRef = useRef(null);
 
-  /***********************
-   * 현재 경로를 저장하여 룩북상세페이지('/lookbook/')인지 아니면 룩북페이지('/lookbook')인지
-   * 구분하기위해 저장한 변수입니다.
-   *
-   * hsw, 24-09-13 02:00
-   */
-  const location = useLocation();
-  const isDetailPage = location.pathname.startsWith('/lookbook/');
-  /***************** */
-
   // 전체 착용샷
   const [lookBookItems, setLookBookItems] = useState([]);
 
   // 현재 착용샷
   const [currentSeasonItems, setCurrentSeasonItems] = useState([]);
 
+  // 현재 경로 저장(LookbookPage/LookbookDetailPage 구분을 위함)
+  const location = useLocation();
+  const isDetailPage = location.pathname.startsWith('/lookbook/');
+
   useEffect(() => {
     const fetchLookBookItems = async () => {
       try {
         // 세션에서 상태 복원 ----------------------
-        // - 상세 페이지에서 돌아올 시 착용샷 유지
+        // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
         const savedLookBookItems = sessionStorage.getItem('lookBookItems');
 
         if (savedLookBookItems) {
@@ -48,6 +42,7 @@ function LookbookPage() {
         // 착용샷 가져오기 --------------------------
         const items = await pb.collection('lookBook').getFullList();
 
+        // 임시!!!!
         const weather = '가을';
 
         // 계절용 룩북 (2개)
@@ -62,17 +57,21 @@ function LookbookPage() {
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
 
+
         // 현재 착용샷 - 업데이트
         setCurrentSeasonItems({ seasonItems, allSeasonItems });
 
         // 전체 챡용샷 - 업데이트
         setLookBookItems([...seasonItems, ...allSeasonItems]);
 
+      
         // 전체 착용샷 - 세션에 저장 --------------------------
+        // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
         sessionStorage.setItem(
           'lookBookItems',
           JSON.stringify([...seasonItems, ...allSeasonItems])
         );
+
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -80,6 +79,7 @@ function LookbookPage() {
 
     fetchLookBookItems();
   }, []);
+
 
   // 스와이퍼 네비게이션 버튼 -----------------------
   const goNext = () => {
@@ -90,21 +90,19 @@ function LookbookPage() {
     swiperRef.current.swiper.slidePrev();
   };
 
-  // 착용샷 클릭 시 로컬에 저장 & 상세 페이지 이동 ------
-  const handleImageClick = (item) => {
-    localStorage.setItem('selectedItemId', item.id);
-    console.log('item', item);
-    console.log('item.id', item.id);
 
-    // navigate('/lookbookdetailpage');
+  // 착용샷 클릭 시 착용샷 상세 페이지로 이동 ------
+  const handleImageClick = (item) => {
     navigate(`/lookbook/${item.id}`);
   };
+
 
   // 새로고침 기능 -----------------------------
   const handleRefresh = async () => {
     try {
       const items = await pb.collection('lookBook').getFullList();
 
+      // 임시!!!
       const weather = '가을';
 
       // 현재 착용샷의 id 배열로 만듦(중복 방지)
@@ -126,14 +124,19 @@ function LookbookPage() {
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
 
-      // 새로운 착용샷(계절용 + 범용)
+
+      // 새로운 착용샷(계절용 + 범용) 업데이트
       const newLookBookItems = [...newSeasonItems, ...newAllSeasonItems];
 
       setLookBookItems(newLookBookItems);
 
+
       // 새로운 착용샷 세션에 저장
+      // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
       sessionStorage.setItem('lookBookItems', JSON.stringify(newLookBookItems));
 
+
+      // 첫 번째 슬라이드로 돌아오기
       if (swiperRef.current && swiperRef.current.swiper) {
         swiperRef.current.swiper.slideTo(0);
       }
@@ -142,15 +145,7 @@ function LookbookPage() {
     }
   };
 
-  /***********************
-   * 현재 경로가 디테일페이지면 Outlet을 출력하고,
-   * 그렇지 않다면 원래 룩북페이지를 출력하도록 수정
-   *
-   * 구조:
-   *  return isDetailPage ? (<Outlet/>) : (본문);
-   *
-   * hsw, 24-09-13 02:00
-   */
+
   return isDetailPage ? (
     <Outlet />
   ) : (
@@ -171,6 +166,7 @@ function LookbookPage() {
         <meta property="og:site:author" content="TopTen" />
         <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
+
       <div className={styles.wrapComponent}>
         <div className={styles.topWrapper}>
           <h2 className={styles.title}>Look Book : OOTD</h2>
