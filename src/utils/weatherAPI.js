@@ -1,19 +1,37 @@
 import axios from 'axios';
 import { convertToGrid } from './weatherUtils';
 
+// 현재 시간에 가장 가까운 BaseTime을 계산하는 함수
+const getBaseTime = () => {
+  const currentDate = new Date();
+  const currentHour = currentDate.getHours();
+
+  // 기상청 API에서 제공하는 BaseTime (발표 시각), 문자열로 변경
+  const baseTimes = ['2300', '2000', '1700', '1400', '1100', '0800', '0500', '0200'];
+  
+  // 현재 시간에 가장 가까운 BaseTime 찾기
+  for (let baseTime of baseTimes) {
+    if (currentHour >= parseInt(baseTime.slice(0, 2))) {
+      return baseTime;  // 문자열 그대로 반환
+    }
+  }
+  
+  return '2300';  // 만약 시간이 새벽이면 전날의 2300 BaseTime 사용
+};
+
 // 날씨 데이터를 API로부터 받아오는 함수
 export const fetchWeatherDataFromAPI = async (lat, lon) => {
   const { nx, ny } = convertToGrid(lat, lon);  // 좌표를 그리드로 변환
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
   const url = 'https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst';
 
-  // 현재 날짜 및 시간 설정
+  // 현재 날짜 및 동적으로 계산된 BaseTime 설정
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, '0');
   const day = String(today.getDate()).padStart(2, '0');
   const baseDate = `${year}${month}${day}`;
-  const baseTime = '0500';
+  const baseTime = getBaseTime();  // 동적으로 계산된 BaseTime
 
   const params = {
     serviceKey: API_KEY,
@@ -42,7 +60,7 @@ export const fetchYesterdayWeatherDataFromAPI = async (lat, lon) => {
   const month = String(yesterday.getMonth() + 1).padStart(2, '0');
   const day = String(yesterday.getDate()).padStart(2, '0');
   const baseDate = `${year}${month}${day}`;
-  const baseTime = '0500';
+  const baseTime = getBaseTime();  // 동적으로 계산된 BaseTime
 
   const params = {
     serviceKey: API_KEY,
@@ -60,7 +78,6 @@ export const fetchYesterdayWeatherDataFromAPI = async (lat, lon) => {
 };
 
 // 시간별 날씨 데이터를 API로부터 받아오는 함수
-// weatherAPI.js에서 API 응답을 확인하는 로그 추가
 export const fetchHourlyWeatherDataFromAPI = async (lat, lon, baseDate = null) => {
   const { nx, ny } = convertToGrid(lat, lon);
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
@@ -71,7 +88,7 @@ export const fetchHourlyWeatherDataFromAPI = async (lat, lon, baseDate = null) =
   const month = baseDate ? baseDate.slice(4, 6) : String(today.getMonth() + 1).padStart(2, '0');
   const day = baseDate ? baseDate.slice(6, 8) : String(today.getDate()).padStart(2, '0');
   const finalBaseDate = `${year}${month}${day}`;
-  const baseTime = '0500';
+  const baseTime = getBaseTime();  // 동적으로 계산된 BaseTime
 
   const params = {
     serviceKey: API_KEY,
@@ -89,4 +106,3 @@ export const fetchHourlyWeatherDataFromAPI = async (lat, lon, baseDate = null) =
   console.log('API 응답 데이터:', response.data.response.body.items.item);  // 데이터를 로그로 확인
   return response.data.response.body.items.item;
 };
-
