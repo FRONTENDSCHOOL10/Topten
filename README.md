@@ -456,7 +456,10 @@
     - 고화질 이미지로 교체
     - 버튼 컴포넌트의 props 수정
     - 버튼 컴포넌트의 prop-types 수정
-
+  - feat/lazywithLoader/hsw
+    - 페이지에 lazy 및 suspense에 fallback으로 Loader 설정
+    - CostumeCard 컴포넌트의 이미지에 Loader 설정
+    - 페이지 import 정리 및 autoCancel 설정 변경
 
 - 함정민
   - fix: 시간대별 날씨 정보 코드 오류 수정
@@ -481,3 +484,4 @@
     - update: 날씨 아이콘 추가
     - update: 현재 월과 기온에 따른 계절 판별 로직 추가
     - fix: null값 에러 처리
+
