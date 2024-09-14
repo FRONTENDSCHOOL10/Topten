@@ -25,11 +25,20 @@ function LookBook({ item }) {
 
   // 기온 ------------------------------------
   const temperatureStr = localStorage.getItem('temperature');
-  const temperature = parseInt(temperatureStr, 10);
+  const temperature = parseInt(temperatureStr, 10) || 20;
 
   // 월
-  const monthStr = localStorage.getItem('lastAccessTime').split('.')[1];
-  const month = parseInt(monthStr, 10);
+  let month;
+
+  const lastAccessTime = localStorage.getItem('lastAccessTime');
+
+  if (lastAccessTime) {
+    const monthStr = lastAccessTime.split('.')[1];
+    month = parseInt(monthStr, 10);
+  } else {
+    console.error('lastAccessTime 값이 없습니다.');
+    month = new Date().getMonth() + 1; // 현재 월로 설정
+  }
 
   // 계절 판별
   const season = getSeason(month, temperature);
@@ -106,7 +115,7 @@ function LookBook({ item }) {
     }
   }, [item, season]);
 
-  
+
   return (
     <div className={styles.container}>
       {!item && (
