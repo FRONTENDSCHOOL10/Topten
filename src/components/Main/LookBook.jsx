@@ -4,6 +4,16 @@ import pb from './../../api/pocketbase';
 import getPbImageURL from './../../api/getPbImageURL';
 import CostumeCardManager from '@/components/CostumeCardManager/CostumeCardManager';
 import Button from './../Button/Button';
+import PropTypes, { string, func, bool, oneOf, oneOfType, object, element } from 'prop-types';
+
+LookBook.propTypes = {
+  item: PropTypes.shape({
+    lookBookTitle: PropTypes.string, // 착용샷 이름
+    lookBookSeason: PropTypes.string, // 착용샷 계절
+    items: PropTypes.arrayOf(PropTypes.string), // 관련 상품
+    outfitImage: PropTypes.string // 착용샷 이미지
+  }),
+};
 
 function LookBook({ item }) {
   // CostumeCard 컴포넌트의 좋아요 기능 --------------------
@@ -132,5 +142,8 @@ function LookBook({ item }) {
     </div>
   );
 }
+
+
+
 
 export default LookBook;
