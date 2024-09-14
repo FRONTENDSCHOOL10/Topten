@@ -66,3 +66,34 @@ export const categoryList = {
   '원피스/스커트': [],
   악세사리: [],
 };
+
+
+const SEASONS = {
+  봄: {
+    months: [3, 4, 5],
+    tempRange: { min: 0, max: 25 }
+  },
+  여름: {
+    months: [6, 7, 8],
+    tempRange: { min: 17, max: 37 }
+  },
+  가을: {
+    months: [9, 10, 11],
+    tempRange: { min: 0, max: 29 }
+  },
+  겨울: {
+    months: [12, 1, 2],
+    tempRange: { min: -Infinity, max: 2 }
+  }
+};
+
+const getSeason = (month, temperature) => {
+  for (const [season, { months, tempRange }] of Object.entries(SEASONS)) {
+    if (months.includes(month) && temperature >= tempRange.min && temperature <= tempRange.max) {
+      return season;
+    }
+  }
+  return 'Unknown';
+};
+
+export { SEASONS, getSeason };
