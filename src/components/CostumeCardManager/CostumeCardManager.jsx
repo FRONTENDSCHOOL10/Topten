@@ -12,10 +12,6 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
   // 수정된 부분: likeList를 likeLocal로 변경하고 toggleLike를 toggleLikeLocal로 변경
   const { likeLocal, toggleLikeLocal } = useLikeStore();
 
-  console.log('CostumeCardManager props - user:', user);
-  console.log('CostumeCardManager props - viewType:', viewType);
-  console.log('CostumeCardManager props - costumeCards:', costumeCards);
-
   // 좋아요 상태와 카드 데이터를 메모이제이션
   const memoizedCards = useMemo(() => {
     return costumeCards.map((record) => {
