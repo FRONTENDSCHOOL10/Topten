@@ -68,6 +68,14 @@ export const categoryList = {
 };
 
 
+export const BUTTONSTYLE = {
+  width: '66px',
+  height: '22px',
+  fontSize: '12px',
+  fontWeight: 400,
+};
+
+
 const SEASONS = {
   봄: {
     months: [3, 4, 5],
@@ -97,3 +105,4 @@ const getSeason = (month, temperature) => {
 };
 
 export { SEASONS, getSeason };
+
