@@ -11,10 +11,14 @@ import getPbImageURL from './../api/getPbImageURL';
 import pb from './../api/pocketbase';
 import Button from './../components/Button/Button';
 import styles from './../styles/pages/Lookbookpage.module.scss';
+import { getWeatherIcon } from './../utils/weatherIcons';
 
 function LookbookPage() {
   const navigate = useNavigate();
   const swiperRef = useRef(null);
+
+  // 날씨 아이콘
+  const skyCondition = localStorage.getItem('skyCondition');
 
   // 전체 착용샷
   const [lookBookItems, setLookBookItems] = useState([]);
@@ -22,7 +26,8 @@ function LookbookPage() {
   // 현재 착용샷
   const [currentSeasonItems, setCurrentSeasonItems] = useState([]);
 
-  // 현재 경로 저장(LookbookPage/LookbookDetailPage 구분을 위함)
+  // 현재 경로 저장
+  // - 룩북p / 룩북 상세p 구분을 위함
   const location = useLocation();
   const isDetailPage = location.pathname.startsWith('/lookbook/');
 
@@ -57,21 +62,19 @@ function LookbookPage() {
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
 
-
         // 현재 착용샷 - 업데이트
         setCurrentSeasonItems({ seasonItems, allSeasonItems });
 
         // 전체 챡용샷 - 업데이트
         setLookBookItems([...seasonItems, ...allSeasonItems]);
 
-      
+
         // 전체 착용샷 - 세션에 저장 --------------------------
         // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
         sessionStorage.setItem(
           'lookBookItems',
           JSON.stringify([...seasonItems, ...allSeasonItems])
         );
-
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -135,16 +138,16 @@ function LookbookPage() {
       // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
       sessionStorage.setItem('lookBookItems', JSON.stringify(newLookBookItems));
 
-
+      
       // 첫 번째 슬라이드로 돌아오기
       if (swiperRef.current && swiperRef.current.swiper) {
         swiperRef.current.swiper.slideTo(0);
       }
+
     } catch (error) {
       console.error('새로고침 중 에러 발생:', error);
     }
   };
-
 
   return isDetailPage ? (
     <Outlet />
@@ -187,7 +190,9 @@ function LookbookPage() {
           </div>
         </div>
 
-        <div className={styles.weatherIcon}>날씨</div>
+        <div className={styles.weatherIcon}>
+          <img src={getWeatherIcon(skyCondition).src} alt={getWeatherIcon(skyCondition).alt} />
+        </div>
 
         <div className={styles.subTitle}>
           <p className={styles.description}>

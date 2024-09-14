@@ -5,10 +5,14 @@ import styles from './../styles/pages/LookbookDetailPage.module.scss';
 import pb from './../api/pocketbase';
 import LookBook from './../components/Main/LookBook';
 import { GoChevronLeft } from 'react-icons/go';
+import { getWeatherIcon } from './../utils/weatherIcons';
 
 function LookBookDetailPage() {
   const navigate = useNavigate();
   const { id } = useParams();
+
+  // 날씨 아이콘
+  const skyCondition = localStorage.getItem('skyCondition');
 
   // 룩북 페이지에서 클릭된 착용샷
   const [item, setItem] = useState(null);
@@ -60,7 +64,9 @@ function LookBookDetailPage() {
           <h2 className={styles.title}>Outfit of the Day </h2>
         </div>
 
-        <div className={styles.weatherIcon}>날씨</div>
+        <div className={styles.weatherIcon}>
+          <img src={getWeatherIcon(skyCondition).src} alt={getWeatherIcon(skyCondition).alt} />
+        </div>
 
         <div className={styles.subTitle}>
           <p className={styles.description}>
