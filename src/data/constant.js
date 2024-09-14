@@ -54,6 +54,75 @@ export const temperatureList = [
   '28° ↑',
 ];
 
+export const bookmarkData = [
+  [
+    {
+      collectionId: 'cfwfpoo8z5svoms',
+      collectionName: 'costumeCard',
+      costumeBrand: '폴로',
+      costumeImage: 'pexels_frendsmans_1926769_deFTIQKSJG.jpg',
+      costumeLink: { 무신사: 'https://www.musinsa.com/products/4268814' },
+      costumeSeason: ['여름'],
+      costumeTemperature: ['5°~8°'],
+      costumeTitle: '향수',
+      created: '2024-09-10 00:24:48.715Z',
+      id: 'nnc25yevw4600cq',
+      isRainsnow: false,
+      lowerCategory: '반바지',
+      updated: '2024-09-10 00:24:48.715Z',
+      upperCategory: '하의',
+    },
+    {
+      collectionId: 'cfwfpoo8z5svoms',
+      collectionName: 'costumeCard',
+      costumeBrand: '폴로',
+      costumeImage: 'profile_4_desktop_wPdVZeGqXg.jpg',
+      costumeLink: { 무신사: 'https://www.musinsa.com/products/4268814' },
+      costumeSeason: ['여름'],
+      costumeTemperature: ['5°~8°'],
+      costumeTitle: '폴로 하의 예시',
+      created: '2024-09-08 15:10:40.756Z',
+      id: 'wymzn0k6ay9zx3u',
+      isRainsnow: false,
+      lowerCategory: '반바지',
+      updated: '2024-09-08 15:10:40.756Z',
+      upperCategory: '하의',
+    },
+    {
+      collectionId: 'cfwfpoo8z5svoms',
+      collectionName: 'costumeCard',
+      costumeBrand: '아식스',
+      costumeImage: 'profile_3_desktop_FLLurxe23y.png',
+      costumeLink: { 무신사: 'https://www.musinsa.com/products/4268814' },
+      costumeSeason: ['여름'],
+      costumeTemperature: ['5°~8°'],
+      costumeTitle: '아식스 하의 예시',
+      created: '2024-09-08 15:09:18.133Z',
+      id: 'd6b3w2v5zl8mner',
+      isRainsnow: false,
+      lowerCategory: '긴바지',
+      updated: '2024-09-12 20:04:38.856Z',
+      upperCategory: '하의',
+    },
+    {
+      collectionId: 'cfwfpoo8z5svoms',
+      collectionName: 'costumeCard',
+      costumeBrand: '아디다스',
+      costumeImage: 'profile_1_desktop_LSNGdCkG5k.png',
+      costumeLink: { 무신사: 'https://www.musinsa.com/products/4268814' },
+      costumeSeason: ['여름'],
+      costumeTemperature: ['5°~8°'],
+      costumeTitle: '아디다스 상의 예시',
+      created: '2024-09-08 15:07:44.902Z',
+      id: 'yp3x1gu86nq6ob5',
+      isRainsnow: false,
+      lowerCategory: '긴팔',
+      updated: '2024-09-08 15:11:02.807Z',
+      upperCategory: '상의',
+    },
+  ],
+];
+
 // export const categoryList = {
 //   upperCategory: ['상의', '하의', '아우터', '원피스/스커트', '악세사리'],
 //   lowerCategory: ['반바지', '바지', '반팔', '긴팔', '가디건', '패딩코트', '향수'],
@@ -67,7 +136,6 @@ export const categoryList = {
   악세사리: [],
 };
 
-
 export const BUTTONSTYLE = {
   width: '66px',
   height: '22px',
@@ -75,27 +143,26 @@ export const BUTTONSTYLE = {
   fontWeight: 400,
 };
 
-
-const SEASONS = {
+export const SEASONS = {
   봄: {
     months: [3, 4, 5],
-    tempRange: { min: 0, max: 25 }
+    tempRange: { min: 0, max: 25 },
   },
   여름: {
     months: [6, 7, 8],
-    tempRange: { min: 17, max: 37 }
+    tempRange: { min: 17, max: 37 },
   },
   가을: {
     months: [9, 10, 11],
-    tempRange: { min: 0, max: 29 }
+    tempRange: { min: 0, max: 29 },
   },
   겨울: {
     months: [12, 1, 2],
-    tempRange: { min: -Infinity, max: 2 }
-  }
+    tempRange: { min: -Infinity, max: 2 },
+  },
 };
 
-const getSeason = (month, temperature) => {
+export const getSeason = (month, temperature) => {
   for (const [season, { months, tempRange }] of Object.entries(SEASONS)) {
     if (months.includes(month) && temperature >= tempRange.min && temperature <= tempRange.max) {
       return season;
@@ -103,6 +170,3 @@ const getSeason = (month, temperature) => {
   }
   return 'Unknown';
 };
-
-export { SEASONS, getSeason };
-
