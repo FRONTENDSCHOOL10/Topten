@@ -456,3 +456,7 @@
     - 고화질 이미지로 교체
     - 버튼 컴포넌트의 props 수정
     - 버튼 컴포넌트의 prop-types 수정
+  - feat/lazywithLoader/hsw
+    - 페이지에 lazy 및 suspense에 fallback으로 Loader 설정
+    - CostumeCard 컴포넌트의 이미지에 Loader 설정
+    - 페이지 import 정리 및 autoCancel 설정 변경
