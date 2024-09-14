@@ -22,37 +22,49 @@ export const useWeatherStore = create((set) => ({
   // 위치 설정 함수: 상태에 위치를 저장하고 로컬 스토리지에도 저장
   setLocation: (location) => {
     set({ location });
-    localStorage.setItem('location', JSON.stringify(location));  // 위치 정보를 로컬 스토리지에 저장
+    const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+    storedData.location = location;
+    localStorage.setItem('weatherData', JSON.stringify(storedData));  // 위치 정보를 로컬 스토리지에 저장
   },
 
   // 주소 설정 함수: 상태에 주소를 저장하고 로컬 스토리지에도 저장
   setAddress: (address) => {
     set({ address });
-    localStorage.setItem('address', address);  // 주소 정보를 로컬 스토리지에 저장
+    const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+    storedData.address = address;
+    localStorage.setItem('weatherData', JSON.stringify(storedData));  // 주소 정보를 로컬 스토리지에 저장
   },
 
   // 기온 설정 함수: 상태에 기온을 저장하고 로컬 스토리지에도 저장
   setTemperature: (temperature) => {
     set({ temperature });
-    localStorage.setItem('temperature', temperature);  // 기온 정보를 로컬 스토리지에 저장
+    const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+    storedData.temperature = temperature;
+    localStorage.setItem('weatherData', JSON.stringify(storedData));  // 기온 정보를 로컬 스토리지에 저장
   },
 
   // 체감 온도 설정 함수: 상태에 체감 온도를 저장하고 로컬 스토리지에도 저장
   setFeelsLikeTemp: (feelsLikeTemp) => {
     set({ feelsLikeTemp });
-    localStorage.setItem('feelsLikeTemp', feelsLikeTemp);  // 체감 온도 정보를 로컬 스토리지에 저장
+    const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+    storedData.feelsLikeTemp = feelsLikeTemp;
+    localStorage.setItem('weatherData', JSON.stringify(storedData));  // 체감 온도 정보를 로컬 스토리지에 저장
   },
 
   // 날씨 상태 설정 함수: 상태에 날씨 상태를 저장하고 로컬 스토리지에도 저장
   setSkyCondition: (skyCondition) => {
     set({ skyCondition });
-    localStorage.setItem('skyCondition', skyCondition);  // 날씨 상태 정보를 로컬 스토리지에 저장
+    const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+    storedData.skyCondition = skyCondition;
+    localStorage.setItem('weatherData', JSON.stringify(storedData));  // 날씨 상태 정보를 로컬 스토리지에 저장
   },
 
   // 시간별 날씨 설정 함수: 상태에 시간별 날씨를 저장하고 로컬 스토리지에도 저장
   setHourlyWeatherData: (hourlyWeatherData) => {
     set({ hourlyWeatherData });
-    localStorage.setItem('hourlyWeatherData', JSON.stringify(hourlyWeatherData));  // 시간별 날씨 정보를 로컬 스토리지에 저장
+    const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+    storedData.hourlyWeatherData = hourlyWeatherData;
+    localStorage.setItem('weatherData', JSON.stringify(storedData));  // 시간별 날씨 정보를 로컬 스토리지에 저장
   },
 
   // Kakao API를 이용하여 주소 가져오는 함수
@@ -66,9 +78,10 @@ export const useWeatherStore = create((set) => ({
       const addressData = response.data.documents[0].address;
       const formattedAddress = `${addressData.region_1depth_name} ${addressData.region_2depth_name} ${addressData.region_3depth_name}`;
 
-      // 상태에 주소 저장
       set({ address: formattedAddress });
-      localStorage.setItem('address', formattedAddress);  // 로컬스토리지에 저장
+      const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+      storedData.address = formattedAddress;
+      localStorage.setItem('weatherData', JSON.stringify(storedData));  // 로컬스토리지에 저장
     } catch (error) {
       console.error('주소 정보를 불러오는 데 실패했습니다:', error);
       set({ error: '주소 정보를 불러오는 데 실패했습니다.' });
@@ -76,42 +89,55 @@ export const useWeatherStore = create((set) => ({
   },
 
   // 날씨 데이터를 API로부터 받아오는 함수
-  fetchWeatherData: async (lat, lon) => {
-    try {
-      const data = await fetchWeatherDataFromAPI(lat, lon);
+  // weatherStore.js에서 기온 데이터를 처리하는 부분
+fetchWeatherData: async (lat, lon) => {
+  try {
+    const data = await fetchWeatherDataFromAPI(lat, lon);
 
-      const temperatureData = data.find((item) => item.category === 'TMP');
-      const windSpeedData = data.find((item) => item.category === 'WSD');
-      const skyData = data.find((item) => item.category === 'SKY');
-      const ptyData = data.find((item) => item.category === 'PTY');
-      const highTempData = data.find((item) => item.category === 'TMX');
-      const lowTempData = data.find((item) => item.category === 'TMN');
+    // 현재 시간을 기준으로 데이터를 필터링하여 최신 기온 값을 얻기
+    const currentHour = new Date().getHours(); // 현재 시간
+    const temperatureData = data.find((item) => item.category === 'TMP' && parseInt(item.fcstTime.slice(0, 2), 10) === currentHour);
+    
+    const windSpeedData = data.find((item) => item.category === 'WSD');
+    const skyData = data.find((item) => item.category === 'SKY');
+    const ptyData = data.find((item) => item.category === 'PTY');
+    const highTempData = data.find((item) => item.category === 'TMX');
+    const lowTempData = data.find((item) => item.category === 'TMN');
 
-      const feelsLikeTemp = calculateFeelsLikeTemp(temperatureData?.fcstValue, windSpeedData?.fcstValue);
-      const isDayTime = new Date().getHours() >= 6 && new Date().getHours() < 18;
-      const weatherConditionIcon = getWeatherCondition(skyData?.fcstValue, ptyData?.fcstValue, isDayTime);
-      const weatherConditionText = getPlainSkyCondition(weatherConditionIcon);
+    const feelsLikeTemp = calculateFeelsLikeTemp(temperatureData?.fcstValue, windSpeedData?.fcstValue);
+    const isDayTime = currentHour >= 6 && currentHour < 18;
+    const weatherConditionIcon = getWeatherCondition(skyData?.fcstValue, ptyData?.fcstValue, isDayTime);
+    const weatherConditionText = getPlainSkyCondition(weatherConditionIcon);
 
-      set({
-        temperature: temperatureData?.fcstValue,
-        windSpeed: windSpeedData?.fcstValue,
-        feelsLikeTemp,
-        skyCondition: weatherConditionIcon,
-        highTemp: highTempData?.fcstValue,
-        lowTemp: lowTempData?.fcstValue,
-      });
+    set({
+      temperature: temperatureData?.fcstValue,  // 현재 시간에 맞는 기온 데이터 설정
+      windSpeed: windSpeedData?.fcstValue,
+      feelsLikeTemp,
+      skyCondition: weatherConditionIcon,
+      highTemp: highTempData?.fcstValue,
+      lowTemp: lowTempData?.fcstValue,
+    });
 
-      localStorage.setItem('temperature', temperatureData?.fcstValue);
-      localStorage.setItem('feelsLikeTemp', feelsLikeTemp);
-      localStorage.setItem('skyCondition', weatherConditionIcon);
-      localStorage.setItem('weatherText', weatherConditionText);
-      localStorage.setItem('highTemp', highTempData?.fcstValue);
-      localStorage.setItem('lowTemp', lowTempData?.fcstValue);
+    // 모든 데이터를 객체로 묶어서 로컬 스토리지에 저장
+    const weatherData = {
+      temperature: temperatureData?.fcstValue,
+      feelsLikeTemp,
+      skyCondition: weatherConditionIcon,
+      weatherText: weatherConditionText,
+      highTemp: highTempData?.fcstValue,
+      lowTemp: lowTempData?.fcstValue,
+      windSpeed: windSpeedData?.fcstValue,
+      location: { lat, lon }, // 위치 추가
+      address: (JSON.parse(localStorage.getItem('weatherData')) || {}).address || "" // 기존 저장된 주소 또는 빈 문자열
+    };
+    
+    localStorage.setItem('weatherData', JSON.stringify(weatherData));
 
-    } catch (error) {
-      set({ error: '날씨 데이터를 불러오는 데 실패했습니다.' });
-    }
-  },
+  } catch (error) {
+    set({ error: '날씨 데이터를 불러오는 데 실패했습니다.' });
+  }
+},
+
 
   // 어제의 날씨 데이터를 API로부터 받아오는 함수
   fetchYesterdayWeatherData: async (lat, lon) => {
@@ -119,35 +145,45 @@ export const useWeatherStore = create((set) => ({
       const data = await fetchYesterdayWeatherDataFromAPI(lat, lon);
       const temperatureData = data.find((item) => item.category === 'TMP');
       set({ yesterdayTemperature: temperatureData?.fcstValue });
-      localStorage.setItem('yesterdayTemperature', temperatureData?.fcstValue);
+      
+      const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+      storedData.yesterdayTemperature = temperatureData?.fcstValue;
+      localStorage.setItem('weatherData', JSON.stringify(storedData));  // 어제의 날씨 데이터를 객체로 저장
     } catch (error) {
       set({ error: '어제의 날씨 데이터를 불러오는 데 실패했습니다.' });
     }
   },
 
   // weatherStore.js에서 시간별 날씨 데이터를 처리하는 부분
-  fetchHourlyWeatherData: async (lat, lon) => {
-    try {
-      const todayData = await fetchHourlyWeatherDataFromAPI(lat, lon);
-      const hourlyData = [];
-  
-      // 시간별로 TMP, SKY, PTY를 추출하여 매칭
-      for (let i = 0; i < todayData.length; i++) {
-        const tempData = todayData.find(
-          (item) => item.category === 'TMP' && item.fcstTime === todayData[i].fcstTime
-        );
-        const skyData = todayData.find(
-          (item) => item.category === 'SKY' && item.fcstTime === todayData[i].fcstTime
-        );
-        const ptyData = todayData.find(
-          (item) => item.category === 'PTY' && item.fcstTime === todayData[i].fcstTime
-        );
-  
-        // 필터링된 데이터를 추가 (같은 시간대에 중복 데이터가 없는 경우)
-        if (tempData && skyData && !hourlyData.some((entry) => entry.time === tempData.fcstTime)) {
-          const forecastHour = parseInt(tempData.fcstTime.slice(0, 2), 10);
-          const isDayTime = forecastHour >= 6 && forecastHour < 18;
-  
+  // weatherStore.js
+// weatherStore.js
+fetchHourlyWeatherData: async (lat, lon) => {
+  try {
+    const todayData = await fetchHourlyWeatherDataFromAPI(lat, lon);
+    const hourlyData = [];
+
+    const currentHour = new Date().getHours(); // 현재 시간을 기준으로 데이터를 필터링
+    const currentDay = new Date().getDate();   // 오늘 날짜
+
+    for (let i = 0; i < todayData.length; i++) {
+      const tempData = todayData.find(
+        (item) => item.category === 'TMP' && item.fcstTime === todayData[i].fcstTime
+      );
+      const skyData = todayData.find(
+        (item) => item.category === 'SKY' && item.fcstTime === todayData[i].fcstTime
+      );
+      const ptyData = todayData.find(
+        (item) => item.category === 'PTY' && item.fcstTime === todayData[i].fcstTime
+      );
+
+      if (tempData && skyData && !hourlyData.some((entry) => entry.time === tempData.fcstTime)) {
+        const forecastHour = parseInt(tempData.fcstTime.slice(0, 2), 10);
+        const forecastDay = parseInt(todayData[i].fcstDate.slice(-2), 10); // 예보 날짜
+
+        const isDayTime = forecastHour >= 6 && forecastHour < 18;
+
+        // 오늘 현재 시간 이후 또는 내일 오전의 데이터만 추가
+        if ((forecastDay === currentDay && forecastHour >= currentHour) || forecastDay > currentDay) {
           hourlyData.push({
             time: tempData.fcstTime,
             temperature: tempData.fcstValue,
@@ -155,16 +191,18 @@ export const useWeatherStore = create((set) => ({
           });
         }
       }
-
-      console.log('시간대별 필터링된 데이터:', hourlyData);
-  
-      // 상태에 시간별 날씨 저장
-      set({ hourlyWeatherData: hourlyData });
-      localStorage.setItem('hourlyWeatherData', JSON.stringify(hourlyData));
-    } catch (error) {
-      set({ error: '시간별 날씨 데이터를 불러오는 데 실패했습니다.' });
     }
-  },  
-  
+
+    set({ hourlyWeatherData: hourlyData });
+
+    const storedData = JSON.parse(localStorage.getItem('weatherData')) || {};
+    storedData.hourlyWeatherData = hourlyData;
+    localStorage.setItem('weatherData', JSON.stringify(storedData));  // 시간별 날씨 데이터를 객체로 저장
+  } catch (error) {
+    set({ error: '시간별 날씨 데이터를 불러오는 데 실패했습니다.' });
+  }
+},
+
+
 
 }));
