@@ -125,40 +125,46 @@ export const useWeatherStore = create((set) => ({
     }
   },
 
-  // 시간별 날씨 데이터를 API로부터 받아오는 함수
+  // weatherStore.js에서 시간별 날씨 데이터를 처리하는 부분
   fetchHourlyWeatherData: async (lat, lon) => {
     try {
-      const data = await fetchHourlyWeatherDataFromAPI(lat, lon);
+      const todayData = await fetchHourlyWeatherDataFromAPI(lat, lon);
       const hourlyData = [];
-
-      const currentTime = new Date();
-      const currentHour = currentTime.getHours() * 100;
-
-      const filteredData = data.filter(
-        (item) =>
-          (item.category === 'TMP' || item.category === 'SKY' || item.category === 'PTY') &&
-          parseInt(item.fcstTime, 10) >= currentHour
-      );
-
-      for (let i = 0; i < filteredData.length && hourlyData.length < 24; i++) {
-        const tempData = filteredData.find((item) => item.category === 'TMP' && item.fcstTime === filteredData[i].fcstTime);
-        const skyData = filteredData.find((item) => item.category === 'SKY' && item.fcstTime === filteredData[i].fcstTime);
-        const ptyData = filteredData.find((item) => item.category === 'PTY' && item.fcstTime === filteredData[i].fcstTime);
-
-        const forecastHour = parseInt(tempData.fcstTime.slice(0, 2), 10);
-        const isDayTime = forecastHour >= 6 && forecastHour < 18;
-
-        hourlyData.push({
-          time: tempData.fcstTime,
-          temperature: tempData.fcstValue,
-          weatherCondition: getWeatherCondition(skyData?.fcstValue, ptyData?.fcstValue, isDayTime),
-        });
+  
+      // 시간별로 TMP, SKY, PTY를 추출하여 매칭
+      for (let i = 0; i < todayData.length; i++) {
+        const tempData = todayData.find(
+          (item) => item.category === 'TMP' && item.fcstTime === todayData[i].fcstTime
+        );
+        const skyData = todayData.find(
+          (item) => item.category === 'SKY' && item.fcstTime === todayData[i].fcstTime
+        );
+        const ptyData = todayData.find(
+          (item) => item.category === 'PTY' && item.fcstTime === todayData[i].fcstTime
+        );
+  
+        // 필터링된 데이터를 추가 (같은 시간대에 중복 데이터가 없는 경우)
+        if (tempData && skyData && !hourlyData.some((entry) => entry.time === tempData.fcstTime)) {
+          const forecastHour = parseInt(tempData.fcstTime.slice(0, 2), 10);
+          const isDayTime = forecastHour >= 6 && forecastHour < 18;
+  
+          hourlyData.push({
+            time: tempData.fcstTime,
+            temperature: tempData.fcstValue,
+            weatherCondition: getWeatherCondition(skyData?.fcstValue, ptyData?.fcstValue, isDayTime),
+          });
+        }
       }
 
+      console.log('시간대별 필터링된 데이터:', hourlyData);
+  
+      // 상태에 시간별 날씨 저장
       set({ hourlyWeatherData: hourlyData });
       localStorage.setItem('hourlyWeatherData', JSON.stringify(hourlyData));
     } catch (error) {
       set({ error: '시간별 날씨 데이터를 불러오는 데 실패했습니다.' });
     }
-  },
+  },  
+  
+
 }));

@@ -72,3 +72,4 @@ export const getWeatherCondition = (skyValue, ptyValue, isDayTime) => {
 
   return '흐림';
 };
+
