@@ -4,6 +4,21 @@ import initialCards from '@/data/test.js';
 import CostumeCard from '@/components/CostumeCard/CostumeCard';
 import Button from '../Button/Button';
 import { IoRefreshSharp } from 'react-icons/io5';
+import { FaBookmark } from 'react-icons/fa6';
+import BookmarkModal from '../BookmarkModal/BookmarkModal';
+import StarRate from '../StarRate/StarRate';
+import getDate from '../../api/getDate';
+
+// 일단 정민님 데이터 받아왔다고 치고
+const OBJ = {
+  address: '충남 천안시 불당동',
+  skyCondition: '구름많음(낮)',
+  comment: '',
+  rate: 0,
+  saveTime: '',
+  upperItems: '',
+  lowerItems: '',
+};
 
 const temperatureList = [
   '4° ↓',
@@ -24,6 +39,8 @@ const BUTTONSTYLE = {
 };
 
 function Product() {
+  const [formData, setFormData] = useState(OBJ);
+  const [clickedModal, setClickedModal] = useState(false);
   const [likeList, setLikeList] = useState([]);
 
   const toggleLike = (id) => {
@@ -77,9 +94,50 @@ function Product() {
     setActiveRandom((prev) => prev + 1);
   };
 
+  // 북마크 클릭 처리 함수
+  const handleClickBookmark = () => {
+    console.log('aaaaaa');
+    setClickedModal(true);
+  };
+
+  // 북마크 textarea 입력 함수
+  const handleChange = (e) => {
+    const { value, name } = e.target;
+    console.log(name);
+    setFormData((prev) => ({ ...prev, comment: value }));
+  };
+
+  const handleSave = () => {
+    const bookmarkItem = {
+      ...formData,
+      upperItems: filteredUpper,
+      lowerItems: filteredLower,
+      saveTime: getDate(),
+    };
+    localStorage.setItem('bookmarkItem', JSON.stringify(bookmarkItem));
+  };
+
   return (
     <div className={styles.product__component}>
-      <h2 className={styles.title}>오늘 날씨엔?</h2>
+      {clickedModal ? (
+        <BookmarkModal
+          address={OBJ.address}
+          skyCondition={OBJ.skyCondition}
+          onClick={() => setClickedModal(false)}
+          onChange={handleChange}
+          onEdit={handleSave}
+        />
+      ) : (
+        ''
+      )}
+      <div className={styles.product__title__button}>
+        <h2 className={styles.title}>오늘 날씨엔?</h2>
+        <Button
+          text="OOTD 저장"
+          icon={<FaBookmark className={styles.icon} />}
+          onClick={handleClickBookmark}
+        />
+      </div>
       <div className={styles.buttons}>
         {temperatureList.map((text, index) => (
           <Button style={BUTTONSTYLE} key={index} text={text} onClick={handleClick} />

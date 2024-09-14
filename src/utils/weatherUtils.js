@@ -60,15 +60,27 @@ export const getPlainSkyCondition = (condition) => {
 };
 
 // 날씨 상태를 결정하는 함수
+// 날씨 상태를 결정하는 함수
 export const getWeatherCondition = (skyValue, ptyValue, isDayTime) => {
-  if (ptyValue === '1') return '비';
+  // 강수 상태가 비로 나타나면 우선적으로 비로 처리
+  if (ptyValue === '1') {
+    // 추가 조건: SKY 값이 맑음(낮) 또는 맑음(밤)일 경우 비 대신 맑음으로 처리
+    if (skyValue === '1') {
+      return isDayTime ? '맑음(낮)' : '맑음(밤)';
+    }
+    return '비';  // 그 외의 경우는 비로 처리
+  }
   if (ptyValue === '2') return '비 또는 눈';
   if (ptyValue === '3') return '눈';
   if (ptyValue === '4') return '소나기';
 
-  if (skyValue === '1') return isDayTime ? '맑음(낮)' : '맑음(밤)';
-  if (skyValue === '3') return isDayTime ? '구름조금(낮)' : '구름조금(밤)';
-  if (skyValue === '4') return isDayTime ? '구름많음(낮)' : '구름많음(밤)';
+  // 강수 상태가 없는 경우, 하늘 상태(SKY)를 기반으로 결정
+  if (ptyValue === '0') {
+    if (skyValue === '1') return isDayTime ? '맑음(낮)' : '맑음(밤)';
+    if (skyValue === '3') return isDayTime ? '구름조금(낮)' : '구름조금(밤)';
+    if (skyValue === '4') return isDayTime ? '구름많음(낮)' : '구름많음(밤)';
+  }
 
-  return '흐림';
+  return '흐림';  // 기본값
 };
+

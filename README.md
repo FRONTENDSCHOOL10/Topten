@@ -460,3 +460,11 @@
     - 페이지에 lazy 및 suspense에 fallback으로 Loader 설정
     - CostumeCard 컴포넌트의 이미지에 Loader 설정
     - 페이지 import 정리 및 autoCancel 설정 변경
+
+- 함정민
+  - fix: 시간대별 날씨 정보 코드 오류 수정
+  - feat: 메인페이지 접근시 마다 해당 시간을 로컬스토리지에 저장
+  - feat: 로컬스토리지에 저장되는 날씨 데이터 객체로 묶기
+  - fix: 시간대별 날씨 출력되는 시간 기준 수정
+  - fix: 현재기온 출력 시간 기준(baseTime) 수정
+
