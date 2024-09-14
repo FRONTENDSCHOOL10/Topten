@@ -5,6 +5,7 @@ import getPbImageURL from './../../api/getPbImageURL';
 import CostumeCardManager from '@/components/CostumeCardManager/CostumeCardManager';
 import Button from './../Button/Button';
 import PropTypes from 'prop-types';
+import { getSeason } from './../../data/constant';
 
 LookBook.propTypes = {
   item: PropTypes.shape({
@@ -22,6 +23,20 @@ function LookBook({ item }) {
   // 관련 상품
   const [relatedItems, setRelatedItems] = useState([]);
 
+  // 기온 ------------------------------------
+  const temperatureStr = localStorage.getItem('temperature');
+  const temperature = parseInt(temperatureStr, 10);
+
+  // 월
+  const monthStr = localStorage.getItem('lastAccessTime').split('.')[1];
+  const month = parseInt(monthStr, 10);
+
+  // 계절 판별
+  const season = getSeason(month, temperature);
+
+  console.log('현재 계절은 ' + season + '입니다.');
+
+
   useEffect(() => {
     // 룩북 상세 페이지의 룩북
     if (item) {
@@ -38,13 +53,13 @@ function LookBook({ item }) {
           const filteredItems = allCostumeCards.filter((card) => costumeCardIds.includes(card.id));
 
           setRelatedItems(filteredItems);
+
         } catch (error) {
           console.error('관련 상품 데이터를 가져오는 중 에러 발생:', error);
         }
       };
 
       fetchRelatedItems();
-
       
     } else {
       // 메인 페이지의 룩북
@@ -52,11 +67,8 @@ function LookBook({ item }) {
         try {
           const items = await pb.collection('lookBook').getFullList();
 
-          // 임시!!! ----------------------------------
-          const weather = '가을';
-
           // 계절에 맞는 아이템 필터링
-          const seasonItems = items.filter((item) => item.lookBookSeason.includes(weather));
+          const seasonItems = items.filter((item) => item.lookBookSeason.includes(season));
 
           console.log(seasonItems);
 
@@ -79,6 +91,7 @@ function LookBook({ item }) {
               );
 
               setRelatedItems(filteredItems);
+
             } else {
               // 관련 상품이 없을 때
               setRelatedItems([]);
@@ -91,8 +104,9 @@ function LookBook({ item }) {
 
       fetchLookBookItems();
     }
-  }, [item]);
+  }, [item, season]);
 
+  
   return (
     <div className={styles.container}>
       {!item && (
