@@ -5,6 +5,7 @@ import Select from '../components/Select/Select';
 import { COLORS } from '../data/constant';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
+import { Toaster } from 'react-hot-toast';
 
 const ChangeColorPage = () => {
   const [color, setColor] = useState(() => ['']);
@@ -34,6 +35,7 @@ const ChangeColorPage = () => {
       />
       <Select name="userColor" text="퍼스널 컬러" items={COLORS} onChange={handleChange} />
       <Button text="변경하기" onClick={handleClick} />
+      <Toaster />
     </div>
   );
 };

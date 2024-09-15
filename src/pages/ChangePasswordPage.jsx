@@ -5,6 +5,7 @@ import Form from '../components/Form/Form';
 import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
+import { Toaster } from 'react-hot-toast';
 const ChangePasswordPage = () => {
   const [passwords, setPasswords] = useState({
     currentPassword: '',
@@ -73,6 +74,7 @@ const ChangePasswordPage = () => {
         />
         <Button text={'비밀번호변경'} onClick={handleClick} />
       </Form>
+      <Toaster />
     </div>
   );
 };
