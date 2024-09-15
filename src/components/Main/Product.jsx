@@ -102,11 +102,11 @@ function Product() {
       uid: user.id,
     };
 
-    //새롭게 생성한 bookmarkItem 데이터를 로컬에 저장
-    localStorage.setItem('bookmarkItem', JSON.stringify(bookmarkItem));
-
-    //bookmarkItem을 로컬에 저장후 db서버에 저장
+    // bookmarkItem을 db서버에 저장
     const result = await createData(bookmarkItem);
+
+    // 위에서 반환한 result 값을 로컬에 저장
+    localStorage.setItem('bookmarkItem', JSON.stringify(result));
 
     // db에 저장이 끝났다면 팝업이 사라지며 토스트가 호출
     setClickedModal(false);
