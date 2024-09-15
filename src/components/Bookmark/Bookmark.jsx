@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { CostumeCardManager } from '@/components';
 import S from './Bookmark.module.scss';
 import StarRate from '../StarRate/StarRate';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
 import { getWeatherIcon } from '../../utils/weatherIcons';
 
@@ -11,10 +11,11 @@ const Bookmark = () => {
   //   const bookmarkData = JSON.parse(localStorage.getItem('bookmarkItem'));
 
   // const { address, skyCondition, comment, rate, saveTime, upperItems, lowerItems } = bookmarkData;
+  const weatherData = JSON.parse(localStorage.getItem('weatherData'));
 
-  const savedAddress = localStorage.getItem('address');
-  const savedTime = localStorage.getItem('lastAccessTime').slice(0, 10);
-  const skyCondition = localStorage.getItem('skyCondition');
+  const savedAddress = weatherData.address;
+  const savedTime = '현재 날짜';
+  const skyCondition = weatherData.skyCondition;
 
   const [costumeCards, setCostumeCards] = useState([]);
   // CostumeCard 리스트를 서버에서 불러와 sessionStorage와 localStorage에 저장
@@ -79,7 +80,7 @@ const Bookmark = () => {
               <FaRegEdit />
             </button>
             <button type="button" className={S.icon} onClick={handleDelete}>
-              <RiDeleteBin6Fill />
+              <RiDeleteBin6Line />
             </button>
           </div>
         </div>
