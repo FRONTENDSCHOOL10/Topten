@@ -6,10 +6,11 @@ import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 import loadToast from '../api/loadToast';
 import { Toaster } from 'react-hot-toast';
+import useGetUserInfo from '../hooks/useGetUserInfo';
 //잠시 커밋 확인 위한 주석
 const ChangeMyInfoPage = () => {
+  const { user } = useGetUserInfo();
   const [userNickName, setUserNickName] = useState('');
-  const user = JSON.parse(sessionStorage.getItem('pb_auth')).token;
 
   const handleChange = (e) => {
     const { value } = e.target;

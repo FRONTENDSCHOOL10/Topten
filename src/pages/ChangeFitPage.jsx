@@ -5,10 +5,11 @@ import { SIZE } from '../data/constant';
 import Select from '../components/Select/Select';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
+import useGetUserInfo from '../hooks/useGetUserInfo';
 
 const ChangeFitPage = () => {
+  const { user } = useGetUserInfo();
   const [userSize, setUserSize] = useState({ topSize: '', bottomSize: '' });
-  const user = JSON.parse(sessionStorage.getItem('pb_auth')).token;
 
   //공백 조건 처리 필
   const handleChange = (e) => {

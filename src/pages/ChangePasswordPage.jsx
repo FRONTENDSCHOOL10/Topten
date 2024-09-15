@@ -7,7 +7,10 @@ import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 import { validatePassword } from '../api/validation';
 import { WRANING } from '../data/constant';
+import useGetUserInfo from '../hooks/useGetUserInfo';
 const ChangePasswordPage = () => {
+  const { user } = useGetUserInfo();
+
   const [passwords, setPasswords] = useState({
     currentPassword: '',
     newPassword: '',
@@ -18,8 +21,6 @@ const ChangePasswordPage = () => {
     newPassword: null,
     confirmNewPassword: null,
   });
-
-  const user = JSON.parse(sessionStorage.getItem('pb_auth')).token;
 
   const validateCheckPassword = (confirmNewPassword) => {
     if (passwords.newPassword.length === 0) return;
