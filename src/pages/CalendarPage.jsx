@@ -64,9 +64,9 @@ function CalendarPage(props) {
   // const { address, skyCondition, comment, rate, saveTime, upperItems, lowerItems } = bookmarkData;
   // ------------------------------------------
 
-  const [value, onChange] = useState(new Date());
+  const [value, setValue] = useState(new Date());
   const [selectedBookmark, setSelectedBookmark] = useState(null);
-  
+
   // 북마크된 날짜
   // const savedTime = localStorage.getItem('lastAccessTime').slice(0, 10);
 
