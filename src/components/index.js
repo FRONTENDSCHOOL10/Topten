@@ -14,3 +14,4 @@ export { default as ToTopButton } from './ToTopButton/ToTopButton.jsx';
 export { default as Loader } from './Loader/Loader.jsx';
 export { default as CommonModal } from './CommonModal/CommonModal.jsx';
 export { default as Bookmark } from './Bookmark/Bookmark.jsx';
+export { default as BookmarkModal } from './BookmarkModal/BookmarkModal.jsx';

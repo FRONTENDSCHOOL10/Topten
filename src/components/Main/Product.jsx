@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import styles from './Product.module.scss';
-import CostumeCard from '@/components/CostumeCard/CostumeCard';
-import Button from '../Button/Button';
-import { IoRefreshSharp } from 'react-icons/io5';
-import { FaBookmark } from 'react-icons/fa6';
-import BookmarkModal from '../BookmarkModal/BookmarkModal';
-import getDate from '../../api/getDate';
-import createData from '../../api/createData';
-import useGetUserInfo from '../../hooks/useGetUserInfo';
-import getPbImageURL from '@/api/getPbImageURL';
-import loadToast from './../../api/loadToast';
 import { Toaster } from 'react-hot-toast';
-import CommonModal from './../CommonModal/CommonModal';
-import useLikeStore from './../../stores/likeStore';
+import { FaBookmark } from 'react-icons/fa6';
+import { IoRefreshSharp } from 'react-icons/io5';
+
+import getPbImageURL from '@/api/getPbImageURL';
+import createData from '../../api/createData';
+import getDate from '../../api/getDate';
+import loadToast from './../../api/loadToast';
+
+import useGetUserInfo from '../../hooks/useGetUserInfo';
 import { BUTTONSTYLE, temperatureList } from './../../data/constant';
+import useLikeStore from './../../stores/likeStore';
+
+import { BookmarkModal, Button, CommonModal, CostumeCard } from '@/components';
+import styles from './Product.module.scss';
 
 function Product() {
   const { user } = useGetUserInfo();
@@ -50,6 +50,8 @@ function Product() {
 
   // 파생된 상태, 기온에 맞게 상의 하의를 필터링
   const makeFilteredItem = (category) => {
+    if (!productItems) return []; // productItems가 null이면 빈 배열 반환
+
     //기온과 카테고리에 맞게 1차 필터링
     const filteredItems = productItems.filter(
       ({ costumeTemperature: t, upperCategory }) =>

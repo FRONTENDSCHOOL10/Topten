@@ -1,11 +1,16 @@
 import { useMemo } from 'react';
 import { object, string, arrayOf } from 'prop-types';
 import CostumeCard from '@/components/CostumeCard/CostumeCard';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Grid } from 'swiper/modules';
+import 'swiper/css/grid';
+import 'swiper/css';
 import useLikeStore from '@/stores/likeStore'; // Zustand store
 import S from './CostumeCardManager.module.scss';
 import getPbImageURL from '@/api/getPbImageURL'; // PocketBase 이미지 URL 생성 함수
 
 const CostumeCardManager = ({ user, viewType, costumeCards }) => {
+  // 수정된 부분: likeList를 likeLocal로 변경하고 toggleLike를 toggleLikeLocal로 변경
   const { likeLocal, toggleLikeLocal } = useLikeStore();
 
   // 좋아요 상태와 카드 데이터를 메모이제이션
@@ -14,17 +19,17 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
       const imageUrl = getPbImageURL(record, 'costumeImage');
 
       return (
-        <div key={record.id} className={S.cardWrapper}>
+        <SwiperSlide key={record.id}>
           <CostumeCard
             record={record}
             imageUrl={imageUrl}
-            isLiked={likeLocal.includes(record.id)}
-            onLikeToggle={() => toggleLikeLocal(record.id)}
+            isLiked={likeLocal.includes(record.id)} // 수정된 부분: likeLocal로 좋아요 상태 전달
+            onLikeToggle={() => toggleLikeLocal(record.id)} // 수정된 부분: toggleLikeLocal로 토글 함수 전달
           />
-        </div>
+        </SwiperSlide>
       );
     });
-  }, [costumeCards, likeLocal]);
+  }, [costumeCards, likeLocal]); // 수정된 부분: likeLocal을 의존성 배열에 추가
 
   if (!costumeCards.length) {
     return <div>저장된 제품이 없는것 같아요...</div>;
@@ -33,7 +38,9 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
   if (viewType === '리스트') {
     return (
       <div className="wrapComponent">
-        <div className={S.gridList}>{memoizedCards}</div>
+        <Swiper spaceBetween={10} slidesPerView={2}>
+          {memoizedCards}
+        </Swiper>
       </div>
     );
   }

@@ -6,20 +6,18 @@ import useLikeStore from '@/stores/likeStore';
 import { Helmet } from 'react-helmet-async';
 
 function MainPage(props) {
-  // pb.autoCancellation(false);
   const [user, setUser] = useState(null);
   const [costumeCards, setCostumeCards] = useState([]);
-  const { initLikeOrigin, initLikeLocal } = useLikeStore(); // Zustand에서 가져온 초기화 함수들
-
-  // 모달창 관련 상태
+  const { initLikeOrigin, initLikeLocal } = useLikeStore();
   const [isModalOpen, setModalOpen] = useState(false);
 
-  // 모달창 활성화 하는 함수
+  // 로딩 상태 관리
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+
   const activateModal = () => {
     setModalOpen(true);
   };
 
-  // 현재 시간을 'YYYY.MM.DD HH:mm:ss' 형식으로 반환하는 함수
   const getCurrentFormattedTime = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -28,35 +26,28 @@ function MainPage(props) {
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
-    
+
     return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
   };
 
-
-  // sessionStorage에서 pb_auth 정보를 가져옴
   useEffect(() => {
     const pbAuth = sessionStorage.getItem('pb_auth');
     if (pbAuth) {
       try {
         const parsedUser = JSON.parse(pbAuth);
-        console.log('MainPage parsedUser:', parsedUser);
         setUser(parsedUser);
 
-        // 유저가 있을 경우, like-origin을 초기화
         if (parsedUser && parsedUser.token?.id) {
-          // 서버에서 like-origin 가져와 초기화
           const fetchLikeList = async () => {
             try {
               const likeListResponse = await pb.collection('likeList').getFullList({
                 filter: `owner = "${parsedUser.token.id}"`,
               });
-              console.log('likeListResponse in MainPage:', likeListResponse);
 
-              // 각 항목의 costumeCard 배열을 평탄화하여 1차원 배열로 만듭니다.
               const likedIds = likeListResponse.map((item) => item.costumeCard).flat();
 
-              initLikeOrigin(likedIds); // 중복 없이 관리
-              initLikeLocal(); // like-local을 like-origin으로 복제
+              initLikeOrigin(likedIds);
+              initLikeLocal();
             } catch (error) {
               console.error('Failed to fetch likeList:', error);
             }
@@ -69,37 +60,31 @@ function MainPage(props) {
     }
   }, []);
 
-  // 로컬스토리지에 접근 시간을 저장하는 useEffect
   useEffect(() => {
     const currentTime = getCurrentFormattedTime();
     localStorage.setItem('lastAccessTime', currentTime);
-    console.log(`접근 시간 저장: ${currentTime}`);
-  }, []);  // 빈 배열이므로 페이지가 로드될 때마다 실행
+  }, []);
 
-  // CostumeCard 리스트를 서버에서 불러와 sessionStorage와 localStorage에 저장
   useEffect(() => {
     const fetchCostumeCards = async () => {
       try {
-        // 세션에 저장된 costumeCards를 가져옴
         const cachedCostumeCards = sessionStorage.getItem('costumeCards');
 
-        // 세션에 데이터가 존재하고, 빈 배열이 아닌 경우 상태에 저장
         if (cachedCostumeCards && JSON.parse(cachedCostumeCards).length > 0) {
           setCostumeCards(JSON.parse(cachedCostumeCards));
-        }
-        // 세션에 데이터가 없거나 빈 배열일 경우 서버에서 데이터를 가져옴
-        else {
+        } else {
           const records = await pb.collection('costumeCard').getFullList({
             sort: '-created',
           });
-
-          // 가져온 데이터를 상태에 저장하고, 로컬 및 세션에 저장
           setCostumeCards(records);
           sessionStorage.setItem('costumeCards', JSON.stringify(records));
           localStorage.setItem('costumeCards', JSON.stringify(records));
         }
       } catch (error) {
         console.error('Failed to fetch costumeCards:', error);
+      } finally {
+        // 모든 데이터를 불러왔을 때 로딩 상태 해제
+        setIsLoading(false);
       }
     };
 
@@ -124,26 +109,30 @@ function MainPage(props) {
         <meta property="og:site:author" content="TopTen" />
         <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
-      <div className={S.wrapComponent}>
-        <button type="button" onClick={activateModal}>
-          모달창 키기
-        </button>
-        <br />
-        <CommonModal
-          isOpen={isModalOpen}
-          onClose={() => setModalOpen(false)}
-          title={['로그인 후', <br />, '이용해보세요!']}
-          firstActionText="회원가입인척 하는 로그인"
-          firstActionLink="/login"
-          secondActionText="회원가입"
-          secondActionLink="/register"
-        />
 
-        <Weather />
-        <Product />
-        <CostumeCardManager user={user} viewType="리스트" costumeCards={costumeCards} />
-        <LookBook />
-      </div>
+      {/* 로딩 상태에 따른 조건부 렌더링 */}
+      {isLoading ? (
+        <div>Loading...</div> // 로딩 중일 때 표시할 컴포넌트 또는 스피너
+      ) : (
+        <div className={S.wrapComponent}>
+          <button type="button" onClick={activateModal}>
+            모달창 키기
+          </button>
+          <CommonModal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            title={['로그인 후', <br />, '이용해보세요!']}
+            firstActionText="회원가입인척 하는 로그인"
+            firstActionLink="/login"
+            secondActionText="회원가입"
+            secondActionLink="/register"
+          />
+          <Weather />
+          <Product />
+          <CostumeCardManager user={user} viewType="리스트" costumeCards={costumeCards} />
+          <LookBook />
+        </div>
+      )}
     </>
   );
 }
