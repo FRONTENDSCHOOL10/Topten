@@ -119,6 +119,12 @@ function CalendarPage(props) {
   return (
     <>
       <div className="wrapComponent">
+
+      <div className={S.title}>
+        <p>원하시는 날짜를 선택하세요</p>
+        <button>달력 접기</button>
+      </div>
+
         <div className={S.myCalendar}>
           <StyledCalendar
             value={value}
