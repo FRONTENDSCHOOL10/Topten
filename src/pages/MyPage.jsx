@@ -14,7 +14,7 @@ function MyPage(props) {
   const navigate = useNavigate();
   const { user } = useGetUserInfo();
   const [isActive, setIsActive] = useState(false);
-  const profileImageUrl = user.isUser ? getPbImageURL(user, 'userPhoto') : defaultImg;
+  const profileImageUrl = user.userPhoto ? getPbImageURL(user, 'userPhoto') : defaultImg;
   const { userNickName, email, userSize: size, userColor } = user;
 
   const updateProfileImage = async (e) => {
@@ -136,7 +136,7 @@ function MyPage(props) {
                 id="upload"
                 type="file"
                 accept="image/jpg,image/png,image/webp,image"
-                // className={S.a11yHidden}
+                className={S.upload__input}
                 onChange={updateProfileImage}
               />
               <img src="/icon/picture.png" alt="" />
