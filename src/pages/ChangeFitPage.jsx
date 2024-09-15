@@ -19,7 +19,7 @@ const ChangeFitPage = () => {
   const handleClick = async () => {
     try {
       const updatedSize = { ...user, userSize: [userSize.topSize, userSize.bottomSize] };
-      const updatedUser = await updateUserData(user.id, updatedSize);
+      const updatedUser = await updateUserData('users', user.id, updatedSize);
       loadToast('사이즈 변경 완료', '📌');
     } catch (error) {
       console.error(error);

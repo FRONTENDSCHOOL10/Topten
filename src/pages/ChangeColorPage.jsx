@@ -19,7 +19,7 @@ const ChangeColorPage = () => {
   const handleClick = async () => {
     try {
       const updatedColor = { ...user, userColor: color };
-      const updatedUser = await updateUserData(user.id, updatedColor);
+      const updatedUser = await updateUserData('users', user.id, updatedColor);
       loadToast('색상 변경 완료', '📌');
     } catch (error) {
       console.error(error);

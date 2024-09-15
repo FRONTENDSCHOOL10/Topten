@@ -27,7 +27,7 @@ const ChangePasswordPage = () => {
         passwordConfirm: passwords.confirmNewPassword,
       };
 
-      const updatedUser = await updateUserData(user.id, updatedPassword);
+      const updatedUser = await updateUserData('users', user.id, updatedPassword);
       loadToast('비밀번호 변경 완료', '📌');
     } catch (error) {
       console.error(error);
