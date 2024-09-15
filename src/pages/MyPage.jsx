@@ -10,26 +10,24 @@ import getPbImageURL from './../api/getPbImageURL';
 import S from './../styles/pages/MainPage.module.scss';
 import defaultImg from '/image/happiness.png';
 import clsx from 'clsx';
+import updateUserData from '../api/updateData';
 function MyPage(props) {
   const navigate = useNavigate();
-  const { user } = useGetUserInfo();
+  const { user, setUser } = useGetUserInfo();
   const [isActive, setIsActive] = useState(false);
   const profileImageUrl = user.userPhoto ? getPbImageURL(user, 'userPhoto') : defaultImg;
   const { userNickName, email, userSize: size, userColor } = user;
 
   const updateProfileImage = async (e) => {
-    // const [file] = e.target.files;
-    // const userPhoto = URL.createObjectURL(file);
-    // const form = new FormData();
-    // form.append('userPhoto', userPhoto);
-    // console.log(form.get('userPhoto').replace('blob:', ''));
-    // console.log({ ...user, userPhoto: form.get('userPhoto') }); // selectedFile must be File or Blob instance
-    // const aa = await updateUserData(user.id, {
-    //   ...user,
-    //   userPhoto: form.get('userPhoto').replace('blob:', ''),
-    // });
-    // console.log('aa', aa);
-    // console.log(user.id, { ...user, userPhoto: form.get('avatar') });
+    const formData = new FormData();
+    const [file] = e.target.files;
+    formData.append('userPhoto', file);
+    console.log({ ...user, userPhoto: formData.get('userPhoto') });
+    const { userPhoto } = await updateUserData(user.id, {
+      ...user,
+      userPhoto: formData.get('userPhoto'),
+    });
+    setUser({ ...user, userPhoto });
   };
 
   //임시 모달
@@ -129,9 +127,9 @@ function MyPage(props) {
           <ul>
             <li>
               <img src="/icon/camera2.png" alt="" />
-              카메라로 촬영하기
+              <label htmlFor="upload">카메라로 촬영하기</label>
             </li>
-            <li htmlFor="upload">
+            <li>
               <input
                 id="upload"
                 type="file"
@@ -140,7 +138,7 @@ function MyPage(props) {
                 onChange={updateProfileImage}
               />
               <img src="/icon/picture.png" alt="" />
-              앨범에서 선택하기
+              <label htmlFor="upload">앨범에서 선택하기</label>
             </li>
           </ul>
         </div>
