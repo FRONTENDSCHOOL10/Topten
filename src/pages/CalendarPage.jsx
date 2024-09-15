@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import Calendar from 'react-calendar';
+import S from '@/styles/pages/CalendarPage.module.scss';
 import 'react-calendar/dist/Calendar.css';
-
+import styled from 'styled-components';
 import CostumeCard from './../components/CostumeCard/CostumeCard';
+import { Bookmark } from '@/components';
+import { FaRegBookmark } from 'react-icons/fa';
 import { RiDeleteBin6Fill } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
 import getPbImageURL from './../api/getPbImageURL';
-
-import { Bookmark } from '@/components';
-import S from '@/styles/pages/CalendarPage.module.scss';
-import styled from 'styled-components';
 
 const StyledCalendar = styled(Calendar)`
   border: none;
@@ -44,16 +43,16 @@ const StyledCalendar = styled(Calendar)`
     color: #000; /* 글자 색상 */
   }
 
-  /* 북마크 표시 */
-  .savedTimeLabel {
-    background-color: #ffbc17;
-    color: white;
-    font-size: 10px;
-    border-radius: 4px;
-    padding: 2px 4px;
-    position: absolute;
-    top: -10px;
-  }
+  // /* 북마크 표시 */
+  // .savedTimeLabel {
+  //   background-color: #ffbc17;
+  //   color: white;
+  //   font-size: 10px;
+  //   border-radius: 4px;
+  //   padding: 2px 4px;
+  //   position: absolute;
+  //   top: -10px;
+  // }
 `;
 
 function CalendarPage(props) {
@@ -70,11 +69,9 @@ function CalendarPage(props) {
   // 북마크된 날짜
   // const savedTime = localStorage.getItem('lastAccessTime').slice(0, 10);
 
-
   // 임시!!!
   // 북마크 날짜 리스트 ('YYYY-MM-DD' 형식)
   const dayList = ['2024-09-06', '2024-09-12', '2024-09-13'];
-
 
   // 'YYYY-MM-DD' 형식으로 날짜 변환
   const formatDate = (date) => {
@@ -85,7 +82,6 @@ function CalendarPage(props) {
     return `${year}-${month}-${day}`;
   };
 
-
   // 북마크 날짜에 스타일 추가
   const tileClassName = ({ date, view }) => {
     if (view === 'month' && dayList.includes(formatDate(date))) {
@@ -94,15 +90,17 @@ function CalendarPage(props) {
     return null;
   };
 
-
   // 북마크 날짜 위에 표시할 컨텐츠 추가
   const tileContent = ({ date, view }) => {
     if (view === 'month' && dayList.includes(formatDate(date))) {
-      return <div className="savedTimeLabel">북마크</div>;
+      return (
+        <div className="savedTimeLabel">
+          <FaRegBookmark />
+        </div>
+      );
     }
     return null;
   };
-
 
   // 북마크 날짜 클릭 시 북마크 컴포넌트 표시
   const handleDateClick = (date) => {
@@ -110,7 +108,6 @@ function CalendarPage(props) {
 
     if (dayList.includes(formattedDate)) {
       setSelectedBookmark(formattedDate);
-
     } else {
       setSelectedBookmark(null);
       // 북마크된 날짜가 아니면 리셋
