@@ -11,6 +11,8 @@ import S from './../styles/pages/MainPage.module.scss';
 import defaultImg from '/image/happiness.png';
 import clsx from 'clsx';
 import updateUserData from '../api/updateData';
+import { Toaster } from 'react-hot-toast';
+import loadToast from '../api/loadToast';
 function MyPage(props) {
   const navigate = useNavigate();
   const { user, setUser } = useGetUserInfo();
@@ -22,12 +24,12 @@ function MyPage(props) {
     const formData = new FormData();
     const [file] = e.target.files;
     formData.append('userPhoto', file);
-    console.log({ ...user, userPhoto: formData.get('userPhoto') });
     const { userPhoto } = await updateUserData(user.id, {
       ...user,
       userPhoto: formData.get('userPhoto'),
     });
     setUser({ ...user, userPhoto });
+    loadToast('프로필 이미지 설정 완료', '📌');
   };
 
   //임시 모달
@@ -142,6 +144,7 @@ function MyPage(props) {
             </li>
           </ul>
         </div>
+        <Toaster />
       </div>
     </>
   );
