@@ -19,7 +19,7 @@ const ChangeMyInfoPage = () => {
   const handleClick = async () => {
     try {
       const updatedNickName = { ...user, userNickName };
-      const updatedUser = await updateUserData(user.id, updatedNickName);
+      const updatedUser = await updateUserData('users', user.id, updatedNickName);
       loadToast('닉네임 변경 완료', '📌');
     } catch (error) {
       console.error(error);

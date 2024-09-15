@@ -6,6 +6,8 @@ import StarRate from '../StarRate/StarRate';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
 import { getWeatherIcon } from '../../utils/weatherIcons';
+//import deleteData from '../../api/deleteData';
+//import updateUserData from '../../api/updateData';
 
 const Bookmark = () => {
   //   const bookmarkData = JSON.parse(localStorage.getItem('bookmarkItem'));
@@ -53,9 +55,11 @@ const Bookmark = () => {
 
   const handleEdit = () => {
     console.log('handleEdit');
+    //const res = updateUserData('bookmarkItem', '아이템 id', '새로운 객체');
   };
   const handleDelete = () => {
     console.log('handleDelete');
+    //const res = deleteData('bookmarkItem', '아이템 id'); 삭제 성공 시 res에 true가 할당
   };
 
   return (
