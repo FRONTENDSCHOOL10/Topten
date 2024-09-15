@@ -119,7 +119,7 @@ function Product() {
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         title={['로그인 후', <br />, '이용해보세요!']}
-        firstActionText="회원가입인척 하는 로그인"
+        firstActionText="로그인"
         firstActionLink="/login"
         secondActionText="회원가입"
         secondActionLink="/register"
