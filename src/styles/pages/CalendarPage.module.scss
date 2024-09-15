@@ -1,31 +1,7 @@
 .bookmarkContainer {
   margin-top: 30px; // 임시
   // border: 1px solid red; // 임시
+
+  
 }
 
-.myCalendar {
-  .reactCalendar {
-    width: 550px;
-    max-width: 100%;
-    background: #ffffff;
-    border: 8px solid #007bff;
-    border: none;
-    font-family: 'Arial', sans-serif;
-    line-height: 1.5em;
-  }
-
-  .react-calendar__month-view__days__day-names,
-  .react-calendar__month-view__days__day {
-    font-family: 'Arial', sans-serif;
-    font-size: 13px;
-  }
-
-  .react-calendar__tile--active {
-    background: #007bff;
-    color: #ffffff;
-  }
-
-  .react-calendar__tile--active:hover {
-    background: #0056b3;
-  }
-}
