@@ -11,20 +11,15 @@ import getPbImageURL from './../api/getPbImageURL';
 import pb from './../api/pocketbase';
 import Button from './../components/Button/Button';
 import styles from './../styles/pages/Lookbookpage.module.scss';
+import { getWeatherIcon } from './../utils/weatherIcons';
+import { getSeason } from './../data/constant';
 
 function LookbookPage() {
   const navigate = useNavigate();
   const swiperRef = useRef(null);
 
-  /***********************
-   * 현재 경로를 저장하여 룩북상세페이지('/lookbook/')인지 아니면 룩북페이지('/lookbook')인지
-   * 구분하기위해 저장한 변수입니다.
-   *
-   * hsw, 24-09-13 02:00
-   */
-  const location = useLocation();
-  const isDetailPage = location.pathname.startsWith('/lookbook/');
-  /***************** */
+  // 날씨 아이콘
+  const skyCondition = localStorage.getItem('skyCondition');
 
   // 전체 착용샷
   const [lookBookItems, setLookBookItems] = useState([]);
@@ -32,11 +27,39 @@ function LookbookPage() {
   // 현재 착용샷
   const [currentSeasonItems, setCurrentSeasonItems] = useState([]);
 
+  // 현재 경로 저장
+  // - 룩북p / 룩북 상세p 구분을 위함
+  const location = useLocation();
+  const isDetailPage = location.pathname.startsWith('/lookbook/');
+
+  // 기온 ------------------------------------
+  const temperatureStr = localStorage.getItem('temperature');
+  const temperature = parseInt(temperatureStr, 10) || 20;
+
+  // 월
+  let month;
+
+  const lastAccessTime = localStorage.getItem('lastAccessTime');
+
+  if (lastAccessTime) {
+    const monthStr = lastAccessTime.split('.')[1];
+    month = parseInt(monthStr, 10);
+  } else {
+    console.error('lastAccessTime 값이 없습니다.');
+    month = new Date().getMonth() + 1; // 현재 월로 설정
+  }
+
+  // 계절 판별
+  const season = getSeason(month, temperature);
+
+  console.log('현재 계절은 ' + season + '입니다.');
+
+
   useEffect(() => {
     const fetchLookBookItems = async () => {
       try {
         // 세션에서 상태 복원 ----------------------
-        // - 상세 페이지에서 돌아올 시 착용샷 유지
+        // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
         const savedLookBookItems = sessionStorage.getItem('lookBookItems');
 
         if (savedLookBookItems) {
@@ -48,11 +71,9 @@ function LookbookPage() {
         // 착용샷 가져오기 --------------------------
         const items = await pb.collection('lookBook').getFullList();
 
-        const weather = '가을';
-
         // 계절용 룩북 (2개)
         const seasonItems = items
-          .filter((item) => item.lookBookSeason.includes(weather))
+          .filter((item) => item.lookBookSeason.includes(season))
           .sort(() => 0.5 - Math.random())
           .slice(0, 2);
 
@@ -62,24 +83,29 @@ function LookbookPage() {
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
 
+
         // 현재 착용샷 - 업데이트
         setCurrentSeasonItems({ seasonItems, allSeasonItems });
 
         // 전체 챡용샷 - 업데이트
         setLookBookItems([...seasonItems, ...allSeasonItems]);
 
+
         // 전체 착용샷 - 세션에 저장 --------------------------
+        // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
         sessionStorage.setItem(
           'lookBookItems',
           JSON.stringify([...seasonItems, ...allSeasonItems])
         );
+
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
     };
 
     fetchLookBookItems();
-  }, []);
+  }, [season]);
+
 
   // 스와이퍼 네비게이션 버튼 -----------------------
   const goNext = () => {
@@ -90,22 +116,17 @@ function LookbookPage() {
     swiperRef.current.swiper.slidePrev();
   };
 
-  // 착용샷 클릭 시 로컬에 저장 & 상세 페이지 이동 ------
-  const handleImageClick = (item) => {
-    localStorage.setItem('selectedItemId', item.id);
-    console.log('item', item);
-    console.log('item.id', item.id);
 
-    // navigate('/lookbookdetailpage');
+  // 착용샷 클릭 시 착용샷 상세 페이지로 이동 ------
+  const handleImageClick = (item) => {
     navigate(`/lookbook/${item.id}`);
   };
+
 
   // 새로고침 기능 -----------------------------
   const handleRefresh = async () => {
     try {
       const items = await pb.collection('lookBook').getFullList();
-
-      const weather = '가을';
 
       // 현재 착용샷의 id 배열로 만듦(중복 방지)
       const currentSeasonItemIds = lookBookItems.map((item) => item.id);
@@ -113,7 +134,7 @@ function LookbookPage() {
       // 계절용 - 새로운 아이템(중복 X)
       const newSeasonItems = items
         .filter(
-          (item) => item.lookBookSeason.includes(weather) && !currentSeasonItemIds.includes(item.id)
+          (item) => item.lookBookSeason.includes(season) && !currentSeasonItemIds.includes(item.id)
         )
         .sort(() => 0.5 - Math.random())
         .slice(0, 2);
@@ -126,31 +147,29 @@ function LookbookPage() {
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
 
-      // 새로운 착용샷(계절용 + 범용)
+
+      // 새로운 착용샷(계절용 + 범용) 업데이트
       const newLookBookItems = [...newSeasonItems, ...newAllSeasonItems];
 
       setLookBookItems(newLookBookItems);
 
+
       // 새로운 착용샷 세션에 저장
+      // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
       sessionStorage.setItem('lookBookItems', JSON.stringify(newLookBookItems));
 
+
+      // 첫 번째 슬라이드로 돌아오기
       if (swiperRef.current && swiperRef.current.swiper) {
         swiperRef.current.swiper.slideTo(0);
       }
+
     } catch (error) {
       console.error('새로고침 중 에러 발생:', error);
     }
   };
 
-  /***********************
-   * 현재 경로가 디테일페이지면 Outlet을 출력하고,
-   * 그렇지 않다면 원래 룩북페이지를 출력하도록 수정
-   *
-   * 구조:
-   *  return isDetailPage ? (<Outlet/>) : (본문);
-   *
-   * hsw, 24-09-13 02:00
-   */
+  
   return isDetailPage ? (
     <Outlet />
   ) : (
@@ -171,6 +190,7 @@ function LookbookPage() {
         <meta property="og:site:author" content="TopTen" />
         <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
+
       <div className={styles.wrapComponent}>
         <div className={styles.topWrapper}>
           <h2 className={styles.title}>Look Book : OOTD</h2>
@@ -191,7 +211,9 @@ function LookbookPage() {
           </div>
         </div>
 
-        <div className={styles.weatherIcon}>날씨</div>
+        <div className={styles.weatherIcon}>
+          <img src={getWeatherIcon(skyCondition).src} alt={getWeatherIcon(skyCondition).alt} />
+        </div>
 
         <div className={styles.subTitle}>
           <p className={styles.description}>

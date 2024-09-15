@@ -3,3 +3,18 @@
   justify-content: center;
   align-items: center;
 }
+
+.gridAlbum {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.gridOOTD {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2개의 열로 고정 */
+  grid-template-rows: repeat(2, 1fr); /* 2개의 행으로 고정 */
+  gap: 20px; /* 카드 간격 */
+  max-width: 800px; /* 카드 크기를 조정할 수 있는 최대 너비 설정 */
+  margin: 0 auto; /* 중앙 정렬 */
+}

@@ -1,39 +1,30 @@
 import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
-import LookBook from './../components/Main/LookBook';
-import pb from './../api/pocketbase';
-import styles from './../styles/pages/LookbookDetailPage.module.scss';
-import { GoChevronLeft } from 'react-icons/go';
-
 import { useNavigate, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import styles from './../styles/pages/LookbookDetailPage.module.scss';
+import pb from './../api/pocketbase';
+import LookBook from './../components/Main/LookBook';
+import { GoChevronLeft } from 'react-icons/go';
+import { getWeatherIcon } from './../utils/weatherIcons';
 
 function LookBookDetailPage() {
-  const { id } = useParams();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  // 날씨 아이콘
+  const skyCondition = localStorage.getItem('skyCondition');
 
   // 룩북 페이지에서 클릭된 착용샷
   const [item, setItem] = useState(null);
 
   useEffect(() => {
     const fetchItemDetails = async () => {
-      // 로컬에 저장되어 있는 클릭된 착용샷 id 가져옴
-      // const itemId = localStorage.getItem('selectedItemId');
-
-      // if (itemId) {
-      //   try {
-      //     // 룩북 레코드에서 클릭된 착용샷 id을 저장
-      //     const item = await pb.collection('lookBook').getOne(itemId);
-
-      //     setItem(item);
-      //   } catch (error) {
-      //     console.error('아이템 상세 데이터를 가져오는 중 에러 발생:', error);
-      //   }
-      // }
-
       if (id) {
         try {
           const fetchedItem = await pb.collection('lookBook').getOne(id);
+
           setItem(fetchedItem);
+          
         } catch (error) {
           console.error('상세페이지 데이터 중 에러', error);
         }
@@ -64,6 +55,7 @@ function LookBookDetailPage() {
         <meta property="og:site:author" content="TopTen" />
         <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
+
       <div className={styles.wrapComponent}>
         <div className={styles.topWrapper}>
           <button className={styles.goPrev} type="button" onClick={() => navigate(-1)}>
@@ -72,7 +64,9 @@ function LookBookDetailPage() {
           <h2 className={styles.title}>Outfit of the Day </h2>
         </div>
 
-        <div className={styles.weatherIcon}>날씨</div>
+        <div className={styles.weatherIcon}>
+          <img src={getWeatherIcon(skyCondition).src} alt={getWeatherIcon(skyCondition).alt} />
+        </div>
 
         <div className={styles.subTitle}>
           <p className={styles.description}>

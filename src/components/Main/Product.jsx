@@ -1,31 +1,27 @@
 import { useState } from 'react';
-import styles from './Product.module.scss';
-import initialCards from '@/data/test.js';
-import CostumeCard from '@/components/CostumeCard/CostumeCard';
-import Button from '../Button/Button';
+import { Toaster } from 'react-hot-toast';
+import { FaBookmark } from 'react-icons/fa6';
 import { IoRefreshSharp } from 'react-icons/io5';
 
-const temperatureList = [
-  '4° ↓',
-  '5°~8°',
-  '9°~11°',
-  '12°~16°',
-  '17°~19°',
-  '20°~22°',
-  '23°~27°',
-  '28° ↑',
-];
+import getPbImageURL from '@/api/getPbImageURL';
+import createData from '../../api/createData';
+import getDate from '../../api/getDate';
+import loadToast from './../../api/loadToast';
 
-const BUTTONSTYLE = {
-  width: '66px',
-  height: '22px',
-  fontSize: '12px',
-  fontWeight: 400,
-};
+import useGetUserInfo from '../../hooks/useGetUserInfo';
+import { BUTTONSTYLE, temperatureList } from './../../data/constant';
+import useLikeStore from './../../stores/likeStore';
+
+import { BookmarkModal, Button, CommonModal, CostumeCard } from '@/components';
+import styles from './Product.module.scss';
 
 function Product() {
-  const [likeList, setLikeList] = useState([]);
-
+  const { user } = useGetUserInfo();
+  const [formData, setFormData] = useState(() => JSON.parse(localStorage.getItem('weatherData')));
+  const [clickedModal, setClickedModal] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const { likeLocal, toggleLikeLocal } = useLikeStore();
+  console.log('user', user);
   const toggleLike = (id) => {
     if (likeList.includes(id)) {
       setLikeList(likeList.filter((likeId) => likeId !== id)); // 좋아요 해제
@@ -40,7 +36,7 @@ function Product() {
   }));
 
   // 랜더링 시 전체 프로덕트 아이템을 받아옴
-  const [productItems] = useState(initialCards);
+  const [productItems] = useState(() => JSON.parse(localStorage.getItem('costumeCards')));
 
   // 해당 상태 값 true, false에 따라서 아이템을 랜덤으로 리턴
   const [activeRandom, setActiveRandom] = useState(0);
@@ -54,6 +50,8 @@ function Product() {
 
   // 파생된 상태, 기온에 맞게 상의 하의를 필터링
   const makeFilteredItem = (category) => {
+    if (!productItems) return []; // productItems가 null이면 빈 배열 반환
+
     //기온과 카테고리에 맞게 1차 필터링
     const filteredItems = productItems.filter(
       ({ costumeTemperature: t, upperCategory }) =>
@@ -71,15 +69,80 @@ function Product() {
 
   const filteredUpper = makeFilteredItem('상의');
   const filteredLower = makeFilteredItem('하의');
-
+  console.log('productItems', productItems);
   // 새로고침 버튼 클릭 시 다음 아이템으로 새로고침
   const refreshProductItem = () => {
     setActiveRandom((prev) => prev + 1);
   };
 
+  // 북마크 클릭 처리 함수
+  const handleClickBookmark = () => {
+    //로그인 상태가 아니라면 로그인 팝업이 보이게
+    if (!user.isUser) return setModalOpen(true);
+
+    //로그인 상태라면 북마크 팝업이 보이게
+    setClickedModal(true);
+  };
+
+  // 북마크 textarea 입력 함수
+  const handleChange = (e) => {
+    //textarea의 값을 formdata에 저장
+    const { value } = e.target;
+    setFormData((prev) => ({ ...prev, comment: value }));
+  };
+
+  // 북마크 저장 함수
+  const handleSave = async () => {
+    //기존 데이터에 옷 시간 uid 데이터를 추가
+    const bookmarkItem = {
+      ...formData,
+      upperItems: filteredUpper,
+      lowerItems: filteredLower,
+      saveTime: getDate(),
+      uid: user.id,
+    };
+
+    //새롭게 생성한 bookmarkItem 데이터를 로컬에 저장
+    localStorage.setItem('bookmarkItem', JSON.stringify(bookmarkItem));
+
+    //bookmarkItem을 로컬에 저장후 db서버에 저장
+    const result = await createData(bookmarkItem);
+
+    // db에 저장이 끝났다면 팝업이 사라지며 토스트가 호출
+    setClickedModal(false);
+    loadToast('북마크 저장 완료', '📌');
+  };
+
   return (
     <div className={styles.product__component}>
-      <h2 className={styles.title}>오늘 날씨엔?</h2>
+      <CommonModal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        title={['로그인 후', <br />, '이용해보세요!']}
+        firstActionText="회원가입인척 하는 로그인"
+        firstActionLink="/login"
+        secondActionText="회원가입"
+        secondActionLink="/register"
+      />
+      {clickedModal ? (
+        <BookmarkModal
+          address={formData.address}
+          weatherText={formData.weatherText}
+          onClick={() => setClickedModal(false)}
+          onChange={handleChange}
+          onEdit={handleSave}
+        />
+      ) : (
+        ''
+      )}
+      <div className={styles.product__title__button}>
+        <h2 className={styles.title}>오늘 날씨엔?</h2>
+        <Button
+          text="OOTD 저장"
+          icon={<FaBookmark className={styles.icon} />}
+          onClick={handleClickBookmark}
+        />
+      </div>
       <div className={styles.buttons}>
         {temperatureList.map((text, index) => (
           <Button style={BUTTONSTYLE} key={index} text={text} onClick={handleClick} />
@@ -94,9 +157,9 @@ function Product() {
           <CostumeCard
             key={card.id}
             record={card}
-            imageUrl={card.costumeImage}
-            isLiked={likeList.includes(card.id)} // 좋아요 상태 전달
-            onLikeToggle={() => toggleLike(card.id)} // 좋아요 토글 함수 전달
+            imageUrl={getPbImageURL(card, 'costumeImage')}
+            isLiked={likeLocal.includes(card.id)}
+            onLikeToggle={() => toggleLikeLocal(card.id)}
           />
         ))}
       </div>
@@ -105,9 +168,9 @@ function Product() {
           <CostumeCard
             key={card.id}
             record={card}
-            imageUrl={card.costumeImage}
-            isLiked={likeList.includes(card.id)} // 좋아요 상태 전달
-            onLikeToggle={() => toggleLike(card.id)} // 좋아요 토글 함수 전달
+            imageUrl={getPbImageURL(card, 'costumeImage')}
+            isLiked={likeLocal.includes(card.id)}
+            onLikeToggle={() => toggleLikeLocal(card.id)}
           />
         ))}
       </div>
@@ -118,6 +181,7 @@ function Product() {
         active={true}
         icon={<IoRefreshSharp />}
       />
+      <Toaster />
     </div>
   );
 }
