@@ -153,9 +153,9 @@ const CalendarPage = (props) => {
   return (
     <>
       <div className="wrapComponent">
-        <div className={S.title}>
-          <p>원하시는 날짜를 선택하세요</p>
-          <button>달력 접기</button>
+        <div className={S.titleWrapper}>
+          <p className={S.title}>원하시는 날짜를 선택하세요</p>
+          <button className={S.btn}>달력 접기</button>
         </div>
 
         <div className={S.calendar}>
@@ -172,7 +172,7 @@ const CalendarPage = (props) => {
             onClickDay={handleDayClick}
           />
         </div>
-        
+
         {visible && (
           <div className={S.statusBar}>
             <button type="button" className={S.arrow} onClick={() => goToBookmark('prev')}>
