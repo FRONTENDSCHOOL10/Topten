@@ -1,4 +1,4 @@
-import { bool, func, string } from 'prop-types';
+import { bool, func, string, oneOfType, arrayOf } from 'prop-types';
 import { Link } from 'react-router-dom';
 import S from './CommonModal.module.scss';
 
@@ -38,9 +38,11 @@ const CommonModal = ({
 
   return (
     <div className={S.modalOverlay} onClick={handleOverlayClick}>
-      {/* 모달 내부를 클릭하면 이벤트 전파를 차단하여 모달이 닫히지 않도록 함 */}
       <div className={S.modalContent} onClick={(e) => e.stopPropagation()}>
-        <h2>{title}</h2>
+        {/* title이 배열일 경우 모든 요소를 렌더링, 아니면 문자열로 렌더링 */}
+        <h2>
+          {Array.isArray(title) ? title.map((item, index) => <div key={index}>{item}</div>) : title}
+        </h2>
         <div className={S.buttonGroup}>
           {firstActionLink ? (
             <Link to={firstActionLink} className={S.firstButton}>
@@ -68,15 +70,15 @@ const CommonModal = ({
 };
 
 CommonModal.propTypes = {
-  isOpen: bool.isRequired, // 모달이 열렸는지 여부
-  onClose: func.isRequired, // 모달을 닫는 함수
-  title: string.isRequired, // 모달 제목
-  firstActionText: string.isRequired, // 왼쪽 버튼 텍스트
-  firstActionLink: string, // 왼쪽 버튼이 이동할 경로 (선택 사항)
-  secondActionText: string.isRequired, // 오른쪽 버튼 텍스트
-  secondActionLink: string, // 오른쪽 버튼이 이동할 경로 (선택 사항)
-  onFirstAction: func, // 왼쪽 버튼 클릭 시 실행할 함수 (선택 사항)
-  onSecondAction: func, // 오른쪽 버튼 클릭 시 실행할 함수 (선택 사항)
+  isOpen: bool.isRequired,
+  onClose: func.isRequired,
+  title: oneOfType([string, arrayOf(string)]).isRequired, // 배열 또는 문자열 허용
+  firstActionText: string.isRequired,
+  firstActionLink: string,
+  secondActionText: string.isRequired,
+  secondActionLink: string,
+  onFirstAction: func,
+  onSecondAction: func,
 };
 
 export default CommonModal;

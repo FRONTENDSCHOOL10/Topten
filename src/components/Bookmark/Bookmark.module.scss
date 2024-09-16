@@ -1,0 +1,97 @@
+.centering {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--gray-custom-300);
+  padding: 20px;
+  position: relative;
+}
+
+.title {
+  position: absolute;
+  top: -15px;
+  width: 170px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--black);
+  border: 1px solid var(--gray-custom-300);
+  background-color: var(--white);
+  border-radius: 80px;
+}
+
+.DateLocation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+
+.upperPart {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.OOTD {
+  width: 170px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+
+  color: var(--black);
+  border: 1px solid var(--gray-custom-300);
+  background-color: var(--white);
+  border-radius: 80px;
+}
+
+.comment {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+
+  &__Part {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__Content {
+    width: 100%;
+    margin-bottom: 18px;
+  }
+}
+
+.iconWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon {
+  font-size: 25px;
+  margin-left: 1rem;
+  border: none;
+  background-color: transparent;
+}
+
+.weather {
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.weatherIcon {
+  width: 30px;
+  padding-right: 10px;
+}

@@ -452,13 +452,18 @@
 ### 9월 14일
 
 - 황선우
+
   - fix/refactoring/hsw
     - 고화질 이미지로 교체
     - 버튼 컴포넌트의 props 수정
     - 버튼 컴포넌트의 prop-types 수정
-
+  - feat/lazywithLoader/hsw
+    - 페이지에 lazy 및 suspense에 fallback으로 Loader 설정
+    - CostumeCard 컴포넌트의 이미지에 Loader 설정
+    - 페이지 import 정리 및 autoCancel 설정 변경
 
 - 함정민
+
   - fix: 시간대별 날씨 정보 코드 오류 수정
   - feat: 메인페이지 접근시 마다 해당 시간을 로컬스토리지에 저장
   - feat: 로컬스토리지에 저장되는 날씨 데이터 객체로 묶기
@@ -481,6 +486,18 @@
     - update: 날씨 아이콘 추가
     - update: 현재 월과 기온에 따른 계절 판별 로직 추가
     - fix: null값 에러 처리
+
+### 9월 15일
+
+- 황선우
+  - 캘린더페이지 OOTD 컴포넌트
+    - init: 캘린더 페이지 구성
+    - feat: 북마크 컴포넌트 생성
+    - style: CCM에 OOTD스타일 추가
+    - feat: 임시용 북마크데이터 추가
+    - style: 타 컴포넌트 스타일링 조정으로인한 좋아요 페이지 스타일링 수정
+    - feat: 북마크 클릭 시 펼쳐지는 기능 추가
+    - feat: 왼쪽 아이콘/오른쪽 아이콘 클릭 시 이전/이후 북마크로 이동하도록 추가
 
 
 

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { animate } from 'motion';
 
-import Button from '../components/Button/Button';
+import { Button } from '@/components';
 import logoSun from '/image/logo-sun.png';
 import logoCloud from '/image/logo-cloud.png';
 
