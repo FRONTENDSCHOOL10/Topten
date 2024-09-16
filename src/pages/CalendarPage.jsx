@@ -116,6 +116,7 @@ const CalendarPage = (props) => {
       setVisible(true);
       setCurrentBookmarkIndex(bookmarkList.indexOf(bookmark)); // indexOf로 인덱스 설정
     } else {
+      setVisible(false);
       console.log('해당 날짜에 북마크가 없습니다.');
     }
   };
