@@ -101,6 +101,8 @@ const CalendarPage = () => {
           sort: 'saveTime2',
         });
 
+        localStorage.setItem('bookMarks', JSON.stringify(bookmarks));
+
         // 날짜별 북마크 객체 생성
         const bookmarkObj = {};
         bookmarks.forEach((b) => {
