@@ -33,6 +33,17 @@ const StyledCalendar = styled(Calendar)`
     font-family: Pretendard;
     font-size: 12px;
     font-weight: 300;
+    height: 39px;
+  }
+
+  
+  /* 날짜 숫자를 왼쪽 상단에 배치 */
+  .react-calendar__tile {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: flex-start;  
+    padding: 5px; 
+    position: relative;
   }
 `;
 
@@ -116,7 +127,10 @@ const CalendarPage = (props) => {
       const hasBookmark = bookmarkList.some((b) => formatDate(new Date(b.created)) === dateString);
 
       if (hasBookmark) {
-        return <FaBookmark style={{ color: 'orange' }} />;
+        return <FaBookmark style={{ 
+          marginLeft: '8px',
+          marginTop: '15px',
+          color: 'orange' }} />;
       }
     }
     return null;
