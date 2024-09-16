@@ -117,8 +117,8 @@ function MainPage(props) {
           <CommonModal
             isOpen={isModalOpen}
             onClose={() => setModalOpen(false)}
-            title={['로그인 후', <br />, '이용해보세요!']}
-            firstActionText="회원가입인척 하는 로그인"
+            title={['로그인 후','이용해보세요!']}
+            firstActionText="로그인"
             firstActionLink="/login"
             secondActionText="회원가입"
             secondActionLink="/register"
