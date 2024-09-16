@@ -50,6 +50,7 @@ const CalendarPage = (props) => {
   const [currentBookmarkIndex, setCurrentBookmarkIndex] = useState(0);
   const [visible, setVisible] = useState(false);
   const [bookmarkList, setBookmarkList] = useState([]);
+  const [calendarCollapsed, setCalendarCollapsed] = useState(false);
 
   // PocketBase에서 북마크 데이터를 불러오는 함수
   useEffect(() => {
@@ -128,15 +129,22 @@ const CalendarPage = (props) => {
 
   console.log('bookmark:', bookmarkList[currentBookmarkIndex]);
 
+  // 달력 상태 토글
+  const toggleCalendar = () => {
+    setCalendarCollapsed((prev) => !prev);
+  };
+
   return (
     <>
       <div className="wrapComponent">
         <div className={S.titleWrapper}>
           <p className={S.title}>원하시는 날짜를 선택하세요</p>
-          <button className={S.btn}>달력 접기</button>
+          <button className={S.btn} onClick={toggleCalendar}>
+            {calendarCollapsed ? '달력 펼치기' : '달력 접기'}
+          </button>
         </div>
 
-        <div className={S.calendar}>
+        <div className={`${S.calendarWrapper} ${calendarCollapsed ? S.collapsed : ''}`}>
           <StyledCalendar
             className={S.custom__calender}
             onChange={onChange}

@@ -19,6 +19,15 @@
   }
 }
 
+.calendarWrapper {
+  overflow: hidden;
+  transition: height 0.5s ease;
+}
+
+.calendarWrapper.collapsed {
+  height: 0;
+}
+
 .titleWrapper {
   display: flex;
   align-items: center;
