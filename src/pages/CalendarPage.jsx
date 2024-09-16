@@ -34,17 +34,18 @@ const StyledCalendar = styled(Calendar)`
     font-size: 12px;
     font-weight: 300;
     height: 39px;
+    // border: 1px solid grey;
   }
 
   
-  /* 날짜 숫자를 왼쪽 상단에 배치 */
-  .react-calendar__tile {
-    display: flex;
-    justify-content: flex-start; 
-    align-items: flex-start;  
-    padding: 5px; 
-    position: relative;
-  }
+  // /* 날짜 숫자를 왼쪽 상단에 배치 */
+  // .react-calendar__tile {
+  //   display: flex;
+  //   justify-content: flex-start; 
+  //   align-items: flex-start;  
+  //   padding: 5px; 
+  //   position: relative;
+  // }
 `;
 
 // 날짜 포맷(한국식)
@@ -128,8 +129,10 @@ const CalendarPage = (props) => {
 
       if (hasBookmark) {
         return <FaBookmark style={{ 
-          marginLeft: '8px',
-          marginTop: '15px',
+          // marginLeft: '8px',
+          // marginTop: '15px',
+          marginRight: '-13px',
+          marginBottom: '-10px',
           color: 'orange' }} />;
       }
     }
