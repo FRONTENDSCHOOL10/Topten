@@ -32,31 +32,24 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
 
   const skyCondition = weatherData.skyCondition;
 
-  // CostumeCard 리스트를 서버에서 불러와 sessionStorage와 localStorage에 저장
+  // upperItems 및 lowerItems에 해당하는 costumeCards를 필터링하여 가져오기
   useEffect(() => {
-    const fetchCostumeCards = async () => {
-      try {
-        const cachedCostumeCards = sessionStorage.getItem('costumeCards');
+    const filterCostumeCards = () => {
+      const cachedCostumeCards = JSON.parse(localStorage.getItem('costumeCards')) || [];
+      const { upperItems, lowerItems } = bookmark || {};
 
-        if (cachedCostumeCards && JSON.parse(cachedCostumeCards).length > 0) {
-          const temp = JSON.parse(cachedCostumeCards);
-          setCostumeCards(temp.slice(0, 4));
-        } else {
-          const records = await pb.collection('costumeCard').getFullList({
-            sort: '-created',
-          });
+      // upperItems와 lowerItems에 해당하는 카드 필터링
+      const filteredCostumeCards = cachedCostumeCards.filter((card) =>
+        (upperItems || []).concat(lowerItems || []).includes(card.id)
+      );
 
-          setCostumeCards(records);
-          sessionStorage.setItem('costumeCards', JSON.stringify(records));
-          localStorage.setItem('costumeCards', JSON.stringify(records));
-        }
-      } catch (error) {
-        console.error('Failed to fetch costumeCards:', error);
-      }
+      setCostumeCards(filteredCostumeCards);
     };
 
-    fetchCostumeCards();
-  }, []);
+    if (bookmark) {
+      filterCostumeCards();
+    }
+  }, [bookmark]);
 
   // 북마크 수정 (BookmarkModal에서 호출됨)
   const handleSave = (rating, comment) => {
@@ -92,6 +85,10 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
     setIsDeleteModalOpen(false); // 삭제 후 모달 닫기
   };
 
+  const handleRate = (num) => {
+    console.log(num);
+  };
+
   return (
     <>
       <div className={S.centering}>
@@ -124,9 +121,9 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
         <div className={S.comment}>
           <div className={S.comment__Part}>
             <label htmlFor="comment">Comment</label>
-            <StarRate />
+            <StarRate initialRate={bookmark?.rate2} onRate={handleRate} />
           </div>
-          <input type="text" id="comment" className={S.comment__Content} />
+          <p className={S.comment__Content}>{bookmark?.comment || '코멘트가 없습니다.'}</p>
           <p align="right">저장 날짜</p>
         </div>
       </div>
