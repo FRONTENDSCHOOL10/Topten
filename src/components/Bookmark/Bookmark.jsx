@@ -12,8 +12,9 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const weatherData = JSON.parse(localStorage.getItem('weatherData'));
-  const savedAddress = bookmark.address;
-  const savedTime = bookmark.date.slice(0, 11);
+  const savedAddress = bookmark?.address || '주소 없음';
+  const savedTime = bookmark?.date?.slice(0, 11) || '날짜 없음';
+  
   const skyCondition = weatherData.skyCondition;
 
   // CostumeCard 리스트를 서버에서 불러와 sessionStorage와 localStorage에 저장
