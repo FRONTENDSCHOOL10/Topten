@@ -6,6 +6,21 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { FaRegEdit } from 'react-icons/fa';
 import { getWeatherIcon } from '../../utils/weatherIcons';
 
+// 날짜 포맷 변환 함수
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  if (isNaN(date)) {
+    return '날짜 없음'; // 날짜가 올바르지 않으면 '날짜 없음' 표시
+  }
+
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 두 자릿수로 맞춤
+  const day = date.getDate().toString().padStart(2, '0'); // 두 자릿수로 맞춤
+
+  return `${year}.${month}.${day}`;
+};
+
 const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkIndex }) => {
   const [costumeCards, setCostumeCards] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -13,8 +28,8 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
 
   const weatherData = JSON.parse(localStorage.getItem('weatherData'));
   const savedAddress = bookmark?.address || '주소 없음';
-  const savedTime = bookmark?.date?.slice(0, 11) || '날짜 없음';
-  
+  const savedTime = bookmark?.saveTime2 ? formatDate(bookmark.saveTime2) : '날짜 없음';
+
   const skyCondition = weatherData.skyCondition;
 
   // CostumeCard 리스트를 서버에서 불러와 sessionStorage와 localStorage에 저장
