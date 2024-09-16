@@ -123,6 +123,39 @@ export const bookmarkData = [
   ],
 ];
 
+export const bookmarkList = [
+  {
+    date: '2024-09-13',
+    OOTD: 'Casual Outfit',
+    weather: 'Sunny',
+    location: 'Seoul',
+  },
+  {
+    date: '2024-09-15',
+    OOTD: 'Casual Outfit',
+    weather: 'Sunny',
+    location: 'Seoul',
+  },
+  {
+    date: '2024-09-17',
+    OOTD: 'Formal',
+    weather: 'Rainy',
+    location: 'Busan',
+  },
+  {
+    date: '2024-09-20',
+    OOTD: 'Sports',
+    weather: 'Cloudy',
+    location: 'Incheon',
+  },
+  {
+    date: '2024-09-22',
+    OOTD: 'Sports',
+    weather: 'Cloudy',
+    location: 'Incheon',
+  },
+];
+
 // export const categoryList = {
 //   upperCategory: ['상의', '하의', '아우터', '원피스/스커트', '악세사리'],
 //   lowerCategory: ['반바지', '바지', '반팔', '긴팔', '가디건', '패딩코트', '향수'],

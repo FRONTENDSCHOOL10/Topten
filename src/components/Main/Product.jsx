@@ -102,11 +102,11 @@ function Product() {
       uid: user.id,
     };
 
-    //새롭게 생성한 bookmarkItem 데이터를 로컬에 저장
-    localStorage.setItem('bookmarkItem', JSON.stringify(bookmarkItem));
-
-    //bookmarkItem을 로컬에 저장후 db서버에 저장
+    // bookmarkItem을 db서버에 저장
     const result = await createData(bookmarkItem);
+
+    // 위에서 반환한 result 값을 로컬에 저장
+    localStorage.setItem('bookmarkItem', JSON.stringify(result));
 
     // db에 저장이 끝났다면 팝업이 사라지며 토스트가 호출
     setClickedModal(false);
@@ -119,7 +119,7 @@ function Product() {
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         title={['로그인 후', <br />, '이용해보세요!']}
-        firstActionText="회원가입인척 하는 로그인"
+        firstActionText="로그인"
         firstActionLink="/login"
         secondActionText="회원가입"
         secondActionLink="/register"

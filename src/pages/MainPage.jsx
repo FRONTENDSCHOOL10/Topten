@@ -129,7 +129,6 @@ function MainPage(props) {
           />
           <Weather />
           <Product />
-          <CostumeCardManager user={user} viewType="리스트" costumeCards={costumeCards} />
           <LookBook />
         </div>
       )}

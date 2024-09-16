@@ -1,151 +1,116 @@
-import { useState } from 'react';
-import Calendar from 'react-calendar';
-import S from '@/styles/pages/CalendarPage.module.scss';
-import 'react-calendar/dist/Calendar.css';
-import styled from 'styled-components';
-import CostumeCard from './../components/CostumeCard/CostumeCard';
+import { useState, useEffect } from 'react';
 import { Bookmark } from '@/components';
-import { FaRegBookmark } from 'react-icons/fa';
-import { RiDeleteBin6Fill } from 'react-icons/ri';
-import { FaRegEdit } from 'react-icons/fa';
-import getPbImageURL from './../api/getPbImageURL';
+import { Calendar } from 'react-calendar';
+import S from './Calender.module.scss';
+import pb from '@/api/pocketbase';
+import { FaBookmark } from 'react-icons/fa';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import 'react-calendar/dist/Calendar.css';
 
-const StyledCalendar = styled(Calendar)`
-  border: none;
+const CalendarPage = (props) => {
+  const [date, setDate] = useState(new Date());
+  const [currentBookmarkIndex, setCurrentBookmarkIndex] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const [bookmarkList, setBookmarkList] = useState([]);
 
-  .react-calendar {
-    width: 450px;
-    max-width: 100%;
-    background: #ffffff;
-    font-family: 'Arial', sans-serif;
-    line-height: 1.5em;
-  }
+  // PocketBase에서 북마크 데이터를 불러오는 함수
+  useEffect(() => {
+    const fetchBookmarks = async () => {
+      try {
+        const userid = JSON.parse(localStorage.getItem('pb_auth')).token.id;
+        const bookmarks = await pb.collection('bookmarkItem').getFullList({
+          filter: `user = "${userid}"`,
+        });
 
-  /* 월 제목 */
-  .react-calendar__navigation__label {
-    font-family: Pretendard;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: normal;
-  }
+        setBookmarkList(bookmarks);
+        console.log('bookmarks:', bookmarks);
+      } catch (error) {
+        console.error('Failed to fetch bookmarks:', error);
+      }
+    };
 
-  /* 날짜 */
-  .react-calendar__month-view__days__day-names,
-  .react-calendar__month-view__days__day {
-    font-family: Pretendard;
-    font-size: 12px;
-    font-weight: 300;
-  }
+    fetchBookmarks();
+  }, []);
 
-  /* 강조 표시된 날짜 스타일 */
-  .react-calendar__tile.markedDate {
-    background: #ffeb3b; /* 강조 표시 색상 */
-    color: #000; /* 글자 색상 */
-  }
-
-  // /* 북마크 표시 */
-  // .savedTimeLabel {
-  //   background-color: #ffbc17;
-  //   color: white;
-  //   font-size: 10px;
-  //   border-radius: 4px;
-  //   padding: 2px 4px;
-  //   position: absolute;
-  //   top: -10px;
-  // }
-`;
-
-function CalendarPage(props) {
-  //로컬에 저장한 북마크에서 입력한 데이터
-  const bookmarkData = JSON.parse(localStorage.getItem('bookmarkItem'));
-
-  //이거 구조분해 할당해서 사용
-  // const { address, skyCondition, comment, rate, saveTime, upperItems, lowerItems } = bookmarkData;
-  // ------------------------------------------
-
-  const [value, setValue] = useState(new Date());
-  const [selectedBookmark, setSelectedBookmark] = useState(null);
-
-  // 북마크된 날짜
-  // const savedTime = localStorage.getItem('lastAccessTime').slice(0, 10);
-
-  // 임시!!!
-  // 북마크 날짜 리스트 ('YYYY-MM-DD' 형식)
-  const dayList = ['2024-09-06', '2024-09-12', '2024-09-13'];
-
-  // 'YYYY-MM-DD' 형식으로 날짜 변환
-  const formatDate = (date) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-  };
-
-  // 북마크 날짜에 스타일 추가
-  const tileClassName = ({ date, view }) => {
-    if (view === 'month' && dayList.includes(formatDate(date))) {
-      return 'markedDate';
+  // 이전/다음 북마크로 이동하는 함수
+  const goToBookmark = (direction) => {
+    let newIndex = currentBookmarkIndex;
+    if (direction === 'prev' && currentBookmarkIndex > 0) {
+      newIndex = currentBookmarkIndex - 1;
+    } else if (direction === 'next' && currentBookmarkIndex < bookmarkList.length - 1) {
+      newIndex = currentBookmarkIndex + 1;
     }
-    return null;
+
+    setCurrentBookmarkIndex(newIndex);
+    const newBookmarkDate = new Date(bookmarkList[newIndex].date);
+    console.log('newbookmarkdate:', newBookmarkDate);
+    setDate(newBookmarkDate);
   };
 
-  // 북마크 날짜 위에 표시할 컨텐츠 추가
-  const tileContent = ({ date, view }) => {
-    if (view === 'month' && dayList.includes(formatDate(date))) {
-      return (
-        <div className="savedTimeLabel">
-          <FaRegBookmark />
-        </div>
-      );
-    }
-    return null;
-  };
+  // 날짜 클릭 시 북마크 확인 및 업데이트
+  const handleDayClick = (value) => {
+    const clickedDate = value.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
 
-  // 북마크 날짜 클릭 시 북마크 컴포넌트 표시
-  const handleDateClick = (date) => {
-    const formattedDate = formatDate(date);
+    const bookmark = bookmarkList.find((b) => {
+      const bookmarkDate = new Date(b.created).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+      return bookmarkDate === clickedDate;
+    });
 
-    if (dayList.includes(formattedDate)) {
-      setSelectedBookmark(formattedDate);
+    if (bookmark) {
+      console.log(`북마크가 선택되었습니다: ${bookmark.created}`);
+      setVisible(true);
+      setCurrentBookmarkIndex(bookmarkList.indexOf(bookmark)); // indexOf로 인덱스 설정
     } else {
-      setSelectedBookmark(null);
-      // 북마크된 날짜가 아니면 리셋
+      console.log('해당 날짜에 북마크가 없습니다.');
     }
-
-    setValue(date);
   };
+
+  // 타일에 북마크 아이콘 표시
+  const renderTileContent = ({ date, view }) => {
+    if (view === 'month') {
+      const dateString = date.toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
+      const hasBookmark = bookmarkList.some(
+        (b) =>
+          new Date(b.created).toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          }) === dateString
+      );
+
+      if (hasBookmark) {
+        return <FaBookmark style={{ color: 'orange' }} />;
+      }
+    }
+    return null;
+  };
+
+  // 날짜 변경 시 상태 업데이트
+  const onChange = (newDate) => {
+    setDate(newDate);
+  };
+
+  console.log('bookmark:', bookmarkList[currentBookmarkIndex]);
 
   return (
     <>
       <div className="wrapComponent">
-
-      <div className={S.title}>
-        <p>원하시는 날짜를 선택하세요</p>
-        <button>달력 접기</button>
-      </div>
-
-        <div className={S.myCalendar}>
-          <StyledCalendar
-            value={value}
-            onChange={handleDateClick}
-            next2Label={null}
-            prev2Label={null}
-            showNeighboringMonth={false}
-            formatDay={(locale, date) => date.toLocaleString('en', { day: 'numeric' })}
-            tileClassName={tileClassName}
-            tileContent={tileContent}
-          />
-        </div>
-
-        {selectedBookmark && (
-          <div className={S.bookmarkContainer}>
-            <Bookmark date={selectedBookmark} />
-          </div>
-        )}
+        <Bookmark />
       </div>
     </>
   );
-}
+};
 
 export default CalendarPage;

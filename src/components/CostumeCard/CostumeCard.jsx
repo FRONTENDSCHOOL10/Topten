@@ -11,10 +11,6 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [fileStatus, setFileStatus] = useState(imageUrl ? 'loading' : 'no image to load');
 
-  // 링크의 키와 URL을 추출
-  const linkKey = Object.keys(costumeLink)[0];
-  const linkUrl = costumeLink[linkKey];
-
   // 이미지가 없거나, 로딩에 실패한 경우 에러 아이콘 또는 기본 이미지 표시
   const validImageUrl = imageUrl && !imageError ? imageUrl : null;
 
@@ -84,9 +80,9 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
         <p className={S.description}>{costumeTitle}</p>
 
         {/* 구매 링크 */}
-        <a href={linkUrl} className={S.link} target="_blank" rel="noopener noreferrer">
+        <a href={costumeLink} className={S.link} target="_blank" rel="noopener noreferrer">
           <FaLink />
-          {linkKey}
+          {costumeBrand}
         </a>
       </div>
     </div>
@@ -97,9 +93,7 @@ CostumeCard.propTypes = {
   record: shape({
     costumeTitle: string.isRequired,
     costumeBrand: string.isRequired,
-    costumeLink: shape({
-      url: string.isRequired,
-    }).isRequired,
+    costumeLink: string.isRequired, // 이제 costumeLink는 문자열입니다
   }).isRequired,
 
   imageUrl: string, // 이미지 경로가 없을 수 있으므로 string으로 설정
