@@ -19,6 +19,44 @@
   }
 }
 
+.calendarWrapper {
+  overflow: hidden;
+  transition: height 0.5s ease;
+}
+
+.calendarWrapper.collapsed {
+  height: 0;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .title {
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 300;
+    margin-left: 25%;
+  }
+
+  .btn {
+    width: 55px;
+    height: 22px;
+
+    font-family: Pretendard;
+    font-size: 11px;
+
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+    background: rgba(255, 255, 255, 0);
+
+    &:hover {
+      background: #e5e5e5;
+    }
+  }
+}
+
 .bookmark {
   color: var(--primary-color);
 }
