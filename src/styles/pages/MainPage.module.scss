@@ -7,6 +7,8 @@
   .profile {
     display: flex;
     justify-content: space-between;
+    padding-bottom:30px;
+    border-bottom:1px solid var(--gray-600, #919191);
   }
   .profile__info {
     font-style: normal;
@@ -30,11 +32,12 @@
   }
 
   .profile__img {
+    z-index: -1;
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    border: 2px solid var(--gray-custom-600);
-    z-index: -1;
+    border: 6px solid var(--white);
+    outline: 1px solid var(--gray-custom-600);
   }
 }
 

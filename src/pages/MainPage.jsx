@@ -69,13 +69,6 @@ function MainPage(props) {
     }
   }, []);
 
-  // 로컬스토리지에 접근 시간을 저장하는 useEffect
-  useEffect(() => {
-    const currentTime = getCurrentFormattedTime();
-    localStorage.setItem('lastAccessTime', currentTime);
-    console.log(`접근 시간 저장: ${currentTime}`);
-  }, []);  // 빈 배열이므로 페이지가 로드될 때마다 실행
-
   // CostumeCard 리스트를 서버에서 불러와 sessionStorage와 localStorage에 저장
   useEffect(() => {
     const fetchCostumeCards = async () => {
@@ -127,7 +120,7 @@ function MainPage(props) {
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
           title={['로그인 후', <br />, '이용해보세요!']}
-          firstActionText="회원가입인척 하는 로그인"
+          firstActionText="로그인"
           firstActionLink="/login"
           secondActionText="회원가입"
           secondActionLink="/register"

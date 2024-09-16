@@ -13,5 +13,10 @@
     border-radius: 6px;
     padding: 0 8px;
     border: 1px solid var(--gray-custom-300);
+
+    &:focus{
+      outline:2px solid var(--primary-color);
+      border:1px solid var(--primary-color);
+    }
   }
 }

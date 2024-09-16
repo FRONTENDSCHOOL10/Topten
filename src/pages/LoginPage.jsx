@@ -164,13 +164,13 @@ function LoginPage() {
               warningText={warnings.password || warnings.auth}
             />
             <div className={styles.showPasswordWrap}>
-              <label htmlFor="showPassword">
                 <input
                   type="checkbox"
                   id="showPassword"
                   checked={showPassword}
                   onChange={toggleShowPassword}
                 />
+              <label htmlFor="showPassword">
                 비밀번호 보기
               </label>
             </div>

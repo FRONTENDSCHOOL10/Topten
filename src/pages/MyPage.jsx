@@ -79,8 +79,8 @@ function MyPage(props) {
           <div className={S.profile__info}>
             <h2>{user.isUser ? userNickName : '환영해요'}</h2>
             <p className={S.email}>{user.isUser ? email : 'E-mail'}</p>
-            <p className={S.size}>Size: {user.isUser ? size : ''}</p>
-            <p className={S.personal__color}>Personal color {user.isUser ? userColor : ''}</p>
+            <p className={S.size}>Size: <b>{user.isUser ? size : ''}</b></p>
+            <p className={S.personal__color}>Personal color: <b>{user.isUser ? userColor : ''}</b></p>
           </div>
           <img className={S.profile__img} src={profileImageUrl} alt="프로필 이미지" />
         </div>

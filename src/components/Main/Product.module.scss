@@ -1,3 +1,6 @@
+@import './../../styles/utils/theme';
+@import './../../styles/utils/utils';
+
 .product__component {
   font-family: Pretendard;
   .product__title__button {
@@ -14,15 +17,23 @@
 
     button {
       font-size: 12px;
-      width: 92px;
+      width: 108px;
       height: 26px;
       margin: 0px;
       padding: 0 5px;
-      background: var(--gray-100, #f5f5f5);
-      border: 1px solid var(--gray-300, #bdbdbd);
-    }
+      border: 1px solid var(--primary-color);
 
+      &:hover .icon,
+      &:focus .icon,
+      &:active .icon{
+        color: var(--black);
+      }
+    }
+    span{
+      margin-left:0.2rem;
+    }
     .icon {
+      margin-left:0.2rem;
       color: var(--primary-color);
     }
   }
@@ -38,19 +49,21 @@
     padding-bottom: 18px;
 
     .recommend {
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 400;
+      @include font-style(16px, 400, $--black);
       letter-spacing: -0.48px;
       margin-left: 5px;
     }
+
+    img{
+      width:13px;
+    }
   }
   .upper__section {
-    margin-bottom: 30px;
+    margin-bottom:10px;
   }
   .upper__section,
   .lower__section {
     display: flex;
-    gap: 15px;
+    gap: 12px;
   }
 }

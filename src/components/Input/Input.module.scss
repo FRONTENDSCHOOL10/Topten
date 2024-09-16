@@ -26,7 +26,7 @@ body {
       border-bottom: 1px solid #e5e5e5;
       box-sizing: border-box;
 
-      @include font-style(12px, 300, $--black);
+      @include font-style(14px, 400, $--black);
       letter-spacing: -0.48px;
 
       &:focus {
@@ -38,7 +38,7 @@ body {
     p {
       margin-top: 6px;
 
-      @include font-style(12px, 300, $--red-100);
+      @include font-style(12px, 400, $--red-100);
       line-height: 13.2px;
       letter-spacing: -0.48px;
     }
@@ -68,7 +68,7 @@ body {
   border-radius: 10px;
   text-align: center;
 
-  @include font-style(12px, 300, $--black);
+  @include font-style(12px, 400, $--black);
   line-height: 13.2px;
   letter-spacing: -0.48px;
 
