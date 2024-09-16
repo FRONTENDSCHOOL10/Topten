@@ -140,7 +140,7 @@ const CalendarPage = (props) => {
         <div className={S.titleWrapper}>
           <p className={S.title}>원하시는 날짜를 선택하세요</p>
           <button className={S.btn} onClick={toggleCalendar}>
-            {calendarCollapsed ? '달력 펼치기' : '달력 접기'}
+            {calendarCollapsed ? '달력 열기' : '달력 접기'}
           </button>
         </div>
 
