@@ -123,8 +123,8 @@ const CalendarPage = (props) => {
             </button>
             <p>
               {/* 현재 북마크 날짜가 undefined가 아닌지 확인 */}
-              {bookmarkList[currentBookmarkIndex]?.date.slice(0, 11)
-                ? `${bookmarkList[currentBookmarkIndex].date.slice(0, 11)}`
+              {bookmarkList[currentBookmarkIndex]?.date.slice(0, 12)
+                ? `${bookmarkList[currentBookmarkIndex].date.slice(0, 12)}`
                 : '북마크가 없습니다.'}
             </p>
             <button type="button" className={S.arrow} onClick={() => goToBookmark('next')}>
