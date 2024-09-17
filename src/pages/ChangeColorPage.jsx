@@ -5,11 +5,13 @@ import Select from '../components/Select/Select';
 import { COLORS } from '../data/constant';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
+import useGetUserInfo from '../hooks/useGetUserInfo';
 import { Toaster } from 'react-hot-toast';
 
+
 const ChangeColorPage = () => {
+  const { user } = useGetUserInfo();
   const [color, setColor] = useState(() => ['']);
-  const user = JSON.parse(sessionStorage.getItem('pb_auth')).token;
 
   //공백 조건 처리 필
   const handleChange = (e) => {
@@ -34,7 +36,10 @@ const ChangeColorPage = () => {
         description="퍼스널컬러에 맞는 옷으로 추천해드릴게요 언젠가는.."
       />
       <Select name="userColor" text="퍼스널 컬러" items={COLORS} onChange={handleChange} />
-      <Button text="변경하기" onClick={handleClick} />
+
+      <div className={S.button__container}>
+        <Button text="변경하기" onClick={handleClick} />
+      </div>
       <Toaster />
     </div>
   );

@@ -1,4 +1,4 @@
-export const SIZE = ['XS', 'S', 'L'];
+export const SIZE = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'];
 
 export const COLORS = ['봄웜', '봄쿨', '여름웜', '여름쿨', '가을웜', '가을쿨', '겨울웜', '겨울쿨'];
 

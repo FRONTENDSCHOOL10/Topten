@@ -6,10 +6,11 @@ import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 import loadToast from '../api/loadToast';
 import { Toaster } from 'react-hot-toast';
+import useGetUserInfo from '../hooks/useGetUserInfo';
 //잠시 커밋 확인 위한 주석
 const ChangeMyInfoPage = () => {
+  const { user } = useGetUserInfo();
   const [userNickName, setUserNickName] = useState('');
-  const user = JSON.parse(sessionStorage.getItem('pb_auth')).token;
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -34,7 +35,9 @@ const ChangeMyInfoPage = () => {
         description="닉네임 등 회원정보를 변경할 수 있어요"
       />
       <Input text="닉네임" onChange={handleChange} />
-      <Button text="회원정보 변경" onClick={handleClick} />
+      <div className={S.button__container}>
+        <Button text="회원정보 변경" onClick={handleClick} />
+      </div>
       <Toaster />
     </div>
   );
