@@ -1,4 +1,6 @@
 export default function getDate() {
-  const date = new Date();
-  return date.toLocaleString('ko-kr');
+  const differ = 1000 * 60 * 60 * 9;
+  const korea = new Date(new Date().getTime() + differ);
+
+  return korea;
 }
