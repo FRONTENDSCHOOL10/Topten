@@ -7,6 +7,8 @@ import getPbImageURL from '@/api/getPbImageURL';
 import createData from '../../api/createData';
 import getDate from '../../api/getDate';
 import loadToast from './../../api/loadToast';
+import { getData } from '../../api/getData';
+import { deleteData } from '../../api/deleteData';
 
 import useGetUserInfo from '../../hooks/useGetUserInfo';
 import { BUTTONSTYLE, temperatureList } from './../../data/constant';
@@ -69,7 +71,7 @@ function Product() {
 
   const filteredUpper = makeFilteredItem('상의');
   const filteredLower = makeFilteredItem('하의');
-  console.log('productItems', productItems);
+
   // 새로고침 버튼 클릭 시 다음 아이템으로 새로고침
   const refreshProductItem = () => {
     setActiveRandom((prev) => prev + 1);
@@ -91,6 +93,12 @@ function Product() {
 
   // 북마크 저장 함수
   const handleSave = async () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const today = `${year}-${month}-${day}`;
+
     //기존 데이터에 옷 시간 uid 데이터를 추가
     const bookmarkItem = {
       ...formData,
@@ -99,8 +107,18 @@ function Product() {
       date: getDate(),
       saveTime: getDate(),
       uid: user.id,
+      checkDate: today,
     };
 
+    // 오늘 이전에 저장한 북마크 아이템 있는지 검사
+    const checkItem = await getData('bookmarkItem', {
+      filter: `checkDate = '${today}' && user = '${user.id}'`,
+    }).then((result) => result[0]);
+
+    // 오늘 저장했던 아이템이 있다면 삭제 아니면 저장 진행
+    if (checkItem) {
+      const deletedItem = await deleteData('bookmarkItem', checkItem.id);
+    }
     // bookmarkItem을 db서버에 저장
     const result = await createData(bookmarkItem);
 
