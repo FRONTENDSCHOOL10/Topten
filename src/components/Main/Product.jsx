@@ -8,7 +8,6 @@ import createData from '../../api/createData';
 import getDate from '../../api/getDate';
 import loadToast from './../../api/loadToast';
 import { getData } from '../../api/getData';
-import { deleteData } from '../../api/deleteData';
 
 import useGetUserInfo from '../../hooks/useGetUserInfo';
 import { BUTTONSTYLE, temperatureList } from './../../data/constant';
