@@ -16,6 +16,7 @@ import useLikeStore from './../../stores/likeStore';
 
 import { BookmarkModal, Button, CommonModal, CostumeCard } from '@/components';
 import styles from './Product.module.scss';
+import updateUserData from '../../api/updateData';
 
 function Product() {
   const { user } = useGetUserInfo();
@@ -115,15 +116,17 @@ function Product() {
       filter: `checkDate = '${today}' && user = '${user.id}'`,
     }).then((result) => result[0]);
 
-    // 오늘 저장했던 아이템이 있다면 삭제 아니면 저장 진행
+    // 오늘 저장했던 아이템이 있다면 해당 db 아이템을 업데이트 아니면 저장 진행
     if (checkItem) {
-      const deletedItem = await deleteData('bookmarkItem', checkItem.id);
-    }
-    // bookmarkItem을 db서버에 저장
-    const result = await createData(bookmarkItem);
+      const result = await updateUserData('bookmarkItem', checkItem.id, bookmarkItem);
+      localStorage.setItem('bookmarkItem', JSON.stringify(result));
+    } else {
+      // bookmarkItem을 db서버에 저장
+      const result = await createData(bookmarkItem);
 
-    // 위에서 반환한 result 값을 로컬에 저장
-    localStorage.setItem('bookmarkItem', JSON.stringify(result));
+      // 위에서 반환한 result 값을 로컬에 저장
+      localStorage.setItem('bookmarkItem', JSON.stringify(result));
+    }
 
     // db에 저장이 끝났다면 팝업이 사라지며 토스트가 호출
     setClickedModal(false);
