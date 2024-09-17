@@ -5,9 +5,13 @@ import Form from '../components/Form/Form';
 import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
+
 import { validatePassword } from '../api/validation';
 import { WRANING } from '../data/constant';
 import useGetUserInfo from '../hooks/useGetUserInfo';
+
+import { Toaster } from 'react-hot-toast';
+
 const ChangePasswordPage = () => {
   const { user } = useGetUserInfo();
 
@@ -55,7 +59,7 @@ const ChangePasswordPage = () => {
         passwordConfirm: passwords.confirmNewPassword,
       };
 
-      const updatedUser = await updateUserData(user.id, updatedPassword);
+      const updatedUser = await updateUserData('users', user.id, updatedPassword);
       loadToast('비밀번호 변경 완료', '📌');
     } catch (error) {
       console.error(error);
@@ -105,6 +109,7 @@ const ChangePasswordPage = () => {
           <Button disabled={disabled} text={'비밀번호변경'} onClick={handleClick} />
         </div>
       </Form>
+      <Toaster />
     </div>
   );
 };

@@ -70,7 +70,8 @@
 
   &__Content {
     width: 100%;
-    margin-bottom: 18px;
+    margin: 18px 0;
+    border: 1px solid var(--gray-custom-300);
   }
 }
 
@@ -80,7 +81,7 @@
 }
 
 .icon {
-  font-size: 20px;
+  font-size: 25px;
   margin-left: 1rem;
   border: none;
   background-color: transparent;

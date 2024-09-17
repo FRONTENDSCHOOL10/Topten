@@ -5,7 +5,11 @@ import { SIZE } from '../data/constant';
 import Select from '../components/Select/Select';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
+
 import useGetUserInfo from '../hooks/useGetUserInfo';
+
+import { Toaster } from 'react-hot-toast';
+
 
 const ChangeFitPage = () => {
   const { user } = useGetUserInfo();
@@ -20,7 +24,7 @@ const ChangeFitPage = () => {
   const handleClick = async () => {
     try {
       const updatedSize = { ...user, userSize: [userSize.topSize, userSize.bottomSize] };
-      const updatedUser = await updateUserData(user.id, updatedSize);
+      const updatedUser = await updateUserData('users', user.id, updatedSize);
       loadToast('사이즈 변경 완료', '📌');
     } catch (error) {
       console.error(error);
@@ -40,9 +44,13 @@ const ChangeFitPage = () => {
       <div className={S.select__container}>
         <Select name="bottomSize" text="하의 사이즈" items={SIZE} onChange={handleChange} />
       </div>
+
       <div className={S.button__container}>
         <Button text="변경하기" onClick={handleClick} />
       </div>
+
+      <Toaster />
+
     </div>
   );
 };
