@@ -9,6 +9,9 @@ const BookmarkModal = ({ address, saveDate, weatherText, onClick, onChange, onEd
   const [comment, setComment] = useState('');
 
   const handleCommentChange = (e) => {
+    if (onChange) {
+      onChange(e.target.value);
+    }
     setComment(e.target.value);
   };
 
