@@ -2,7 +2,7 @@
 @import './../utils/utils';
 
 .wrapComponent {
-  margin-top: -23px;
+  padding-top: 67px;
 
   .topWrapper {
     display: flex;
@@ -35,6 +35,11 @@
     }
   }
   .product {
-    margin: -38px 0 -30px;
+    margin-top:30px;
+    padding-bottom:30px;
+
+    .container{
+      margin-top:0;
+    }
   }
 }

@@ -37,7 +37,7 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
 
   if (viewType === '리스트') {
     return (
-      <Swiper spaceBetween={1} slidesPerView={1.9}>
+      <Swiper spaceBetween={1} slidesPerView={2.15}>
         {memoizedCards}
       </Swiper>
     );

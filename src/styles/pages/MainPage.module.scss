@@ -70,23 +70,32 @@ button {
   .profile__change__popup {
     visibility: hidden;
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 81px;
-    border: 1px solid black;
+    bottom:61px;
+    left: 50%;
+    z-index: 2;
+    width:288px;
+    transform:translate(-50%,0);
+    border: 1px solid var(--gray-custom-600);
+    border-bottom:0;
     border-radius: 6px 6px 0 0;
-    padding: 12px;
-    background-color: white;
+    padding:20px 20px 10px;
+    background-color: var(--white);
+    box-sizing:border-box;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 
     div {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 15px 0;
+      align-items: baseline;
 
       h2 {
+        margin-bottom:10px;
         font-size: 14px;
         font-weight: 600;
+      }
+      img{
+        width:16px;
+        height:18px;
       }
     }
 
@@ -116,15 +125,25 @@ button {
   }
 }
 
-// <div class={S.profile}>
-// <div class={S.profile__info}>
-//   <h2>고통받는_고길동동동</h2>
-//   <p class={S.email}>gildong-go86@gmail.com</p>
-//   <p class={S.size}>Size: 77 | L</p>
-//   <p class={S.personal__color}>Personal color: 여름 쿨</p>
-// </div>
-// <img src="profile-image.png" alt="프로필 이미지" />
-// </div>
+.logoutButton {
+ 
+  a{
+    display:block;
+    padding:10px 0;
+    text-decoration: none;
+    border-bottom:1px solid var(--gray-custom-600);
+    
+      button{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        width:100%;
+        margin:0;
+        padding:14px 10px 14px 0;
+      }
+    }
+  }
+
 
 .modal__outer {
   position: absolute;
@@ -144,3 +163,5 @@ button {
   text-align: center;
   background-color: white;
 }
+
+
