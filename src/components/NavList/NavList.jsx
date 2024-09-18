@@ -5,9 +5,9 @@ import S from './NavList.module.scss';
 function NavList({ text, link }) {
   const navigate = useNavigate();
   return (
-    <li className={S.NavList}>
+    <li className={S.NavList} onClick={() => navigate(link)}>
       {text}
-      <button onClick={() => navigate(link)}>
+      <button>
         <img src={arrow} alt="페이지 이동 화살표" />
       </button>
     </li>

@@ -9,22 +9,36 @@ import useGetUserInfo from '../hooks/useGetUserInfo';
 import getPbImageURL from './../api/getPbImageURL';
 import S from './../styles/pages/MainPage.module.scss';
 import defaultImg from '/image/happiness.png';
-
+import clsx from 'clsx';
+import updateUserData from '../api/updateData';
+import { Toaster } from 'react-hot-toast';
+import loadToast from '../api/loadToast';
+import CommonModal from './../components/CommonModal/CommonModal';
 function MyPage(props) {
   const navigate = useNavigate();
-  const { user } = useGetUserInfo();
-  const profileImageUrl = user.isUser ? getPbImageURL(user, 'userPhoto') : defaultImg;
+  const { user, setUser } = useGetUserInfo();
+  const [isActive, setIsActive] = useState(false);
+  const profileImageUrl = user.userPhoto ? getPbImageURL(user, 'userPhoto') : defaultImg;
   const { userNickName, email, userSize: size, userColor } = user;
 
-  //임시 모달
-  const modal = !user.isUser && (
-    <div className={S.modal__outer}>
-      <div className={S.modal}>
-        <h1>로그인 ㄴㄴ 임시 모달</h1>
-        <button onClick={() => navigate('/login')}>로그인 버튼</button>
-      </div>
-    </div>
-  );
+  const updateProfileImage = async (e) => {
+    if (!user.isUser) return;
+    const formData = new FormData();
+    const [file] = e.target.files;
+    formData.append('userPhoto', file);
+    const { userPhoto } = await updateUserData(user.id, {
+      ...user,
+      userPhoto: formData.get('userPhoto'),
+    });
+    setUser({ ...user, userPhoto });
+    loadToast('프로필 이미지 설정 완료', '📌');
+  };
+
+  const handleClickProfile = () => {
+    if (!user.isUser) return;
+    setIsActive(true);
+  };
+
   //////////////로딩 구현
 
   /***************************************************** */
@@ -74,7 +88,18 @@ function MyPage(props) {
         <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
       <div className={S.wrapComponent}>
-        {modal}
+        {!user.isUser && (
+          <CommonModal
+            isOpen={true}
+            onClose={() => setModalOpen(true)}
+            title={['로그인 후', <br />, '이용해보세요!']}
+            firstActionText="로그인"
+            firstActionLink="/login"
+            secondActionText="회원가입"
+            secondActionLink="/register"
+          />
+        )}
+
         <div className={S.profile}>
           <div className={S.profile__info}>
             <h2>{user.isUser ? userNickName : '환영해요'}</h2>
@@ -82,7 +107,14 @@ function MyPage(props) {
             <p className={S.size}>Size: <b>{user.isUser ? size : ''}</b></p>
             <p className={S.personal__color}>Personal color: <b>{user.isUser ? userColor : ''}</b></p>
           </div>
-          <img className={S.profile__img} src={profileImageUrl} alt="프로필 이미지" />
+          <div className={S.img__container}>
+            <div>
+              <img className={S.profile__img} src={profileImageUrl} alt="프로필 이미지" />
+            </div>
+            <button className={S.camera__button} onClick={handleClickProfile}>
+              <img className={S.camera__icon} src={'/icon/camera.png'} alt="프로필 이미지" />
+            </button>
+          </div>
         </div>
         <ul>
           {user.isUser
@@ -96,6 +128,32 @@ function MyPage(props) {
             </button>
           </Link>
         </div>
+        <div className={clsx(S.profile__change__popup, { [S.active]: isActive })}>
+          <div>
+            <h2>사진 등록</h2>
+            <button onClick={() => setIsActive(false)}>
+              <img src="/icon/icon-button-close.png" />
+            </button>
+          </div>
+          <ul>
+            <li>
+              <img src="/icon/camera2.png" alt="" />
+              <label htmlFor="upload">카메라로 촬영하기</label>
+            </li>
+            <li>
+              <input
+                id="upload"
+                type="file"
+                accept="image/jpg,image/png,image/webp,image"
+                className={S.upload__input}
+                onChange={updateProfileImage}
+              />
+              <img src="/icon/picture.png" alt="" />
+              <label htmlFor="upload">앨범에서 선택하기</label>
+            </li>
+          </ul>
+        </div>
+        <Toaster />
       </div>
     </>
   );

@@ -5,15 +5,46 @@ import Form from '../components/Form/Form';
 import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
+
+import { validatePassword } from '../api/validation';
+import { WRANING } from '../data/constant';
+import useGetUserInfo from '../hooks/useGetUserInfo';
+
 import { Toaster } from 'react-hot-toast';
+
 const ChangePasswordPage = () => {
+  const { user } = useGetUserInfo();
+
   const [passwords, setPasswords] = useState({
     currentPassword: '',
     newPassword: '',
     confirmNewPassword: '',
   });
 
-  const user = JSON.parse(sessionStorage.getItem('pb_auth')).token;
+  const [visible, setVisible] = useState({
+    newPassword: null,
+    confirmNewPassword: null,
+  });
+
+  const validateCheckPassword = (confirmNewPassword) => {
+    if (passwords.newPassword.length === 0) return;
+    return passwords.newPassword !== confirmNewPassword ? false : true;
+  };
+
+  const handleBlur = (e) => {
+    const { value, name } = e.target;
+    if (name === 'currentPassword' && !validatePassword(value)) {
+      return setVisible((prev) => ({ ...prev, [name]: true }));
+    }
+    if (name === 'newPassword' && !validatePassword(value)) {
+      return setVisible((prev) => ({ ...prev, [name]: true }));
+    }
+    if (name === 'confirmNewPassword' && !validateCheckPassword(value)) {
+      return setVisible((prev) => ({ ...prev, [name]: true }));
+    } else {
+      return setVisible((prev) => ({ ...prev, [name]: false }));
+    }
+  };
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -34,12 +65,17 @@ const ChangePasswordPage = () => {
       console.error(error);
     }
   };
+
+  const passwordWarn = visible.currentPassword && WRANING.passwordMsg;
+  const newPasswordWarn = visible.newPassword && WRANING.passwordMsg;
+  const confirmNewPasswordWarn = visible.confirmNewPassword && WRANING.passwordCheckMsg;
+  const disabled = Object.values(visible).filter((item) => item === false).length < 3;
   return (
     <div className={S.wrapComponent}>
       <EditHeader
         navText="비밀번호 변경"
         mainText="비밀번호를 변경할 수 있어요."
-        description="제형에 맞는 옷으로 추천해드릴게요 언젠가는.."
+        description="비밀번호를 변경할 수 있어요"
       />
       <Form>
         <Input
@@ -48,9 +84,8 @@ const ChangePasswordPage = () => {
           type={'password'}
           description={'비밀번호를 입력해주세요'}
           onChange={handleChange}
-          // onBlur={handleBlur}
-          // warningText={passwordWarn}
-          // activeVisible={true}
+          onBlur={handleBlur}
+          warningText={passwordWarn}
         />
         <Input
           text={'새 비밀번호'}
@@ -58,9 +93,8 @@ const ChangePasswordPage = () => {
           type={'password'}
           description={'새 비밀번호를 입력해주세요'}
           onChange={handleChange}
-          // onBlur={handleBlur}
-          // warningText={passwordCheckWarn}
-          // activeVisible={true}
+          onBlur={handleBlur}
+          warningText={newPasswordWarn}
         />
         <Input
           text={'새 비밀번호 확인'}
@@ -68,11 +102,12 @@ const ChangePasswordPage = () => {
           type={'password'}
           description={'새 비밀번호를 한번 더 입력해주세요'}
           onChange={handleChange}
-          // onBlur={handleBlur}
-          // warningText={passwordCheckWarn}
-          // activeVisible={true}
+          onBlur={handleBlur}
+          warningText={confirmNewPasswordWarn}
         />
-        <Button text={'비밀번호변경'} onClick={handleClick} />
+        <div className={S.button__container}>
+          <Button disabled={disabled} text={'비밀번호변경'} onClick={handleClick} />
+        </div>
       </Form>
       <Toaster />
     </div>

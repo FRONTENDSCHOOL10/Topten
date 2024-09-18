@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { object, string, arrayOf } from 'prop-types';
-import CostumeCard from '@/components/CostumeCard/CostumeCard';
+import { CostumeCard } from '@/components';
+import clsx from 'clsx';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Grid } from 'swiper/modules';
 import 'swiper/css/grid';
 import 'swiper/css';
 import useLikeStore from '@/stores/likeStore'; // Zustand store
@@ -50,9 +50,12 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
   if (viewType === 'OOTD') {
     // OOTD에서는 딱 4장의 카드만 사용
     const ootdCards = costumeCards.slice(0, 4);
-
+    const ootdGridClass = clsx(S.gridOOTD, {
+      [S.twoByOneGrid]: ootdCards.length <= 2, // 2개 이하일 때 적용할 클래스
+      [S.twoByTwoGrid]: ootdCards.length > 2, // 3개 이상일 때 적용할 클래스
+    });
     return (
-      <div className={S.gridOOTD}>
+      <div className={ootdGridClass}>
         {ootdCards.map((record) => {
           const imageUrl = getPbImageURL(record, 'costumeImage');
           return (

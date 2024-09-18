@@ -5,11 +5,15 @@ import { SIZE } from '../data/constant';
 import Select from '../components/Select/Select';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
+
+import useGetUserInfo from '../hooks/useGetUserInfo';
+
 import { Toaster } from 'react-hot-toast';
 
+
 const ChangeFitPage = () => {
+  const { user } = useGetUserInfo();
   const [userSize, setUserSize] = useState({ topSize: '', bottomSize: '' });
-  const user = JSON.parse(sessionStorage.getItem('pb_auth')).token;
 
   //공백 조건 처리 필
   const handleChange = (e) => {
@@ -40,8 +44,13 @@ const ChangeFitPage = () => {
       <div className={S.select__container}>
         <Select name="bottomSize" text="하의 사이즈" items={SIZE} onChange={handleChange} />
       </div>
-      <Button text="변경하기" onClick={handleClick} />
+
+      <div className={S.button__container}>
+        <Button text="변경하기" onClick={handleClick} />
+      </div>
+
       <Toaster />
+
     </div>
   );
 };
