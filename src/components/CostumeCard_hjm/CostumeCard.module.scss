@@ -47,10 +47,9 @@
   }
 
   .description {
-    @include ellipsis(2, 1.2em); /* 한 줄만 표시하고 나머지는 숨김 */
+    @include ellipsis(2, 1.2em); /* 두 줄만 표시하고 나머지는 숨김 */
     text-overflow: ellipsis;
     overflow: hidden;
-    // white-space: nowrap; /* 텍스트를 한 줄로 제한 */
   }
 
   .link {

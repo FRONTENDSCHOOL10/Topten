@@ -125,26 +125,6 @@ button {
   }
 }
 
-.logoutButton {
- 
-  a{
-    display:block;
-    padding:10px 0;
-    text-decoration: none;
-    border-bottom:1px solid var(--gray-custom-600);
-    
-      button{
-        display:flex;
-        justify-content: space-between;
-        align-items: center;
-        width:100%;
-        margin:0;
-        padding:14px 10px 14px 0;
-      }
-    }
-  }
-
-
 .modal__outer {
   position: absolute;
   display: flex;
