@@ -98,7 +98,7 @@ const CalendarPage = () => {
         const userid = JSON.parse(localStorage.getItem('pb_auth')).token.id;
         const bookmarks = await pb.collection('bookmarkItem').getFullList({
           filter: `user = "${userid}"`,
-          sort: 'saveTime2',
+          sort: 'saveTime',
         });
 
         localStorage.setItem('bookMarks', JSON.stringify(bookmarks));
@@ -106,7 +106,7 @@ const CalendarPage = () => {
         // 날짜별 북마크 객체 생성
         const bookmarkObj = {};
         bookmarks.forEach((b) => {
-          const bookmarkDate = new Date(b.saveTime2);
+          const bookmarkDate = new Date(b.saveTime);
           bookmarkObj[bookmarkDate.toDateString()] = b; // 날짜를 키로 저장
         });
 
@@ -131,7 +131,7 @@ const CalendarPage = () => {
 
     setCurrentBookmarkIndex(newIndex);
 
-    const newBookmarkDate = new Date(bookmarkList[newIndex].saveTime2);
+    const newBookmarkDate = new Date(bookmarkList[newIndex].saveTime);
 
     setDate(newBookmarkDate); // 캘린더의 날짜도 업데이트
 
@@ -149,7 +149,7 @@ const CalendarPage = () => {
     const bookmark = bookmarkMap[clickedDate]; // 해당 날짜의 북마크 가져오기
 
     if (bookmark) {
-      console.log(`북마크가 선택되었습니다: ${bookmark.saveTime2}`);
+      console.log(`북마크가 선택되었습니다: ${bookmark.saveTime}`);
       setVisible(true);
       const index = bookmarkList.findIndex((b) => b.id === bookmark.id);
       setCurrentBookmarkIndex(index); // 해당 북마크의 인덱스를 설정
@@ -163,7 +163,7 @@ const CalendarPage = () => {
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
       const hasBookmark = bookmarkList.some((b) => {
-        const bookmarkDate = new Date(b.saveTime2);
+        const bookmarkDate = new Date(b.saveTime);
         return isSameDay(bookmarkDate, date);
       });
 
@@ -220,7 +220,7 @@ const CalendarPage = () => {
           <button type="button" className={S.arrow} onClick={() => goToBookmark('prev')}>
             <IoIosArrowBack />
           </button>
-          <p>{formatDate(bookmarkList[currentBookmarkIndex]?.saveTime2)}</p>
+          <p>{formatDate(bookmarkList[currentBookmarkIndex]?.saveTime)}</p>
           <button type="button" className={S.arrow} onClick={() => goToBookmark('next')}>
             <IoIosArrowForward />
           </button>
