@@ -449,7 +449,6 @@
       - /src/utils/weatherIcons.js : 날씨 아이콘 유틸리티 함수 분리
         /src/components/Main/Weather.jsx : 분리된 상태 관리 스토어와 연동하여 데이터를 제대로 가져올 수 있도록 수정
 
-
 ### 9월 14일
 
 - 황선우
@@ -488,10 +487,10 @@
     - update: 현재 월과 기온에 따른 계절 판별 로직 추가
     - fix: null값 에러 처리
 
-
 ### 9월 15일
 
 - 황선우
+
   - 캘린더페이지 OOTD 컴포넌트
     - init: 캘린더 페이지 구성
     - feat: 북마크 컴포넌트 생성
@@ -503,8 +502,8 @@
 
 - 권보령
   - 달력 캘린더
-    - update: react-calendar 설치 
-    - update: 달력 불러오기 
+    - update: react-calendar 설치
+    - update: 달력 불러오기
     - update: 달력 커스텀을 위한 styled-components 설치
     - update: 달력 커스텀 조정
     - 이전 달/다음 달의 날짜 제거하기
@@ -514,10 +513,10 @@
     - update: 북마크 아이콘 추가
     - update: 제목과 달력 접기 버튼 추가
 
-
 ### 9월 16일
 
 - 권보령
+
   - 달력 캘린더
     - update: 캘린더 페이지 머지
     - update: 캘린더 페이지 스타일 추가
@@ -531,6 +530,27 @@
     - update: 북마크 undefined 값 할당으로 인한 에러 처리
 
 - 황선우
+
   - 하단 네비게이션바
     - feat: 현재 접속경로에 따른 하단 네비게이션바 색상 활성화
 
+- 캘린더 페이지
+
+  - feat: calendarPage 동작 로직 구현
+
+    - active, hover 시 테마색상 적용되도록 수정
+    - 날짜 포맷 변환함수(formatDate) 에러핸들링
+    - 날짜 비교함수(isSameDay) 추가
+    - 북마크 좌우 이동 관련 로직 수정
+      - 좌우로 북마크 이동 시, 이월된 경우 해당 월로 옮겨지도록 수정(activeStartDate)
+      - 북마크를 빠르게 이동 및 빠르게 찾기 위해 배열(bookmarkList), 객체(bookmarkMap) 둘다 적용
+      - goToBookmark 클릭 시에도 달력을 클릭한것 처럼 동작하도록 수정
+      - 날짜관련 형식 Date객체로 통일. 표기시에만 변형
+      - 위 변경사항에 따른 jsx 마크업 수정
+    - 불필요한 scss 스타일 제거
+    - Calendar 페이지에서 전달한 날짜정보 포맷도 Bookmark에서 동일하게 적용되도록 수정
+
+  - fix : 캘린더페이지에서, 로컬스토리지에 북마크 관련 데이터를 저장하도록 수정
+  - fix: CCM의 ootd형태일 때, 카드개수가 2개 이하일 경우의 스타일링 수정
+  - fix: 저장된 북마크 기반으로 costumecard를 표기하도록 수정
+  - fix: 숫자 전달 시 별표를 세팅할 수 있도록 수정

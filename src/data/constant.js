@@ -1,4 +1,4 @@
-export const SIZE = ['XS', 'S', 'L'];
+export const SIZE = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL', '4XL'];
 
 export const COLORS = ['봄웜', '봄쿨', '여름웜', '여름쿨', '가을웜', '가을쿨', '겨울웜', '겨울쿨'];
 
@@ -35,12 +35,12 @@ export const INITCHECKED = {
 };
 
 export const NAV = [
-  { text: '나의 체형', path: '/changefit' },
-  { text: '나의 퍼스널 컬러', path: '/changecolor' },
-  { text: '회원정보 변경', path: '/changeinfo' },
-  { text: '비밀번호 변경', path: '/changepassword' },
-  { text: '고객센터', path: '/cs' },
-  { text: '로그아웃', path: '/cs' },
+  { text: '나의 체형', path: '/changefit', onClick: null },
+  { text: '나의 퍼스널 컬러', path: '/changecolor', onClick: null },
+  { text: '회원정보 변경', path: '/changeinfo', onClick: null },
+  { text: '비밀번호 변경', path: '/changepassword', onClick: null },
+  { text: '고객센터', path: '/cs', onClick: null },
+  { text: '로그아웃', path: '/', onClick: 'handleLogout' }, // 로그아웃 항목만 onClick 할당
 ];
 
 export const temperatureList = [

@@ -85,9 +85,7 @@ function Product() {
   };
 
   // 북마크 textarea 입력 함수
-  const handleChange = (e) => {
-    //textarea의 값을 formdata에 저장
-    const { value } = e.target;
+  const handleChange = (value) => {
     setFormData((prev) => ({ ...prev, comment: value }));
   };
 
@@ -98,6 +96,7 @@ function Product() {
       ...formData,
       upperItems: filteredUpper,
       lowerItems: filteredLower,
+      date: getDate(),
       saveTime: getDate(),
       uid: user.id,
     };
