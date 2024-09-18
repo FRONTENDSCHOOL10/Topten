@@ -143,7 +143,7 @@ function LoginPage() {
           </div>
         )}
         {!redirecting && (
-          <Form onSubmit={handleLogin}>
+          <Form onSubmit={handleLogin} className={styles.loginForm}>
             <Input
               text="이메일"
               description="이메일을 입력하세요"
