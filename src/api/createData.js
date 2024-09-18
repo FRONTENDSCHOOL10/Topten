@@ -11,6 +11,7 @@ export default async function createData(formData) {
     lowerItems: formData.lowerItems.map((item) => item.id),
     user: formData.uid,
     rate: 0,
+    checkDate: formData.checkDate,
   };
 
   const record = await pb.collection('bookmarkItem').create(newData);
