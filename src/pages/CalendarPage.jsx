@@ -30,17 +30,27 @@ const StyledCalendar = styled(Calendar)`
     font-size: 12px;
     font-weight: 300;
     height: 39px;
-    // border: 1px solid grey;
   }
-
-  
-  /* 날짜 숫자를 왼쪽 상단에 배치 */
   .react-calendar__tile {
     display: flex;
-    justify-content: flex-start; 
-    align-items: flex-start;  
-    padding: 5px; 
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 5px;
     position: relative;
+  }
+
+  .react-calendar__tile--active {
+    background-color: #ffc107 !important;
+    color: white;
+  }
+
+  .react-calendar__tile:hover {
+    background-color: #ffc107;
+  }
+
+  .react-calendar__tile--active:hover {
+    background-color: #ffc107;
+    color: white;
   }
 `;
 
@@ -144,7 +154,6 @@ const CalendarPage = () => {
       const index = bookmarkList.findIndex((b) => b.id === bookmark.id);
       setCurrentBookmarkIndex(index); // 해당 북마크의 인덱스를 설정
     } else {
-      setVisible(false);
       console.log('해당 날짜에 북마크가 없습니다.');
       setVisible(false);
     }
@@ -159,10 +168,15 @@ const CalendarPage = () => {
       });
 
       if (hasBookmark) {
-        return <FaBookmark style={{ 
-          marginLeft: '8px',
-          marginTop: '15px',
-          color: 'orange' }} />;
+        return (
+          <FaBookmark
+            style={{
+              marginLeft: '8px',
+              marginTop: '15px',
+              color: 'orange',
+            }}
+          />
+        );
       }
     }
     return null;
