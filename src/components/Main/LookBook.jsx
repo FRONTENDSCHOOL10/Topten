@@ -148,7 +148,9 @@ function LookBook({ item }) {
       {!item && (
         <>
           <div className={styles.btnContainer}>
-            <Button text="더 많은 룩북 보기" type="button" linkTo="/lookbook" />
+            <div className={styles.buttonArea}>
+              <Button text="더 많은 룩북 보기" type="button" linkTo="/lookbook" />
+            </div>
           </div>
         </>
       )}

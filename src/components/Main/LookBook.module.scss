@@ -36,16 +36,10 @@
     .card{
       width:auto;
     }
-    .productTitle {
-      // margin-bottom: -77px;
-    }
-
-    .productSwiper {
-      // margin-left: -17px;
-    }
   }
 
-  .btnContainer {
-    // margin-top: -53px;
+  .buttonArea{
+    display:flex;
+    justify-content: center;
   }
 }

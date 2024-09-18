@@ -32,9 +32,9 @@ form > div:nth-child(2){
   }
 }
 
-button{
-  display: block;
-  margin: 0 auto;
+.buttonArea{
+  display:flex;
+  justify-content: center;
 }
 
 .joinGroup{

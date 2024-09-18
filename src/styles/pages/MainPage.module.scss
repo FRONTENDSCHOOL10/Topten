@@ -34,8 +34,6 @@ button {
     .size {
       padding-bottom: 12px;
     }
-    .personal__color {
-    }
   }
 
   .img__container {
@@ -45,8 +43,8 @@ button {
       width: 90px;
       height: 90px;
       border-radius: 50%;
-      border: 2px solid var(--gray-custom-600);
-      z-index: -1;
+      border: 6px solid var(--white);
+      outline: 1px solid var(--gray-custom-300);
       overflow: hidden;
     }
 
@@ -56,12 +54,12 @@ button {
 
     .camera__button {
       position: absolute;
-      bottom: 25px;
-      right: 3px;
-      width: 21px;
-      height: 21px;
-      background-color: #d9d9d9;
-      border: 2px solid var(--white);
+      bottom: 15px;
+      right: 0px;
+      width: 28px;
+      height: 28px;
+      background-color: var(--gray-custom-600);
+      border: 3px solid var(--white);
       border-radius: 50%;
       display: flex;
       justify-content: center;

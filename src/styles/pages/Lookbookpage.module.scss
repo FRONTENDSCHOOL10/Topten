@@ -7,6 +7,7 @@
   .topWrapper {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 
     .title {
@@ -21,8 +22,11 @@
       height: 31px;
       border-radius: 50%;
       border: 1px solid #e5e5e5;
-      
-      margin: 30px 0 0 95px;
+      margin-top:30px;
+
+      .icon{
+        margin:0;
+      }
     }
   }
 
