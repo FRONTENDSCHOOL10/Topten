@@ -11,5 +11,6 @@ export async function getUserInfo() {
   }
   const uid = JSON.parse(sessionStorage.getItem('pb_auth')).token.id;
   const data = await pb.collection('users').getOne(uid);
+
   return { ...data, isUser: true };
 }
