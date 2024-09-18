@@ -1,6 +1,5 @@
 import { Outlet, useLocation, useNavigation } from 'react-router-dom';
 import { Header, NavigationBar, ToTopButton, Loader } from '@/components';
-import useLikeStore from '@/stores/likeStore'; // Zustand로 상태 관리
 
 const RootLayout = ({ user }) => {
   const location = useLocation();
