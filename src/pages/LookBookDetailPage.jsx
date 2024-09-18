@@ -11,13 +11,11 @@ function LookBookDetailPage() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-
-  // 로컬스토리지에서 날씨 정보 가져오기
+  // 날씨 아이콘
   const weatherData = JSON.parse(localStorage.getItem('weatherData'));
   const skyCondition = weatherData ? weatherData.skyCondition : '';
   const weatherIcon = getWeatherIcon(skyCondition);
-
-
+  
   // 룩북 페이지에서 클릭된 착용샷
   const [item, setItem] = useState(null);
 
@@ -69,10 +67,7 @@ function LookBookDetailPage() {
         </div>
 
         <div className={styles.weatherIcon}>
-          <img
-            src={weatherIcon.src}
-            alt={weatherIcon.alt}
-          />
+          <img src={getWeatherIcon(skyCondition).src} alt={getWeatherIcon(skyCondition).alt} />
         </div>
 
         <div className={styles.subTitle}>
