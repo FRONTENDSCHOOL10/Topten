@@ -8,6 +8,8 @@
   .profile {
     display: flex;
     justify-content: space-between;
+    padding-bottom:30px;
+    border-bottom:1px solid var(--gray-600, #919191);
   }
   .profile__info {
     font-style: normal;
@@ -26,8 +28,6 @@
     .size {
       padding-bottom: 12px;
     }
-    .personal__color {
-    }
   }
 
   .img__container {
@@ -37,8 +37,8 @@
       width: 90px;
       height: 90px;
       border-radius: 50%;
-      border: 2px solid var(--gray-custom-600);
-      z-index: -1;
+      border: 6px solid var(--white);
+      outline: 1px solid var(--gray-custom-300);
       overflow: hidden;
     }
 
@@ -48,12 +48,12 @@
 
     .camera__button {
       position: absolute;
-      bottom: 25px;
-      right: 3px;
-      width: 21px;
-      height: 21px;
-      background-color: #d9d9d9;
-      border: 2px solid var(--white);
+      bottom: 15px;
+      right: 0px;
+      width: 28px;
+      height: 28px;
+      background-color: var(--gray-custom-600);
+      border: 3px solid var(--white);
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -64,23 +64,32 @@
   .profile__change__popup {
     visibility: hidden;
     position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 81px;
-    border: 1px solid black;
+    bottom:61px;
+    left: 50%;
+    z-index: 2;
+    width:288px;
+    transform:translate(-50%,0);
+    border: 1px solid var(--gray-custom-600);
+    border-bottom:0;
     border-radius: 6px 6px 0 0;
-    padding: 12px;
-    background-color: white;
+    padding:20px 20px 10px;
+    background-color: var(--white);
+    box-sizing:border-box;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 
     div {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 15px 0;
+      align-items: baseline;
 
       h2 {
+        margin-bottom:10px;
         font-size: 14px;
         font-weight: 600;
+      }
+      img{
+        width:16px;
+        height:18px;
       }
     }
 
@@ -110,16 +119,6 @@
   }
 }
 
-// <div class={S.profile}>
-// <div class={S.profile__info}>
-//   <h2>고통받는_고길동동동</h2>
-//   <p class={S.email}>gildong-go86@gmail.com</p>
-//   <p class={S.size}>Size: 77 | L</p>
-//   <p class={S.personal__color}>Personal color: 여름 쿨</p>
-// </div>
-// <img src="profile-image.png" alt="프로필 이미지" />
-// </div>
-
 .modal__outer {
   position: absolute;
   display: flex;
@@ -138,3 +137,5 @@
   text-align: center;
   background-color: white;
 }
+
+

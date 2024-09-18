@@ -25,7 +25,8 @@
 .wrapComponent {
   width: 320px;
   margin: 0 auto;
-  padding: 90px 16px 100px;
+  padding: 90px 16px 61px;
+  box-sizing: border-box;
 }
 
 // 믹스인
@@ -47,5 +48,5 @@
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   line-height: $line-height;
-  height: $line-height * $line-cnt; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
+  max-height: $line-height * $line-cnt; /* line-height 가 1.2em 이고 3라인을 자르기 때문에 height는 1.2em * 3 = 3.6em */
 }

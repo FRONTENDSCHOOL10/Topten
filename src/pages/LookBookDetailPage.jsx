@@ -67,10 +67,7 @@ function LookBookDetailPage() {
         </div>
 
         <div className={styles.weatherIcon}>
-        <img
-            src={weatherIcon.src}
-            alt={weatherIcon.alt}
-          />
+          <img src={getWeatherIcon(skyCondition).src} alt={getWeatherIcon(skyCondition).alt} />
         </div>
 
         <div className={styles.subTitle}>

@@ -118,8 +118,8 @@ const MyPage = () => {
           <div className={S.profile__info}>
             <h2>{user?.userNickName || '환영해요'}</h2>
             <p className={S.email}>{user?.email || 'E-mail'}</p>
-            <p className={S.size}>Size: {user?.userSize?.join(', ') || ''}</p>
-            <p className={S.personal__color}>Personal color: {user?.userColor?.join(', ') || ''}</p>
+            <p className={S.size}>Size: <b>{user?.userSize?.join(', ') || ''}</b></p>
+            <p className={S.personal__color}>Personal color: <b>{user?.userColor?.join(', ') || ''}</b></p>
           </div>
           <div className={S.img__container}>
             <div>

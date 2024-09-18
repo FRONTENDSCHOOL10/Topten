@@ -104,14 +104,16 @@ function LoginPage() {
     <>
       <Helmet>
         <title>로그인 | StyleCast - 나만의 스타일 캐스트</title>
-        <meta name="description" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
         <meta property="og:title" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
         <meta property="twitter:title" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
-        <meta property="og:type" content="site" />
+        <meta name="description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta property="og:description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta name="keywords" content="날씨, 기온, 옷차림, 뭐입지, 입을옷, 의류, 기상정보, 룩북, 체형, 퍼스널컬러" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://stylecast.netlify.app/image/og-sc.png" />
         <meta property="og:url" content="https://stylecast.netlify.app/" />
-        <meta property="og:description" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
-        <meta property="og:image" content="https://stylecast.netlify.app/og-sc.png" />
         <meta property="og:site:author" content="TopTen" />
+        <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
 
       <div className="wrapComponent">
@@ -141,7 +143,7 @@ function LoginPage() {
           </div>
         )}
         {!redirecting && (
-          <Form onSubmit={handleLogin}>
+          <Form onSubmit={handleLogin} className={styles.loginForm}>
             <Input
               text="이메일"
               description="이메일을 입력하세요"
@@ -164,17 +166,19 @@ function LoginPage() {
               warningText={warnings.password || warnings.auth}
             />
             <div className={styles.showPasswordWrap}>
-              <label htmlFor="showPassword">
                 <input
                   type="checkbox"
                   id="showPassword"
                   checked={showPassword}
                   onChange={toggleShowPassword}
                 />
+              <label htmlFor="showPassword">
                 비밀번호 보기
               </label>
             </div>
-            <Button type="submit" text="로그인" onClick={handleLogin} active={true} />
+            <div className={styles.buttonArea}>
+              <Button type="submit" text="로그인" onClick={handleLogin} active={true} />
+            </div>
           </Form>
         )}
         <div className={styles.joinGroup}>

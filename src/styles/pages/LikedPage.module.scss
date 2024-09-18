@@ -1,14 +1,12 @@
-.likedPage {
-  padding: 20px;
-}
-
 .album {
   display: flex;
   justify-content: space-between;
+  padding-top:12px;
 }
 
 .ccmWrapper {
-  width: 60%; // 기존 40%에서 조정
+  width: 64%; // 기존 40%에서 조정
+  padding-bottom:30px;
 }
 
 .title {
@@ -45,9 +43,8 @@
 .categoryButtons {
   display: flex;
   flex-direction: column;
-  margin-top: 12px;
-  //   gap: 12px;
   width: 30%; // 왼쪽 카테고리의 너비 설정
+  background-color: var(--gray-custom-100);
 }
 
 .categoryButton {

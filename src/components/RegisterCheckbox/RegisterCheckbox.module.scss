@@ -1,3 +1,6 @@
+@import './../../styles/utils/theme';
+@import './../../styles/utils/utils';
+
 .checkbox__container {
   font-family: Pretendard;
   display: flex;
@@ -11,14 +14,13 @@
 
   label,
   span {
-    font-size: 12px;
-    line-height: 110%;
+    @include font-style(14px, 400, $--gray-custom-600);
     letter-spacing: -0.48px;
   }
 
   .chevron__right {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -26,8 +28,8 @@ input[type='checkbox'] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 10px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   border: 2px solid #ccc;
   border-radius: 50%;
   outline: none;

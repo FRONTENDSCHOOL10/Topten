@@ -10,24 +10,31 @@
   @include font-style(20px, 700, $--black);
 }
 .top__title--sm{
-  @include font-style(14px, 500, $--gray-custom-600);
+  @include font-style(14px, 400, $--gray-custom-600);
 
   margin-top:12px;
   line-height:1.4;
 }
-form > div:nth-child(2){
+.loginForm > div:nth-child(2){
   margin-bottom:0 !important;
 }
 
 .showPasswordWrap{
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
   margin-top:4px;
   margin-bottom:30px;
   text-align:right;
+
+  input[type=checkbox]{
+    margin-right:6px;
+  }
 }
 
-button{
-  display: block;
-  margin: 0 auto;
+.buttonArea{
+  display:flex;
+  justify-content: center;
 }
 
 .joinGroup{

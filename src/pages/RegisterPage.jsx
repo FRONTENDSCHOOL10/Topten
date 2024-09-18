@@ -220,7 +220,7 @@ function RegisterPage(props) {
             아래 정보를 입력해주세요.
           </p>
           <div className={styles.radio__container}>
-            <label>
+            <label className={styles.label}>
               성별 <span className={styles.mark}>*</span>
             </label>
             <div className={styles.radio__inner}>{genderComponent}</div>
@@ -237,7 +237,7 @@ function RegisterPage(props) {
 
           <div className={styles.policy__container}>
             <p className={styles.policy__title}>아래 이용약관에 동의해주세요</p>
-            <div>
+            <div className={styles.policyGr}>
               <input type="checkbox" id="checkAll" checked={checkAll} onChange={handleCheckAll} />
               <label className={styles.checkAll__title} htmlFor="checkAll">
                 전체 동의합니다

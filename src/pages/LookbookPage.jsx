@@ -207,7 +207,7 @@ function LookbookPage() {
                 border: 'none',
                 width: '31px',
                 height: '31px',
-                marginLeft: '-8px',
+                marginLeft: '-4px',
               }}
             />
           </div>

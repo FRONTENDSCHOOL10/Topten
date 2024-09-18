@@ -137,7 +137,7 @@ function Product() {
       <CommonModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        title={['로그인 후', <br />, '이용해보세요!']}
+        title={['로그인 후','이용해보세요!']}
         firstActionText="로그인"
         firstActionLink="/login"
         secondActionText="회원가입"
@@ -193,13 +193,16 @@ function Product() {
           />
         ))}
       </div>
-      <Button
-        style={{ marginTop: '30px' }}
-        text="다른 스타일 추천해드릴까요?"
-        onClick={refreshProductItem}
-        active={true}
-        icon={<IoRefreshSharp />}
-      />
+      
+      <div className={styles.buttonArea}>
+        <Button
+          style={{ marginTop: '30px' }}
+          text="다른 스타일 추천해드릴까요?"
+          onClick={refreshProductItem}
+          active={true}
+          icon={<IoRefreshSharp />}
+        />
+      </div>
       <Toaster />
     </div>
   );

@@ -1,4 +1,6 @@
+@import './../utils/theme';
 @import './../utils/utils';
+
 .wrapComponent {
   font-family: Pretendard;
   font-family: Pretendard;
@@ -6,25 +8,19 @@
   //padding: 30px 12px;
 
   .title {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: normal;
+    @include font-style(20px, 700, $--black);
   }
 
   .description {
-    color: var(--gray-600, #919191);
-    font-size: 12px;
-    font-weight: 300;
-    line-height: 110%; /* 13.2px */
+    @include font-style(14px, 400, $--gray-custom-600);
+    line-height: 1.4;
     letter-spacing: -0.48px;
     padding-top: 12px;
   }
 
   .ootd__info {
-    color: var(--gray-600, #919191);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 110%;
+    @include font-style(14px, 400, $--gray-custom-600);
+    line-height: 1.4;
     letter-spacing: -0.48px;
     padding: 72px 0 30px 0;
   }
@@ -33,6 +29,10 @@
     width: 288px;
     padding-bottom: 5px;
     border-bottom: 1px solid var(--gray-custom-300);
+
+    .label{
+      font-weight: 700;
+    }
 
     .mark {
       color: var(--primary-color);
@@ -87,16 +87,18 @@
 
     .policy__title {
       padding-top: 72px;
-      color: var(--gray-600, #919191);
-      font-size: 12px;
-      font-weight: 300;
-      line-height: 110%;
+      @include font-style(14px, 400, $--gray-custom-600);
+      line-height: 1.4;
       letter-spacing: -0.48px;
     }
 
+    .policyGr{
+      display:flex;
+      align-items: center;
+    }
+
     .checkAll__title {
-      font-size: 14px;
-      font-weight: 600;
+      @include font-style(18px, 700, $--black);
       line-height: 110%;
       letter-spacing: -0.56px;
     }
@@ -113,8 +115,8 @@ input[type='radio'] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 8px;
-  height: 8px;
+  width: 14px;
+  height: 14px;
   border: 2px solid #ccc;
   border-radius: 50%;
   outline: none;
@@ -122,5 +124,6 @@ input[type='radio'] {
 }
 
 input[type='radio']:checked {
+  background-color:var(--primary-color);
   border: 2px solid var(--primary-color);
 }

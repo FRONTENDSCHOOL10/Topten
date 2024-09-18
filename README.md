@@ -579,3 +579,165 @@
       - saveTime2 에서 saveTime으로 변경
     - fix: 버튼이 틀어지는 현상 수정
       - MainPage.module.scss에 선언되어있던 button스타일링 삭제
+
+
+- 함정민
+  - style: 모든 페이지 전반적인 스타일 및 관련 마크업 수정
+    - 공통
+      - 헤더 scss
+        - 헤더 배경은 가로 100%로 하되, 헤더의 콘텐츠는 가운데로 배치
+        - 프로필 아이콘 사이즈 및 비율 고정되게 수정
+        - src/components/Header/Header.module.scss
+      - 하단 네비게이션바 jsx
+        - 하단 네비게이션을 감싸는 div 생성
+        - src/components/NavigationBar/NavigationBar.jsx
+      - 하단 네비게이션바 scss
+        - 하단 네비게이션을 감싸는 div 디자인 적용
+        - 아이콘 사이즈 조정
+        - src/components/NavigationBar/NavigationBar.module.scss
+      - 버튼 공통 scss
+        - 버튼 아이콘 왼쪽 마진값이 조정 1rem -> 0.4rem
+        - src/components/Button/Button.module.scss
+      - 모달 공통 scss
+        - 폰트 사이즈 및 마진값 조정
+        - src/components/CommonModal/CommonModal.module.scss
+      - 체크박스 공통 scss
+        - theme.scss, utils.scss 임포트 및 믹스인 적용
+        - 체크박스 사이즈 키우기
+        - 폰트 사이즈 및 두께 가독성 높이기 작업
+        - src/components/RegisterCheckbox/RegisterCheckbox.module.scss
+      - 셀렉트박스 공통 scss
+        - 포커스 상태 스타일 추가
+        - src/components/Select/Select.module.scss
+      - 위로 가기 버튼 scss
+        - 사이즈 수정 및 버튼 내 아이콘 위치 조정
+        - src/components/ToTopButton/ToTopButton.module.scss
+      - 인풋 scss
+        - 폰트 사이즈 및 두께 가독성 높이기 작업
+        - src/components/Input/Input.module.scss
+      - 공통 utils scss
+        - 콘텐츠를 중앙으로 감싸는 wrapComponent의 하단 padding 값 조정
+        - 의상카드 상품명 2줄로 나오게 max-height 부여
+        - src/styles/utils/_utils.scss
+
+    - 회원가입
+      - 회원가입 jsx
+        - 성별 label 및 동의 부분 div에 클래스 추가
+        - src/pages/RegisterPage.jsx
+      - 회원가입 scss
+        - theme.scss 추가 임포트 및 믹스인 적용
+        - 폰트 사이즈 및 두께 가독성 높이기 작업
+        - 동의 부분 정렬 교정 및 아이콘 사이즈 수정
+        - src/styles/pages/RegisterPage.module.scss
+
+    - 로그인
+      - 로그인 페이지 jsx
+        - '로그인' 버튼 가운데로 정렬
+        - 비밀번호보기 버튼 체크박스와 글자 마크업 수정
+        - src/pages/LoginPage.jsx
+      - 로그인 페이지 scss
+        - '로그인' 버튼 가운데로 정렬
+        - 비밀번호보기 버튼 체크박스와 글자 여백 수정
+        - src/styles/pages/Login.module.scss
+
+    - 메인
+      - 메인 jsx
+        - 모달창 불필요한 `<br />` 삭제 및 로그인 버튼 텍스트 수정
+        - src/pages/MainPage.jsx
+      - 룩북 jsx
+        - '더 많은 룩북 보기' 버튼 가운데로 정렬
+        - src/components/Main/LookBook.jsx
+      - 룩북 scss
+        - '더 많은 룩북 보기' 버튼 가운데로 정렬 
+        - 불필요한 margin 마이너스 값 삭제 및 조정
+        - src/components/Main/LookBook.module.scss
+      - product jsx
+        - 모달창 불필요한 `<br />` 삭제
+        - '다른 스타일 추천해드릴까요?' 버튼 가운데로 정렬 
+        - src/components/Main/Product.jsx
+      - product scss
+        - theme.scss, utils.scss 임포트 및 믹스인 적용
+        - OOTD 저장 버튼 디자인 변경, 상호작용 디자인 적용
+        - '다른 스타일 추천해드릴까요?' 버튼 가운데로 정렬
+        - 여백 조정
+        - src/components/Main/Product.module.scss
+      - 북마크 모달 scss
+        - 모달창 높이값 주석처리
+        - src/components/BookmarkModal/BookmarkModal.module.scss
+
+    - 코스튬카드 (hjm)
+      - 코스튬카드_hjm jsx : 원본과 변경없음. 파일만 복제함
+      - 코스튬카드_hjm scss
+        - .card : flex 축약형 속성 추가, 너비 조정, 최소 높이 주석처리, css 작성 순서 변경
+        - .imageWrapper : 너비, 높이 값 주석처리
+        - .imageWrapper .image : 마진 탑 삭제
+        - .infoWrapper : padding 추가
+        - .description : 상품명 노출을 2줄로 변경
+        - .link : 아이콘과 글자 세로 중앙 나열을 위한 display:flex 선언
+        - .likeButton : 좋아요 버튼 크기 조정
+        - src/components/CostumeCard_hjm/CostumeCard.module.scss
+
+    - 코스튬카드 매니저
+      - 코스튬카드 매니저 jsx
+        - 불필요한 div.wrapComponent 삭제
+        - src/components/CostumeCardManager/CostumeCardManager.jsx
+      - 코스튬카드 매니저 scss
+        - 의상카드를 1줄에 2개씩 나열
+        - src/components/CostumeCardManager/CostumeCardManager.module.scss
+
+    - 마이페이지
+      - 마이페지이 jsx
+        - 나의 체형, 나의 퍼스널컬러에 글자 두께 `<b>` 태그 적용
+        - src/pages/MyPage.jsx
+      - 고객센터 페이지 jsx
+        - 상단 타이틀 추가
+        - src/pages/CustomerServicePage.jsx
+      - 고객센터 페이지 scss
+        - 여백 및 글자 두께 가독성 높이기 작업
+        - src/styles/pages/CustomerServicePage.module.scss
+      - EditHeader scss
+        - 아이콘 크기 조정, 여백 조정
+        - src/components/EditHeader/EditHeader.module.scss
+      - NavList scss
+        - 마이페이지 하단 링크버튼들 글자 두께 조정
+        - 이미지 아이콘 크기 조정
+        - src/components/NavList/NavList.module.scss
+
+      - 메인 scss : (src/styles/pages/MainPage.module.scss)
+        - 🛑 마이페이지의 내용이 메인 scss에 잘못 들어간 것으로 여겨짐
+        - 마이페이지의 프로필 이미지 스타일 수정
+        - 마이페지이의 프로필 수정 버튼 스타일 수정
+        - 불필요한 마크업 코드 삭제
+
+    - 룩북 페이지  
+      - 룩북 페이지 jsx
+        - 인라인 여백 조정
+        - src/pages/LookbookPage.jsx
+      - 룩북 디테일 scss
+        - 여백 및 폰트 사이즈 및 두께 가독성 높이기 작업
+        - src/styles/pages/LookbookDetailPage.module.scss
+      - 룩북 페이지 scss
+        - 여백 수정 및 큰 이미지 사이즈 수정
+        - src/styles/pages/Lookbookpage.module.scss
+            
+    - 비밀번호 찾기
+      - 비밀번호 찾기 scss
+        - 폰트 사이즈 및 두께 가독성 높이기 작업
+        - src/styles/pages/FindPasswordPage.module.scss
+
+    - 좋아요 페이지
+      - 좋아요 페이지 scss
+        - 여백 및 비율 조정
+        - 카테고리 배경컬러 부여
+        - src/styles/pages/LikedPage.module.scss
+
+
+  - public: 아이콘 해상도 개선 버전 업로드
+    - 메인 추천OOTD 알림 아이콘
+    - public/image/notification.png
+  - fix: 메인페이지 접근 시간을 weatherData 객체로 묶어서 로컬스토리지에 저장
+    - src/stores/weatherStore.js
+  - fix: 로그인 페이지 Helmet 수정
+  - fix: 룩북 디테일 페이지 jsx
+    - 로컬 스토리지 날씨정보 객체에서 아이콘 가져오는 방식 수정
+    - src/pages/LookBookDetailPage.jsx

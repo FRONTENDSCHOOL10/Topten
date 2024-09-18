@@ -29,7 +29,11 @@ const CustomerServicePage = () => {
 
   return (
     <div className={S.wrapComponent}>
-      <EditHeader navText="고객센터" />
+      <EditHeader
+        navText="고객센터"
+        mainText="고객센터"
+        description="문의주시면 언제든지 답변해드리겠습니다."
+      />
       <div className={S.user__container}>{userInfo}</div>
     </div>
   );

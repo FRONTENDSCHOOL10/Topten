@@ -2,8 +2,8 @@
   display: none;
   opacity: 0;
 
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
 
   position: fixed;
   bottom: 120px;
@@ -25,5 +25,9 @@
 
   &.visible {
     display: block;
+  }
+
+  img, svg{
+    vertical-align:middle;
   }
 }

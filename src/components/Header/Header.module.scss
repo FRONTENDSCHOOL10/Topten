@@ -1,39 +1,48 @@
 .wrapper {
   width: 100%;
+  min-width:320px;
   position: fixed;
-  background-color: black; // 배경색을 검은색으로 설정
-  z-index: 1000;
-
   top: 0;
-  left: 0;
+  left: 50%;
+  z-index: 1000;
+  transform:translate(-50%, 0);
+  background-color: black; // 배경색을 검은색으로 설정
+
 }
 
 .header {
-  width: 100%;
+  width: 320px;
   min-width: 320px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  margin:0 auto;
+  padding: 10px 16px;
   color: white; // 텍스트 색상을 흰색으로 설정
+  box-sizing:border-box;
 }
 
 .logo {
   // width: 40px;
   width: 30%;
-  margin-left: 0.5rem;
+  // margin-left: 0.5rem;
 }
 
 .imageContainer {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #fff;
-  margin-right: 1.5rem;
-  overflow: hidden;
+  // margin-right: 1.5rem;
   justify-content: center;
   align-items: center;
+
+  a{
+    display:block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #fff;
+    overflow: hidden;
+
+  }
 
   .profileImage {
     width: 100%;
