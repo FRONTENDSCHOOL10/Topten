@@ -28,7 +28,7 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
 
   const weatherData = JSON.parse(localStorage.getItem('weatherData'));
   const savedAddress = bookmark?.address || '주소 없음';
-  const savedTime = bookmark?.saveTime2 ? formatDate(bookmark.saveTime2) : '날짜 없음';
+  const savedTime = bookmark?.saveTime ? formatDate(bookmark.saveTime) : '날짜 없음';
 
   const skyCondition = weatherData.skyCondition;
 

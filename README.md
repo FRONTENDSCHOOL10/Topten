@@ -530,25 +530,50 @@
 - 황선우
 
   - 하단 네비게이션바
+
     - feat: 현재 접속경로에 따른 하단 네비게이션바 색상 활성화
 
-- 캘린더 페이지
+  - 캘린더 페이지
 
-  - feat: calendarPage 동작 로직 구현
+    - feat: calendarPage 동작 로직 구현
 
-    - active, hover 시 테마색상 적용되도록 수정
-    - 날짜 포맷 변환함수(formatDate) 에러핸들링
-    - 날짜 비교함수(isSameDay) 추가
-    - 북마크 좌우 이동 관련 로직 수정
-      - 좌우로 북마크 이동 시, 이월된 경우 해당 월로 옮겨지도록 수정(activeStartDate)
-      - 북마크를 빠르게 이동 및 빠르게 찾기 위해 배열(bookmarkList), 객체(bookmarkMap) 둘다 적용
-      - goToBookmark 클릭 시에도 달력을 클릭한것 처럼 동작하도록 수정
-      - 날짜관련 형식 Date객체로 통일. 표기시에만 변형
-      - 위 변경사항에 따른 jsx 마크업 수정
-    - 불필요한 scss 스타일 제거
-    - Calendar 페이지에서 전달한 날짜정보 포맷도 Bookmark에서 동일하게 적용되도록 수정
+      - active, hover 시 테마색상 적용되도록 수정
+      - 날짜 포맷 변환함수(formatDate) 에러핸들링
+      - 날짜 비교함수(isSameDay) 추가
+      - 북마크 좌우 이동 관련 로직 수정
+        - 좌우로 북마크 이동 시, 이월된 경우 해당 월로 옮겨지도록 수정(activeStartDate)
+        - 북마크를 빠르게 이동 및 빠르게 찾기 위해 배열(bookmarkList), 객체(bookmarkMap) 둘다 적용
+        - goToBookmark 클릭 시에도 달력을 클릭한것 처럼 동작하도록 수정
+        - 날짜관련 형식 Date객체로 통일. 표기시에만 변형
+        - 위 변경사항에 따른 jsx 마크업 수정
+      - 불필요한 scss 스타일 제거
+      - Calendar 페이지에서 전달한 날짜정보 포맷도 Bookmark에서 동일하게 적용되도록 수정
 
-  - fix : 캘린더페이지에서, 로컬스토리지에 북마크 관련 데이터를 저장하도록 수정
-  - fix: CCM의 ootd형태일 때, 카드개수가 2개 이하일 경우의 스타일링 수정
-  - fix: 저장된 북마크 기반으로 costumecard를 표기하도록 수정
-  - fix: 숫자 전달 시 별표를 세팅할 수 있도록 수정
+    - fix : 캘린더페이지에서, 로컬스토리지에 북마크 관련 데이터를 저장하도록 수정
+    - fix: CCM의 ootd형태일 때, 카드개수가 2개 이하일 경우의 스타일링 수정
+    - fix: 저장된 북마크 기반으로 costumecard를 표기하도록 수정
+    - fix: 숫자 전달 시 별표를 세팅할 수 있도록 수정
+
+### 9월 17일
+
+- 황선우
+
+  - fix : 이제 @를 사용해도 vscode에서 경로를 추적할 수 있도록 변경(야무쌤 피드백)
+
+  - feat/authZustand/hsw
+
+    - feat: pb_auth를 zustand 상태로 관리하도록 수정
+    - refactor: auth관련 zustand 상태 사용하도록 마이페이지 리팩토링
+      - NavList 컴포넌트의 index 추가
+      - NavList 구조 수정
+        - 해당 NavList 클릭 시 동작하도록 수정
+        - constant에 있던 NAV 자료구조 수정
+      - zustand 상태에 맞도록 마이페이지 구조 수정
+    - refactor: zustand 상태 사용하도록 헤더 수정
+
+  - fix/projectrefactoring/hsw
+    - fix: 모달 외부 클릭 시 모달을 닫도록 수정
+    - fix: DB 수정에 따른 변수명 수정
+      - saveTime2 에서 saveTime으로 변경
+    - fix: 버튼이 틀어지는 현상 수정
+      - MainPage.module.scss에 선언되어있던 button스타일링 삭제
