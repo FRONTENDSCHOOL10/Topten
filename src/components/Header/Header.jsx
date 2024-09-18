@@ -1,15 +1,18 @@
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import getPbImageURL from '@/api/getPbImageURL';
+
 import logo from '/image/logo.png';
-import userLoginImg from '/image/user-login.png';
 import S from './Header.module.scss';
 
-const Header = () => {
-  // session storage에서 pb_auth 값을 가져옵니다.
-  const pbAuth = JSON.parse(sessionStorage.getItem('pb_auth'));
+import useUserStore from '@/stores/userStore';
 
-  // 유저의 프로필 사진 URL 생성
-  const profileImageUrl = pbAuth ? getPbImageURL(pbAuth.token, 'userPhoto') : userLoginImg;
+const Header = () => {
+  const { isLoggedIn, profileImageUrl, initUser } = useUserStore();
+
+  useEffect(() => {
+    // 컴포넌트가 처음 렌더링될 때 사용자 상태 초기화
+    initUser();
+  }, [initUser]);
 
   return (
     <div className={S.wrapper}>
@@ -21,13 +24,13 @@ const Header = () => {
 
         <div className={S.imageContainer}>
           {/* 오른쪽 프로필 이미지 */}
-          {pbAuth ? (
+          {isLoggedIn ? (
             <NavLink to="/myinfo">
               <img src={profileImageUrl} alt="User Profile" className={S.profileImage} />
             </NavLink>
           ) : (
             <NavLink to="/login">
-              <img src={userLoginImg} alt="Default Profile" className={S.profileImage} />
+              <img src={profileImageUrl} alt="Default Profile" className={S.profileImage} />
             </NavLink>
           )}
         </div>
