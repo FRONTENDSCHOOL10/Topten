@@ -32,8 +32,10 @@ const CommonModal = ({
   if (!isOpen) return null;
 
   // 모달 외부를 클릭하면 모달을 닫는 함수
-  const handleOverlayClick = () => {
-    onClose();
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
   };
 
   return (
