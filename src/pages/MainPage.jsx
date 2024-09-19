@@ -119,8 +119,7 @@ function MainPage() {
 
   useEffect(() => {
     intervalIdRef.current = setInterval(() => {
-      const randomIndex = Math.floor(Math.random() * loadingComments.length);
-      setCurrentCommentIndex(randomIndex);
+      setCurrentCommentIndex((prevIndex) => (prevIndex + 1) % loadingComments.length);
     }, 8000);
 
     mainApi();
