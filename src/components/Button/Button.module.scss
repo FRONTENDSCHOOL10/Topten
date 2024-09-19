@@ -6,6 +6,7 @@
   border: 1px solid var(--gray-custom-300);
   background-color: var(--white);
   border-radius: 80px;
+  transition: all 0.2s ease-in-out;
 
   &.active {
     background-color: var(--primary-color);
@@ -35,6 +36,7 @@
   border: 1px solid var(--gray-custom-300);
   background-color: var(--white);
   border-radius: 80px;
+  transition: all 0.2s ease-in-out;
 
   &.active {
     background-color: var(--primary-color);
