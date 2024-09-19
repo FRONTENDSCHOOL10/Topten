@@ -16,7 +16,7 @@ function NavList({ text, link, onClick, altText }) {
   return (
     <li className={S.NavList} onClick={handleClick}>
       {text}
-      <button>
+      <button type="button">
         <img src={arrow} alt={altText} />
       </button>
     </li>
