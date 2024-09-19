@@ -10,7 +10,7 @@ import loadToast from './../../api/loadToast';
 import { getData } from '../../api/getData';
 
 import useGetUserInfo from '../../hooks/useGetUserInfo';
-import { BUTTONSTYLE, temperatureList } from './../../data/constant';
+import { BUTTONSTYLE, getInitTemperature, temperatureList } from './../../data/constant';
 import useLikeStore from './../../stores/likeStore';
 
 import { BookmarkModal, Button, CommonModal, CostumeCard } from '@/components';
@@ -23,18 +23,10 @@ function Product() {
   const [clickedModal, setClickedModal] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const { likeLocal, toggleLikeLocal } = useLikeStore();
-  console.log('user', user);
-  const toggleLike = (id) => {
-    if (likeList.includes(id)) {
-      setLikeList(likeList.filter((likeId) => likeId !== id)); // 좋아요 해제
-    } else {
-      setLikeList([...likeList, id]); // 좋아요 추가
-    }
-  };
 
   // 초기 현재 기온 상태
   const [temperature, setTemperature] = useState(() => ({
-    current: '5°~8°',
+    current: getInitTemperature(formData.temperature),
   }));
 
   // 랜더링 시 전체 프로덕트 아이템을 받아옴
@@ -137,7 +129,7 @@ function Product() {
       <CommonModal
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
-        title={['로그인 후','이용해보세요!']}
+        title={['로그인 후', '이용해보세요!']}
         firstActionText="로그인"
         firstActionLink="/login"
         secondActionText="회원가입"
@@ -164,7 +156,13 @@ function Product() {
       </div>
       <div className={styles.buttons}>
         {temperatureList.map((text, index) => (
-          <Button style={BUTTONSTYLE} key={index} text={text} onClick={handleClick} />
+          <Button
+            style={BUTTONSTYLE}
+            key={index}
+            text={text}
+            onClick={handleClick}
+            active={text === temperature.current}
+          />
         ))}
       </div>
       <div className={styles.recommend__container}>
@@ -193,7 +191,7 @@ function Product() {
           />
         ))}
       </div>
-      
+
       <div className={styles.buttonArea}>
         <Button
           style={{ marginTop: '30px' }}
