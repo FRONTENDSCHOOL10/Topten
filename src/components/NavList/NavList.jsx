@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import arrow from '/icon/right.svg';
 import S from './NavList.module.scss';
-function NavList({ text, link, onClick }) {
+function NavList({ text, link, onClick, altText }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -17,7 +17,7 @@ function NavList({ text, link, onClick }) {
     <li className={S.NavList} onClick={handleClick}>
       {text}
       <button>
-        <img src={arrow} alt="페이지 이동 화살표" />
+        <img src={arrow} alt={altText} />
       </button>
     </li>
   );
