@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Calendar } from 'react-calendar';
-import { Bookmark } from '@/components';
+import { Bookmark, CommonModal } from '@/components';
 import pb from '@/api/pocketbase';
 import S from './Calender.module.scss';
 import 'react-calendar/dist/Calendar.css';
 import styled from 'styled-components';
 import { FaBookmark } from 'react-icons/fa';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import useUserStore from '@/stores/userStore';
 
 // 캘린더 스타일 커스터마이징
 const StyledCalendar = styled(Calendar)`
@@ -90,6 +91,10 @@ const CalendarPage = () => {
   const [bookmarkMap, setBookmarkMap] = useState({});
 
   const [calendarCollapsed, setCalendarCollapsed] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const { isLoggedIn } = useUserStore();
 
   // PocketBase에서 북마크 데이터를 불러오는 함수
   useEffect(() => {
@@ -194,6 +199,17 @@ const CalendarPage = () => {
 
   return (
     <div className="wrapComponent">
+      {!isLoggedIn && (
+        <CommonModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title={['로그인 후', '이용해보세요!']}
+          firstActionText="로그인"
+          firstActionLink="/login"
+          secondActionText="회원가입"
+          secondActionLink="/register"
+        />
+      )}
       <div className={S.titleWrapper}>
         <p className={S.title}>원하시는 날짜를 선택하세요</p>
         <button className={S.btn} onClick={toggleCalendar}>
