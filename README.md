@@ -754,3 +754,5 @@
 
 - 황선우
   - fix : eslint 오류 수정 - globals 패키지 설치
+  - fix/lintBookmark/hsw
+    - eslint 오류 수정 : p 태그의 align 속성을 스타일 클래스로 변경
