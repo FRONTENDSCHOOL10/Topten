@@ -754,3 +754,4 @@
 
 - 황선우
   - fix : eslint 오류 수정 - globals 패키지 설치
+  - fix/button/hsw : props 중 active 속성 분리
