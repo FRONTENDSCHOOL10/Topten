@@ -124,7 +124,7 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
             <StarRate initialRate={bookmark?.rate2} onRate={handleRate} />
           </div>
           <p className={S.comment__Content}>{bookmark?.comment || '코멘트가 없습니다.'}</p>
-          <p align="right">저장 날짜</p>
+          <p className={S.savedDate}>{savedTime}</p>
         </div>
       </div>
 
