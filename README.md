@@ -755,6 +755,9 @@
 - 황선우
 
   - fix : eslint 오류 수정 - globals 패키지 설치
+  - fix/button/hsw : props 중 active 속성 분리
+  - fix/lintBookmark/hsw
+    - eslint 오류 수정 : p 태그의 align 속성을 스타일 클래스로 변경
 
 - 곽승헌
   - fix : 로그인 여부에 따라서 모달창 표시, 불필요 주석 제거
@@ -766,3 +769,4 @@
   - feat: 온도 조건에 맞게 추천문구 랜더링 구현
   - feat: 온도에 맞는 추천 문구 리턴 함수 생성
   - fix: pb관련 함수 묶음
+

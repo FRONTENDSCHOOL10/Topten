@@ -204,7 +204,7 @@ function Product() {
           style={{ marginTop: '30px' }}
           text="다른 스타일 추천해드릴까요?"
           onClick={refreshProductItem}
-          active={true}
+          activeAnimation={true}
           icon={<IoRefreshSharp />}
         />
       </div>

@@ -35,12 +35,12 @@ export const INITCHECKED = {
 };
 
 export const NAV = [
-  { text: '나의 체형', path: '/changefit', onClick: null },
-  { text: '나의 퍼스널 컬러', path: '/changecolor', onClick: null },
-  { text: '회원정보 변경', path: '/changeinfo', onClick: null },
-  { text: '비밀번호 변경', path: '/changepassword', onClick: null },
-  { text: '고객센터', path: '/cs', onClick: null },
-  { text: '로그아웃', path: '/', onClick: 'handleLogout' }, // 로그아웃 항목만 onClick 할당
+  { text: '나의 체형', path: '/changefit', onClick: null, altText: 'aawef' },
+  { text: '나의 퍼스널 컬러', path: '/changecolor', onClick: null, altText: 'qfqf' },
+  { text: '회원정보 변경', path: '/changeinfo', onClick: null, altText: 'awfaw' },
+  { text: '비밀번호 변경', path: '/changepassword', onClick: null, altText: 'awggw' },
+  { text: '고객센터', path: '/cs', onClick: null, altText: 'htj' },
+  { text: '로그아웃', path: '/', onClick: 'handleLogout', altText: 'yjy' }, // 로그아웃 항목만 onClick 할당
 ];
 
 export const temperatureList = [

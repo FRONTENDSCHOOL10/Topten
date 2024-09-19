@@ -137,11 +137,12 @@ const MyPage = () => {
 
         {isLoggedIn && (
           <ul>
-            {NAV.map(({ text, path, onClick }, index) => (
+            {NAV.map(({ text, path, onClick, altText }, index) => (
               <NavList
                 key={index}
                 text={text}
                 link={path}
+                altText={altText}
                 onClick={onClick === 'handleLogout' ? handleLogout : null} // 로그아웃에만 handleLogout 할당
               />
             ))}
