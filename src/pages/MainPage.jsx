@@ -1,91 +1,78 @@
 import { useEffect, useState } from 'react';
 import S from './../styles/pages/MainPage.module.scss';
-import { Weather, Product, LookBook, CostumeCardManager, CommonModal } from '@/components';
+import { Weather, Product, LookBook, Loader, LoadingComment } from '@/components';
 import pb from '@/api/pocketbase';
 import useLikeStore from '@/stores/likeStore';
 import { Helmet } from 'react-helmet-async';
+import { useWeatherStore } from '@/stores/weatherStore';
 
 function MainPage(props) {
   const [user, setUser] = useState(null);
   const [costumeCards, setCostumeCards] = useState([]);
   const { initLikeOrigin, initLikeLocal } = useLikeStore();
-  const [isModalOpen, setModalOpen] = useState(false);
+  const { loading: weatherLoading } = useWeatherStore(); // 추가: weatherLoading 가져오기
 
   // 로딩 상태 관리
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+  const [loading, setLoading] = useState(true);
+  const [showLoader, setShowLoader] = useState(true);
 
-  const activateModal = () => {
-    setModalOpen(true);
-  };
-
-  const getCurrentFormattedTime = () => {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-
-    return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
-  };
-
-  useEffect(() => {
-    const pbAuth = sessionStorage.getItem('pb_auth');
-    if (pbAuth) {
-      try {
+  // 메인 API 호출
+  const mainApi = async () => {
+    try {
+      const pbAuth = sessionStorage.getItem('pb_auth');
+      if (pbAuth) {
         const parsedUser = JSON.parse(pbAuth);
         setUser(parsedUser);
 
         if (parsedUser && parsedUser.token?.id) {
-          const fetchLikeList = async () => {
-            try {
-              const likeListResponse = await pb.collection('likeList').getFullList({
-                filter: `owner = "${parsedUser.token.id}"`,
-              });
+          const likeListResponse = await pb.collection('likeList').getFullList({
+            filter: `owner = "${parsedUser.token.id}"`,
+          });
 
-              const likedIds = likeListResponse.map((item) => item.costumeCard).flat();
-
-              initLikeOrigin(likedIds);
-              initLikeLocal();
-            } catch (error) {
-              console.error('Failed to fetch likeList:', error);
-            }
-          };
-          fetchLikeList();
+          const likedIds = likeListResponse.map((item) => item.costumeCard).flat();
+          initLikeOrigin(likedIds);
+          initLikeLocal();
         }
-      } catch (error) {
-        console.error('Error parsing user data from sessionStorage:', error);
       }
-    }
-  }, []);
 
+      // CostumeCards API 호출
+      const cachedCostumeCards =
+        sessionStorage.getItem('costumeCards') || localStorage.getItem('costumeCards');
+
+      if (cachedCostumeCards && JSON.parse(cachedCostumeCards).length > 0) {
+        setCostumeCards(JSON.parse(cachedCostumeCards));
+      } else {
+        const records = await pb.collection('costumeCard').getFullList({
+          sort: '-created',
+        });
+        setCostumeCards(records);
+        sessionStorage.setItem('costumeCards', JSON.stringify(records));
+        localStorage.setItem('costumeCards', JSON.stringify(records));
+      }
+
+      setLoading(false); // 모든 데이터 로딩이 끝나면 상위 컴포넌트에 로딩 해제
+    } catch (error) {
+      console.error('Error:', error);
+      setLoading(false); // 에러가 발생해도 로딩 종료
+    }
+  };
 
   useEffect(() => {
-    const fetchCostumeCards = async () => {
-      try {
-        const cachedCostumeCards = sessionStorage.getItem('costumeCards');
-
-        if (cachedCostumeCards && JSON.parse(cachedCostumeCards).length > 0) {
-          setCostumeCards(JSON.parse(cachedCostumeCards));
-        } else {
-          const records = await pb.collection('costumeCard').getFullList({
-            sort: '-created',
-          });
-          setCostumeCards(records);
-          sessionStorage.setItem('costumeCards', JSON.stringify(records));
-          localStorage.setItem('costumeCards', JSON.stringify(records));
-        }
-      } catch (error) {
-        console.error('Failed to fetch costumeCards:', error);
-      } finally {
-        // 모든 데이터를 불러왔을 때 로딩 상태 해제
-        setIsLoading(false);
-      }
-    };
-
-    fetchCostumeCards();
+    mainApi();
   }, []);
+
+  const isLoading = loading || weatherLoading;
+
+  useEffect(() => {
+    if (!isLoading) {
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowLoader(true);
+    }
+  }, [isLoading]);
 
   return (
     <>
@@ -106,28 +93,19 @@ function MainPage(props) {
         <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
 
-      {/* 로딩 상태에 따른 조건부 렌더링 */}
-      {isLoading ? (
-        <div>Loading...</div> // 로딩 중일 때 표시할 컴포넌트 또는 스피너
-      ) : (
-        <div className={S.wrapComponent}>
-          <button type="button" onClick={activateModal}>
-            모달창 키기
-          </button>
-          <CommonModal
-            isOpen={isModalOpen}
-            onClose={() => setModalOpen(false)}
-            title={['로그인 후','이용해보세요!']}
-            firstActionText="로그인"
-            firstActionLink="/login"
-            secondActionText="회원가입"
-            secondActionLink="/register"
-          />
-          <Weather />
-          <Product />
-          <LookBook />
-        </div>
-      )}
+      <div className={S.wrapComponent}>
+        {showLoader && (
+          <div className={`${S.loaderOverlay} ${!isLoading ? S.fadeOut : ''}`}>
+            <Loader />
+            <div className={S.commentWrapper}>
+              <LoadingComment text="옷차림 고민하는 중..." />
+            </div>
+          </div>
+        )}
+        <Weather />
+        <Product />
+        <LookBook />
+      </div>
     </>
   );
 }
