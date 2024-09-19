@@ -54,6 +54,18 @@ export const temperatureList = [
   '28° ↑',
 ];
 
+export function getInitTemperature(currentTemperature) {
+  const value = parseInt(currentTemperature);
+  if (value <= 4) return '4° ↓';
+  if (5 < value && value < 8) return '5°~8°';
+  if (9 < value && value < 11) return '9°~11°';
+  if (12 < value && value < 16) return '12°~16°';
+  if (17 < value && value < 19) return '17°~19°';
+  if (20 < value && value < 22) return '20°~22°';
+  if (23 < value && value < 27) return '23°~27°';
+  if (value >= 28) return '28° ↑';
+}
+
 export const bookmarkData = [
   [
     {
