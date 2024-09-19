@@ -10,7 +10,12 @@ import loadToast from './../../api/loadToast';
 import { getData } from '../../api/getData';
 
 import useGetUserInfo from '../../hooks/useGetUserInfo';
-import { BUTTONSTYLE, getInitTemperature, temperatureList } from './../../data/constant';
+import {
+  BUTTONSTYLE,
+  getInitTemperature,
+  getRecommend,
+  temperatureList,
+} from './../../data/constant';
 import useLikeStore from './../../stores/likeStore';
 
 import { BookmarkModal, Button, CommonModal, CostumeCard } from '@/components';
@@ -124,6 +129,8 @@ function Product() {
     loadToast('북마크 저장 완료', '📌');
   };
 
+  //추천 문구
+  const recommendText = getRecommend(temperature.current);
   return (
     <div className={styles.product__component}>
       <CommonModal
@@ -167,7 +174,7 @@ function Product() {
       </div>
       <div className={styles.recommend__container}>
         <img className={styles.icon} src="/image/notification.png" alt="notification" />
-        <span className={styles.recommend}>반팔, 얇은 셔츠, 반바지, 면바지를 입으면 좋아요!</span>
+        <span className={styles.recommend}>{recommendText}를 입으면 좋아요!</span>
       </div>
       <div className={styles.upper__section}>
         {filteredUpper.map((card) => (
