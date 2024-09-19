@@ -27,7 +27,7 @@ const MyPage = () => {
     initUser,
     logout: storeLogout,
     profileImageUrl,
-    setUser,
+    getUserFromDb,
   } = useUserStore();
   const { syncLikeLocalToOriginAndServer } = useLikeSync(user?.id);
   const [isActive, setIsActive] = useState(false);
@@ -51,8 +51,8 @@ const MyPage = () => {
         ...user,
         userPhoto: formData.get('userPhoto'),
       });
-
-      setUser({ ...user, userPhoto: updatedUser.userPhoto }); // 업데이트된 프로필 이미지 설정
+      getUserFromDb({ model: 'model', token: updatedUser });
+      //setUser({ ...user, userPhoto: updatedUser.userPhoto }); // 업데이트된 프로필 이미지 설정
       loadToast('프로필 이미지 설정 완료', '📌');
     } catch (error) {
       console.error('프로필 이미지 업데이트 중 오류 발생:', error);
@@ -118,8 +118,12 @@ const MyPage = () => {
           <div className={S.profile__info}>
             <h2>{user?.userNickName || '환영해요'}</h2>
             <p className={S.email}>{user?.email || 'E-mail'}</p>
-            <p className={S.size}>Size: <b>{user?.userSize?.join(', ') || ''}</b></p>
-            <p className={S.personal__color}>Personal color: <b>{user?.userColor?.join(', ') || ''}</b></p>
+            <p className={S.size}>
+              Size: <b>{user?.userSize?.join(', ') || ''}</b>
+            </p>
+            <p className={S.personal__color}>
+              Personal color: <b>{user?.userColor?.join(', ') || ''}</b>
+            </p>
           </div>
           <div className={S.img__container}>
             <div>
