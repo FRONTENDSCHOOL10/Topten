@@ -19,7 +19,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 // 분리된 컴포넌트 import
 import MainPageWrapper from '@/routes/MainPageWrapper';
-import LookbookPageWrapper from '@/routes/LookbookPageWrapper';
+import LookbookPageWrapper from '@/routes/LookBookPageWrapper';
 import LookBookDetailPageWrapper from '@/routes/LookBookDetailPageWrapper';
 import CalendarPageWrapper from '@/routes/CalendarPageWrapper';
 import LikedPageWrapper from '@/routes/LikedPageWrapper';
