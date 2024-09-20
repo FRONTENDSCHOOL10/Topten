@@ -8,12 +8,12 @@ import updateUserData from '../api/updateData';
 
 import { validatePassword } from '../api/validation';
 import { WARNING } from '../data/constant';
-import useGetUserInfo from '../hooks/useGetUserInfo';
 
 import { Toaster } from 'react-hot-toast';
+import { useUserStore } from '@/stores';
 
 const ChangePasswordPage = () => {
-  const { user } = useGetUserInfo();
+  const { user } = useUserStore();
 
   const [passwords, setPasswords] = useState({
     currentPassword: '',

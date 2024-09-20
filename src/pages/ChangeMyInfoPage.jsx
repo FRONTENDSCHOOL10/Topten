@@ -5,10 +5,10 @@ import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 import { Toaster } from 'react-hot-toast';
-import useGetUserInfo from '../hooks/useGetUserInfo';
+import { useUserStore } from '@/stores';
 //잠시 커밋 확인 위한 주석
 const ChangeMyInfoPage = () => {
-  const { user } = useGetUserInfo();
+  const { user } = useUserStore();
   const [userNickName, setUserNickName] = useState('');
 
   const handleChange = (e) => {
