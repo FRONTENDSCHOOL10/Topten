@@ -1,3 +1,4 @@
+// src/router.jsx
 import RootLayout from '@/layouts/RootLayout';
 import {
   ChangeColorPage,
@@ -5,7 +6,8 @@ import {
   ChangeMyInfoPage,
   ChangePasswordPage,
   CustomerServicePage,
-  Fallback,
+  // Fallback,
+  Error,
   FindPasswordPage,
   IntroPage,
   LoginPage,
@@ -13,17 +15,16 @@ import {
   RegisterPage,
 } from '@/pages';
 import { configRoutes, getNavigationItems } from '@/utils';
-import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
-// Lazy-loaded components
-const MainPage = lazy(() => import('./pages/MainPage'));
-const LookbookPage = lazy(() => import('./pages/LookbookPage'));
-const LookBookDetailPage = lazy(() => import('./pages/LookBookDetailPage'));
-const CalendarPage = lazy(() => import('./pages/CalendarPage'));
-const LikedPage = lazy(() => import('./pages/LikedPage'));
+// 분리된 컴포넌트 import
+import MainPageWrapper from '@/routes/MainPageWrapper';
+import LookbookPageWrapper from '@/routes/LookbookPageWrapper';
+import LookBookDetailPageWrapper from '@/routes/LookBookDetailPageWrapper';
+import CalendarPageWrapper from '@/routes/CalendarPageWrapper';
+import LikedPageWrapper from '@/routes/LikedPageWrapper';
 
-/**@type {import('react-router-dom').RouteObject[]} */
+/** @type {import('react-router-dom').RouteObject[]} */
 const navigation = [
   {
     text: '인트로',
@@ -48,56 +49,35 @@ const navigation = [
   {
     text: '메인페이지',
     path: '/main',
-    element: (
-      <Suspense fallback={<Fallback />}>
-        <MainPage />
-      </Suspense>
-    ), // Lazy load with fallback
+    element: <MainPageWrapper />,
   },
   {
     text: '룩북페이지',
     path: '/lookbook',
-    element: (
-      <Suspense fallback={<Fallback />}>
-        <LookbookPage />
-      </Suspense>
-    ), // Lazy load with fallback
+    element: <LookbookPageWrapper />,
     children: [
       {
         text: '룩북상세페이지',
         path: ':id',
-        element: (
-          <Suspense fallback={<Fallback />}>
-            <LookBookDetailPage />
-          </Suspense>
-        ), // Lazy load with fallback
+        element: <LookBookDetailPageWrapper />,
       },
     ],
   },
   {
     text: '달력페이지',
     path: '/calendar',
-    element: (
-      <Suspense fallback={<Fallback />}>
-        <CalendarPage />
-      </Suspense>
-    ), // Lazy load with fallback
+    element: <CalendarPageWrapper />,
   },
   {
     text: '좋아요페이지',
     path: '/liked',
-    element: (
-      <Suspense fallback={<Fallback />}>
-        <LikedPage />
-      </Suspense>
-    ), // Lazy load with fallback
+    element: <LikedPageWrapper />,
   },
   {
     text: '마이페이지',
     path: '/myinfo',
     element: <MyPage />,
   },
-  ///////
   {
     text: '퍼스널컬러변경',
     path: '/changecolor',
@@ -125,11 +105,12 @@ const navigation = [
   },
 ];
 
-/**@type {import('react-router-dom').RouteObject[]} */
+/** @type {import('react-router-dom').RouteObject[]} */
 export const routes = [
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <Error />,
     children: configRoutes(navigation),
   },
 ];
