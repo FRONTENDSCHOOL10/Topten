@@ -7,7 +7,7 @@ import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 
 import { validatePassword } from '../api/validation';
-import { WRANING } from '../data/constant';
+import { WARNING } from '../data/constant';
 import useGetUserInfo from '../hooks/useGetUserInfo';
 
 import { Toaster } from 'react-hot-toast';
@@ -66,9 +66,9 @@ const ChangePasswordPage = () => {
     }
   };
 
-  const passwordWarn = visible.currentPassword && WRANING.passwordMsg;
-  const newPasswordWarn = visible.newPassword && WRANING.passwordMsg;
-  const confirmNewPasswordWarn = visible.confirmNewPassword && WRANING.passwordCheckMsg;
+  const passwordWarn = visible.currentPassword && WARNING.passwordMsg;
+  const newPasswordWarn = visible.newPassword && WARNING.passwordMsg;
+  const confirmNewPasswordWarn = visible.confirmNewPassword && WARNING.passwordCheckMsg;
   const disabled = Object.values(visible).filter((item) => item === false).length < 3;
   return (
     <div className={S.wrapComponent}>
