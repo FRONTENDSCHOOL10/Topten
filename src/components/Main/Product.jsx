@@ -21,6 +21,7 @@ import useLikeStore from './../../stores/likeStore';
 import { BookmarkModal, Button, CommonModal, CostumeCard } from '@/components';
 import styles from './Product.module.scss';
 import updateUserData from '../../api/updateData';
+import { useMemo } from 'react';
 
 function Product() {
   const { user } = useGetUserInfo();
@@ -68,8 +69,8 @@ function Product() {
     return filteredItems.slice(0, 2);
   };
 
-  const filteredUpper = makeFilteredItem('상의');
-  const filteredLower = makeFilteredItem('하의');
+  const filteredUpper = useMemo(() => makeFilteredItem('상의'), [temperature, activeRandom]);
+  const filteredLower = useMemo(() => makeFilteredItem('하의'), [temperature, activeRandom]);
 
   // 새로고침 버튼 클릭 시 다음 아이템으로 새로고침
   const refreshProductItem = () => {
