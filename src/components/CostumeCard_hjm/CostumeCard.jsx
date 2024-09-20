@@ -5,6 +5,8 @@ import { TbPhotoExclamation } from 'react-icons/tb'; // 대체 아이콘
 import S from './CostumeCard.module.scss';
 import LazyLoad from 'react-lazyload';
 import { Loader } from '@/components';
+import { useLocation } from 'react-router-dom';
+import clsx from 'clsx';
 
 const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
   const { costumeTitle, costumeBrand, costumeLink } = record;
@@ -48,6 +50,12 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
     }
   };
 
+  // 현재 경로가 좋아요 페이지면 .image 에 .imageInLikePage 클래스 추가
+  const location = useLocation();
+  const imageClass = clsx(S.image, {
+    [S.imageInLikePage]: location.pathname === '/liked',
+  });
+
   return (
     <div className={S.card}>
       {/* 좋아요 버튼 */}
@@ -70,7 +78,7 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
             <img
               src={validImageUrl}
               alt={costumeTitle}
-              className={S.image}
+              className={imageClass}
               onLoad={handleImageLoad}
               onError={handleImageError}
             />
