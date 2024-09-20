@@ -9,7 +9,7 @@ import { getData } from '../api/getData';
 import loadToast from '../api/loadToast';
 import { Helmet } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
-import { COLORS, GENDER, POLICY, SIZE, INITCHECKED, INITUSER, WRANING } from '../data/constant';
+import { COLORS, GENDER, POLICY, SIZE, INITCHECKED, INITUSER, WARNING } from '../data/constant';
 
 function RegisterPage(props) {
   // const navigate = useNavigate();
@@ -122,10 +122,10 @@ function RegisterPage(props) {
     }
   };
 
-  const nameWarn = visible.name && WRANING.nameMsg;
-  const emailWarn = visible.email && WRANING.emailMsg;
-  const passwordWarn = visible.password && WRANING.passwordMsg;
-  const passwordCheckWarn = visible.checkPassword && WRANING.passwordCheckMsg;
+  const nameWarn = visible.name && WARNING.nameMsg;
+  const emailWarn = visible.email && WARNING.emailMsg;
+  const passwordWarn = visible.password && WARNING.passwordMsg;
+  const passwordCheckWarn = visible.checkPassword && WARNING.passwordCheckMsg;
   const genderComponent = GENDER.map((value, index) => (
     <div key={index}>
       <input type="radio" id={value} name="gender" value={value} onChange={handleChange} />
