@@ -24,7 +24,9 @@ import updateUserData from '../../api/updateData';
 
 function Product() {
   const { user } = useGetUserInfo();
-  const [formData, setFormData] = useState(() => JSON.parse(localStorage.getItem('weatherData')));
+  const [formData, setFormData] = useState(
+    () => JSON.parse(localStorage.getItem('weatherData')) || {}
+  );
   const [clickedModal, setClickedModal] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const { likeLocal, toggleLikeLocal } = useLikeStore();
