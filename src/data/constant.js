@@ -9,7 +9,7 @@ export const POLICY = [
 ];
 export const GENDER = ['남자', '여자', '선택안함'];
 
-export const WRANING = {
+export const WARNING = {
   nameMsg: '한글로 입력해주세요.',
   emailMsg: '이메일 형식으로 입력해주세요.',
   passwordMsg: '영문자, 숫자, 특수문자를 포함하여 최소 8자 이상 입력해야 합니다.',
@@ -35,12 +35,22 @@ export const INITCHECKED = {
 };
 
 export const NAV = [
-  { text: '나의 체형', path: '/changefit', onClick: null },
-  { text: '나의 퍼스널 컬러', path: '/changecolor', onClick: null },
-  { text: '회원정보 변경', path: '/changeinfo', onClick: null },
-  { text: '비밀번호 변경', path: '/changepassword', onClick: null },
-  { text: '고객센터', path: '/cs', onClick: null },
-  { text: '로그아웃', path: '/', onClick: 'handleLogout' }, // 로그아웃 항목만 onClick 할당
+  { text: '나의 체형', path: '/changefit', onClick: null, altText: '나의 체형으로 가기' },
+  {
+    text: '나의 퍼스널 컬러',
+    path: '/changecolor',
+    onClick: null,
+    altText: '나의 퍼스널 컬러로 가기',
+  },
+  { text: '회원정보 변경', path: '/changeinfo', onClick: null, altText: '회원정보 변경하러 가기' },
+  {
+    text: '비밀번호 변경',
+    path: '/changepassword',
+    onClick: null,
+    altText: '비밀번호 변경하러 가기',
+  },
+  { text: '고객센터', path: '/cs', onClick: null, altText: '고객센터로 가기' },
+  { text: '로그아웃', path: '/', onClick: 'handleLogout', altText: '로그아웃 하기' }, // 로그아웃 항목만 onClick 할당
 ];
 
 export const temperatureList = [
@@ -53,113 +63,6 @@ export const temperatureList = [
   '23°~27°',
   '28° ↑',
 ];
-
-export const bookmarkData = [
-  [
-    {
-      collectionId: 'cfwfpoo8z5svoms',
-      collectionName: 'costumeCard',
-      costumeBrand: '폴로',
-      costumeImage: 'pexels_frendsmans_1926769_deFTIQKSJG.jpg',
-      costumeLink: { 무신사: 'https://www.musinsa.com/products/4268814' },
-      costumeSeason: ['여름'],
-      costumeTemperature: ['5°~8°'],
-      costumeTitle: '향수',
-      created: '2024-09-10 00:24:48.715Z',
-      id: 'nnc25yevw4600cq',
-      isRainsnow: false,
-      lowerCategory: '반바지',
-      updated: '2024-09-10 00:24:48.715Z',
-      upperCategory: '하의',
-    },
-    {
-      collectionId: 'cfwfpoo8z5svoms',
-      collectionName: 'costumeCard',
-      costumeBrand: '폴로',
-      costumeImage: 'profile_4_desktop_wPdVZeGqXg.jpg',
-      costumeLink: { 무신사: 'https://www.musinsa.com/products/4268814' },
-      costumeSeason: ['여름'],
-      costumeTemperature: ['5°~8°'],
-      costumeTitle: '폴로 하의 예시',
-      created: '2024-09-08 15:10:40.756Z',
-      id: 'wymzn0k6ay9zx3u',
-      isRainsnow: false,
-      lowerCategory: '반바지',
-      updated: '2024-09-08 15:10:40.756Z',
-      upperCategory: '하의',
-    },
-    {
-      collectionId: 'cfwfpoo8z5svoms',
-      collectionName: 'costumeCard',
-      costumeBrand: '아식스',
-      costumeImage: 'profile_3_desktop_FLLurxe23y.png',
-      costumeLink: { 무신사: 'https://www.musinsa.com/products/4268814' },
-      costumeSeason: ['여름'],
-      costumeTemperature: ['5°~8°'],
-      costumeTitle: '아식스 하의 예시',
-      created: '2024-09-08 15:09:18.133Z',
-      id: 'd6b3w2v5zl8mner',
-      isRainsnow: false,
-      lowerCategory: '긴바지',
-      updated: '2024-09-12 20:04:38.856Z',
-      upperCategory: '하의',
-    },
-    {
-      collectionId: 'cfwfpoo8z5svoms',
-      collectionName: 'costumeCard',
-      costumeBrand: '아디다스',
-      costumeImage: 'profile_1_desktop_LSNGdCkG5k.png',
-      costumeLink: { 무신사: 'https://www.musinsa.com/products/4268814' },
-      costumeSeason: ['여름'],
-      costumeTemperature: ['5°~8°'],
-      costumeTitle: '아디다스 상의 예시',
-      created: '2024-09-08 15:07:44.902Z',
-      id: 'yp3x1gu86nq6ob5',
-      isRainsnow: false,
-      lowerCategory: '긴팔',
-      updated: '2024-09-08 15:11:02.807Z',
-      upperCategory: '상의',
-    },
-  ],
-];
-
-export const bookmarkList = [
-  {
-    date: '2024-09-13',
-    OOTD: 'Casual Outfit',
-    weather: 'Sunny',
-    location: 'Seoul',
-  },
-  {
-    date: '2024-09-15',
-    OOTD: 'Casual Outfit',
-    weather: 'Sunny',
-    location: 'Seoul',
-  },
-  {
-    date: '2024-09-17',
-    OOTD: 'Formal',
-    weather: 'Rainy',
-    location: 'Busan',
-  },
-  {
-    date: '2024-09-20',
-    OOTD: 'Sports',
-    weather: 'Cloudy',
-    location: 'Incheon',
-  },
-  {
-    date: '2024-09-22',
-    OOTD: 'Sports',
-    weather: 'Cloudy',
-    location: 'Incheon',
-  },
-];
-
-// export const categoryList = {
-//   upperCategory: ['상의', '하의', '아우터', '원피스/스커트', '악세사리'],
-//   lowerCategory: ['반바지', '바지', '반팔', '긴팔', '가디건', '패딩코트', '향수'],
-// };
 
 export const categoryList = {
   상의: ['반팔', '긴팔'],
@@ -203,3 +106,11 @@ export const getSeason = (month, temperature) => {
   }
   return 'Unknown';
 };
+
+export const loadingComments = [
+  '옷차림 고민하는 중...',
+  '패션 트렌드를 분석 중...',
+  '당신의 스타일을 찾아드릴게요!',
+  '날씨 정보 불러오는 중...',
+  '추천 코디 준비 중...',
+];

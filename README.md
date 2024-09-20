@@ -754,3 +754,12 @@
 
 - 황선우
   - fix : eslint 오류 수정 - globals 패키지 설치
+  - fix/button/hsw : props 중 active 속성 분리
+  - fix/lintBookmark/hsw
+    - eslint 오류 수정 : p 태그의 align 속성을 스타일 클래스로 변경
+  - fix/loadingMainpage/hsw
+    - weatherData 로직 변경 및 메인페이지에서 실행되도록 변경
+    - weatherStore, weatherAPI, weatherUtils 내의 시간 로직 수정
+    - 로딩화면 최적화 위해 코드 수정
+    - 발표시간 직전이면 다음날 날씨를 표기하던 에러 수정
+    - loadingComment 로직 수정
