@@ -1,6 +1,6 @@
 // Weather.jsx
 import styles from './Weather.module.scss';
-import { useWeatherStore } from '../../stores/weatherStore';
+import { useWeatherStore } from '@/stores';
 import { getWeatherIcon, getWeatherIconSm } from '../../utils/weatherIcons';
 
 function Weather() {
