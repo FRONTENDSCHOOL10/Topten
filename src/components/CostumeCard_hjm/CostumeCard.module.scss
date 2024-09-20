@@ -30,6 +30,10 @@
     object-fit: cover;
   }
 
+  .imageInLikePage{
+    height:120px; /* 좋아요 페이지에 적용되는 이미지 높이 */
+  }
+
   .errorIcon {
     font-size: 3rem; /* 에러 아이콘의 크기 */
     color: var(--primary-color); /* 에러 아이콘의 색상 */
