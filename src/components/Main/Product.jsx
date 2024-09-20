@@ -10,7 +10,12 @@ import loadToast from './../../api/loadToast';
 import { getData } from '../../api/getData';
 
 import useGetUserInfo from '../../hooks/useGetUserInfo';
-import { BUTTONSTYLE, temperatureList } from './../../data/constant';
+import {
+  BUTTONSTYLE,
+  getInitTemperature,
+  getRecommend,
+  temperatureList,
+} from './../../data/constant';
 import useLikeStore from './../../stores/likeStore';
 
 import { BookmarkModal, Button, CommonModal, CostumeCard } from '@/components';
@@ -19,22 +24,16 @@ import updateUserData from '../../api/updateData';
 
 function Product() {
   const { user } = useGetUserInfo();
-  const [formData, setFormData] = useState(() => JSON.parse(localStorage.getItem('weatherData')));
+  const [formData, setFormData] = useState(
+    () => JSON.parse(localStorage.getItem('weatherData')) || {}
+  );
   const [clickedModal, setClickedModal] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const { likeLocal, toggleLikeLocal } = useLikeStore();
-  console.log('user', user);
-  const toggleLike = (id) => {
-    if (likeList.includes(id)) {
-      setLikeList(likeList.filter((likeId) => likeId !== id)); // 좋아요 해제
-    } else {
-      setLikeList([...likeList, id]); // 좋아요 추가
-    }
-  };
 
   // 초기 현재 기온 상태
   const [temperature, setTemperature] = useState(() => ({
-    current: '5°~8°',
+    current: getInitTemperature(formData.temperature),
   }));
 
   // 랜더링 시 전체 프로덕트 아이템을 받아옴
@@ -132,6 +131,8 @@ function Product() {
     loadToast('북마크 저장 완료', '📌');
   };
 
+  //추천 문구
+  const recommendText = getRecommend(temperature.current);
   return (
     <div className={styles.product__component}>
       <CommonModal
@@ -164,12 +165,18 @@ function Product() {
       </div>
       <div className={styles.buttons}>
         {temperatureList.map((text, index) => (
-          <Button style={BUTTONSTYLE} key={index} text={text} onClick={handleClick} />
+          <Button
+            style={BUTTONSTYLE}
+            key={index}
+            text={text}
+            onClick={handleClick}
+            active={text === temperature.current}
+          />
         ))}
       </div>
       <div className={styles.recommend__container}>
         <img className={styles.icon} src="/image/notification.png" alt="notification" />
-        <span className={styles.recommend}>반팔, 얇은 셔츠, 반바지, 면바지를 입으면 좋아요!</span>
+        <span className={styles.recommend}>{recommendText}를 입으면 좋아요!</span>
       </div>
       <div className={styles.upper__section}>
         {filteredUpper.map((card) => (

@@ -5,7 +5,7 @@ import { Toaster } from 'react-hot-toast';
 
 import pb from '../api/pocketbase';
 import updateUserData from '../api/updateData';
-import loadToast from '../api/loadToast';
+// import loadToast from '../api/loadToast';
 
 import { NAV } from '../data/constant';
 

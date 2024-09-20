@@ -183,7 +183,7 @@ function MainPage() {
           </div>
         )}
         <Weather />
-        <Product />
+        {!weatherLoading ? <Product /> : <div></div>}
         <LookBook />
       </div>
     </>

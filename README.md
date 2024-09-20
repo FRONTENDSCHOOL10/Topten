@@ -753,6 +753,7 @@
 ### 9월 19일
 
 - 황선우
+
   - fix : eslint 오류 수정 - globals 패키지 설치
   - fix/button/hsw : props 중 active 속성 분리
   - fix/lintBookmark/hsw
@@ -763,6 +764,9 @@
     - 로딩화면 최적화 위해 코드 수정
     - 발표시간 직전이면 다음날 날씨를 표기하던 에러 수정
     - loadingComment 로직 수정
+  - fix/button/hsw : props 중 active 속성 분리
+  - fix/lintBookmark/hsw
+    - eslint 오류 수정 : p 태그의 align 속성을 스타일 클래스로 변경
   - feat : 에러페이지 생성 및 라우팅 설정
     - Error 페이지 생성
     - Fallback 페이지 스타일링 삭제
@@ -770,6 +774,17 @@
     - lazy 적용된 페이지는 routes 폴더로 구분
     - Calendar페이지 scss 위치 수정
     - Error페이지 스타일링
+
+- 곽승헌
+  - fix : 로그인 여부에 따라서 모달창 표시, 불필요 주석 제거
+  - fix: 불필요 모달 창, 함수 제거
+  - fix: 불필요 주석 삭제
+  - feat: 초기 온도 리턴 함수 추가
+  - feat: 초기 온도와 일치하는 버튼이 활성화 가능하게 기능 구현, 불필요 주석 제거
+  - style: 버튼 간격 수정
+  - feat: 온도 조건에 맞게 추천문구 랜더링 구현
+  - feat: 온도에 맞는 추천 문구 리턴 함수 생성
+  - fix: pb관련 함수 묶음
 
 - 함정민
   - style: 공통, 메인 스타일 교정
@@ -785,3 +800,10 @@
     - (룩북) 버튼 커서 포인터 적용
     - (좋아요) 좋아요 페이지의 경우 의상카드 이미지에 imageInLikePage 클래스 추가
     - (좋아요) 좋아요 페이지의 경우 의상카드 이미지 높이 조정
+
+### 9월 20일
+
+- 곽승헌
+  - feat : 추천 코멘트 받는 함수 생성
+  - fix: weatherState 기본 값 추가
+  - fix: 날씨 정보 로딩이 끝날 때까지 Product 컴포넌트 대기
