@@ -1,13 +1,14 @@
-import { useMemo } from 'react';
-import { object, string, arrayOf } from 'prop-types';
-import { CostumeCard } from '@/components';
-import clsx from 'clsx';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css/grid';
-import 'swiper/css';
-import useLikeStore from '@/stores/likeStore'; // Zustand store
-import S from './CostumeCardManager.module.scss';
 import getPbImageURL from '@/api/getPbImageURL'; // PocketBase 이미지 URL 생성 함수
+import { CostumeCard } from '@/components';
+import useLikeStore from '@/stores/likeStore'; // Zustand store
+import clsx from 'clsx';
+import { AnimatePresence, motion } from 'framer-motion';
+import { arrayOf, object, string } from 'prop-types';
+import { useMemo } from 'react';
+import 'swiper/css';
+import 'swiper/css/grid';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import S from './CostumeCardManager.module.scss';
 
 const CostumeCardManager = ({ viewType, costumeCards }) => {
   // 수정된 부분: likeList를 likeLocal로 변경하고 toggleLike를 toggleLikeLocal로 변경
@@ -31,6 +32,11 @@ const CostumeCardManager = ({ viewType, costumeCards }) => {
     });
   }, [costumeCards, likeLocal]); // 수정된 부분: likeLocal을 의존성 배열에 추가
 
+  // 좋아요된 카드만 필터링
+  const filteredCards = useMemo(() => {
+    return costumeCards.filter((record) => likeLocal.includes(record.id));
+  }, [costumeCards, likeLocal]);
+
   if (!costumeCards.length) {
     return <div>저장된 제품이 없는것 같아요...</div>;
   }
@@ -44,7 +50,33 @@ const CostumeCardManager = ({ viewType, costumeCards }) => {
   }
 
   if (viewType === '앨범') {
-    return <div className={S.gridAlbum}>{memoizedCards}</div>;
+    return (
+      <div className={S.flexAlbum}>
+        <AnimatePresence>
+          {filteredCards.map((record) => {
+            const imageUrl = getPbImageURL(record, 'costumeImage');
+            return (
+              <motion.div
+                key={record.id}
+                layout // 레이아웃 애니메이션 활성화
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+                className={S.cardWrapper}
+              >
+                <CostumeCard
+                  record={record}
+                  imageUrl={imageUrl}
+                  isLiked={likeLocal.includes(record.id)}
+                  onLikeToggle={() => toggleLikeLocal(record.id)}
+                />
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      </div>
+    );
   }
 
   if (viewType === 'OOTD') {

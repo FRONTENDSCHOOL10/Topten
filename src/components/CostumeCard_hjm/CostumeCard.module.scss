@@ -5,6 +5,7 @@
   flex-direction: column;
   position: relative; /* 하트 버튼이 카드 내에서 위치하도록 설정 */
   max-width: 138px;
+  width: 100%;
   // min-height: 292px;
   overflow: hidden;
   background-color: #fff;
@@ -38,11 +39,11 @@
 }
 
 .infoWrapper {
-  font-size:14px;
+  font-size: 14px;
   padding: 0.6rem 0.6rem 0 0;
 
   .title {
-    margin-bottom:6px;
+    margin-bottom: 6px;
     font-weight: 700;
   }
 
@@ -50,20 +51,21 @@
     @include ellipsis(2, 1.2em); /* 두 줄만 표시하고 나머지는 숨김 */
     text-overflow: ellipsis;
     overflow: hidden;
-    margin-bottom:6px;
+    margin-bottom: 6px;
   }
 
   .link {
-    display:flex;
+    display: flex;
     align-items: baseline;
     text-decoration: none;
     color: var(--black);
     font-weight: 600;
     cursor: pointer;
 
-    img, svg{
-      display:inline-block;
-      margin-right:2px;
+    img,
+    svg {
+      display: inline-block;
+      margin-right: 2px;
       padding-top: 3px;
     }
   }
@@ -74,7 +76,7 @@
   top: 10px;
   right: 10px;
   width: 14%;
-  min-width:20px;
+  min-width: 20px;
   background: none;
   border: none;
   cursor: pointer;
