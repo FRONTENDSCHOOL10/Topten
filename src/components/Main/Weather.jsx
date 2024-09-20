@@ -13,15 +13,15 @@ function Weather() {
     lowTemp,
     feelsLikeTemp,
     hourlyWeatherData,
-    loading,
+    // loading,
   } = useWeatherStore();
 
   const formatTime = (time) => {
     const hourString = time.slice(0, 2);
-    const minuteString = time.slice(2, 4);
+    // const minuteString = time.slice(2, 4);
 
     let hour = parseInt(hourString, 10);
-    const minute = parseInt(minuteString, 10);
+    // const minute = parseInt(minuteString, 10);
 
     // 24시간제를 12시간제로 변환
     const period = hour < 12 ? '오전' : '오후';

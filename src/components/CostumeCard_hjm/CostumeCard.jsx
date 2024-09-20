@@ -3,6 +3,7 @@ import { string, bool, func, shape } from 'prop-types';
 import { FaLink } from 'react-icons/fa6';
 import { TbPhotoExclamation } from 'react-icons/tb'; // 대체 아이콘
 import S from './CostumeCard.module.scss';
+import LazyLoad from 'react-lazyload';
 import { Loader } from '@/components';
 
 const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
@@ -24,7 +25,7 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
   }, [imageUrl, isLoading]);
 
   const handleImageLoad = () => {
-    console.log(`Image loaded successfully: ${validImageUrl}`);
+    // console.log(`Image loaded successfully: ${validImageUrl}`);
     setIsLoading(false); // 로딩 종료
     setFileStatus('loaded');
   };
@@ -57,21 +58,26 @@ const CostumeCard = ({ record, imageUrl, isLiked, onLikeToggle }) => {
           className={S.likeIcon}
         />
       </button>
-
       {/* 상단의 제품 이미지 또는 에러 아이콘 */}
       <div className={S.imageWrapper}>
         {renderStatus()}
-        {validImageUrl && !imageError ? (
-          <img
-            src={validImageUrl}
-            alt={costumeTitle}
-            className={S.image}
-            onLoad={handleImageLoad}
-            onError={handleImageError}
-          />
-        ) : (
-          <TbPhotoExclamation className={S.errorIcon} /> // 이미지 로딩 실패 또는 경로가 없는 경우 아이콘 표시
-        )}
+        <LazyLoad
+          height={175} // 이미지 높이를 175px로 설정
+          offset={50} // 스크롤 100px 전에 로딩 시작
+          placeholder={<Loader />} // 로딩 중 보여줄 컴포넌트
+        >
+          {validImageUrl && !imageError ? (
+            <img
+              src={validImageUrl}
+              alt={costumeTitle}
+              className={S.image}
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+            />
+          ) : (
+            <TbPhotoExclamation className={S.errorIcon} /> // 이미지 로딩 실패 또는 경로가 없는 경우 아이콘 표시
+          )}
+        </LazyLoad>
       </div>
 
       {/* 제품 정보 */}

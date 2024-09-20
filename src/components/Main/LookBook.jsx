@@ -6,6 +6,8 @@ import CostumeCardManager from '@/components/CostumeCardManager/CostumeCardManag
 import Button from './../Button/Button';
 import PropTypes from 'prop-types';
 import { getSeason } from './../../data/constant';
+import LazyLoad from 'react-lazyload';
+import { Loader } from '@/components';
 
 LookBook.propTypes = {
   item: PropTypes.shape({
@@ -45,7 +47,6 @@ function LookBook({ item }) {
 
   console.log('현재 계절은 ' + season + '입니다.');
 
-
   useEffect(() => {
     // 룩북 상세 페이지의 룩북
     if (item) {
@@ -62,14 +63,12 @@ function LookBook({ item }) {
           const filteredItems = allCostumeCards.filter((card) => costumeCardIds.includes(card.id));
 
           setRelatedItems(filteredItems);
-
         } catch (error) {
           console.error('관련 상품 데이터를 가져오는 중 에러 발생:', error);
         }
       };
 
       fetchRelatedItems();
-      
     } else {
       // 메인 페이지의 룩북
       const fetchLookBookItems = async () => {
@@ -100,7 +99,6 @@ function LookBook({ item }) {
               );
 
               setRelatedItems(filteredItems);
-
             } else {
               // 관련 상품이 없을 때
               setRelatedItems([]);
@@ -115,7 +113,6 @@ function LookBook({ item }) {
     }
   }, [item, season]);
 
-
   return (
     <div className={styles.container}>
       {!item && (
@@ -123,14 +120,19 @@ function LookBook({ item }) {
           <h2 className={styles.title}>Look Book : OOTD</h2>
         </>
       )}
-
       <div className={styles.outfitContainer}>
         {lookBookItem ? (
-          <img
-            src={getPbImageURL(lookBookItem, 'outfitImage')}
-            alt={lookBookItem.lookBookTitle}
-            className={styles.outfitImage}
-          />
+          <LazyLoad
+            height={400} // 이미지 높이 지정
+            offset={100} // 스크롤 100px 전에 로딩 시작
+            placeholder={<Loader />} // 로딩 중에 표시할 컴포넌트
+          >
+            <img
+              src={getPbImageURL(lookBookItem, 'outfitImage')}
+              alt={lookBookItem.lookBookTitle}
+              className={styles.outfitImage}
+            />
+          </LazyLoad>
         ) : (
           <p>해당 계절에 맞는 이미지를 찾을 수 없습니다.</p>
         )}
