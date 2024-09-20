@@ -18,3 +18,4 @@ export { default as Bookmark } from './Bookmark/Bookmark.jsx';
 export { default as BookmarkModal } from './BookmarkModal/BookmarkModal.jsx';
 export { default as StarRate } from './StarRate/StarRate.jsx';
 export { default as NavList } from './NavList/NavList.jsx';
+export { default as LoadingComment } from './LoadingComment/LoadingComment.jsx';

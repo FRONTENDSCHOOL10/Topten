@@ -14,7 +14,8 @@ import { useNavigate } from 'react-router-dom/dist';
  * @param {object} props - 컴포넌트에 전달되는 props 객체
  * @param {string} props.text - 버튼에 표시될 텍스트 (필수)
  * @param {string} props.type - 사용할 버튼 타입 (선택)
- * @param {boolean} [props.active=false] - 버튼이 활성화된 상태인지 여부 (선택)
+ * @param {boolean} [props.active=false] - 노랑색으로 바꿀지 선택 여부 (선택)
+ * @param {boolean} [props.activeAnimation=false] - 버튼의 애니메이션 발동 여부 (선택)
  * @param {boolean} [props.TemperButton=false] - 작은버튼(온도버튼으로 설정) (선택)
  * @param {JSX.Element|null} [props.icon=null] - 버튼에 표시될 아이콘 컴포넌트 (선택)
  * @param {object} [props.iconAnimation={}] - 아이콘에 적용할 애니메이션 설정 객체 (선택)
@@ -27,6 +28,7 @@ function Button({
   text = '',
   type = 'button',
   active = false, // 기본 active 상태 false
+  activeAnimation = false, // 아이콘 애니메이션 설정
   icon = null, // 기본 아이콘은 null, JSX 형태로 전달해야함.
   iconAnimation = {}, // 아이콘 애니메이션 설정
   linkTo = '', //이동할 경로
@@ -46,13 +48,13 @@ function Button({
 
   // Hover 시 버튼과 아이콘에 애니메이션 적용
   const handleMouseEnter = () => {
-    if (iconRef.current && active) {
+    if (iconRef.current && activeAnimation) {
       animate(iconRef.current, { rotate: 360 }, { duration: 0.5 }); // 360도 회전
     }
   };
 
   const handleMouseLeave = () => {
-    if (iconRef.current && active) {
+    if (iconRef.current && activeAnimation) {
       animate(iconRef.current, { rotate: 0 }, { duration: 0.5 }); // 아이콘 애니메이션 복귀
     }
   };
@@ -98,7 +100,8 @@ function Button({
 Button.propTypes = {
   text: string, // 필수 문자열
   type: oneOf(['button', 'submit', 'reset']), //사용할 버튼 타입
-  active: bool, // active 여부
+  active: bool, // 색상 노랑색
+  activeAnimation: bool, // 아이콘애니메이션 active 여부
   icon: element, // 아이콘으로 JSX 요소 전달
   iconAnimation: object, // 아이콘에 적용할 애니메이션 설정
   linkTo: string, // 이동해야할 링크

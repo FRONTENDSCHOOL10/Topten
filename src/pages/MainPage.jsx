@@ -1,73 +1,157 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import S from './../styles/pages/MainPage.module.scss';
-import { Weather, Product, LookBook, CostumeCardManager, CommonModal } from '@/components';
+import { Weather, Product, LookBook, Loader, LoadingComment } from '@/components';
 import pb from '@/api/pocketbase';
 import useLikeStore from '@/stores/likeStore';
 import { Helmet } from 'react-helmet-async';
+import { useWeatherStore } from '@/stores/weatherStore';
+import { loadingComments } from '@/data/constant';
 
-function MainPage(props) {
+function MainPage() {
   const [user, setUser] = useState(null);
   const [costumeCards, setCostumeCards] = useState([]);
   const { initLikeOrigin, initLikeLocal } = useLikeStore();
+  const { loading: weatherLoading, initFetching, error: weatherError } = useWeatherStore();
+  const [currentCommentIndex, setCurrentCommentIndex] = useState(0);
+  const intervalIdRef = useRef(null);
 
   // 로딩 상태 관리
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+  const [loading, setLoading] = useState(true);
+  const [showLoader, setShowLoader] = useState(true);
 
-  useEffect(() => {
-    const pbAuth = sessionStorage.getItem('pb_auth');
-    if (pbAuth) {
-      try {
+  // 날짜 포맷 변환 함수 (한국 표준시 적용)
+  const formatDate = (dateInput) => {
+    const date = new Date(dateInput);
+
+    if (isNaN(date)) {
+      return '날짜 없음'; // 날짜가 올바르지 않으면 '날짜 없음' 표시
+    }
+
+    // Intl.DateTimeFormat을 사용하여 한국 표준시로 날짜 포맷팅
+    const options = {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    };
+
+    const formatter = new Intl.DateTimeFormat('ko-KR', options);
+
+    // 포맷팅된 날짜 문자열 얻기 (예: "2024.09.20")
+    const formattedDate = formatter.format(date);
+
+    return formattedDate;
+  };
+
+  // 메인 API 호출
+  const mainApi = async () => {
+    try {
+      const pbAuth = sessionStorage.getItem('pb_auth');
+      if (pbAuth) {
         const parsedUser = JSON.parse(pbAuth);
         setUser(parsedUser);
 
         if (parsedUser && parsedUser.token?.id) {
-          const fetchLikeList = async () => {
-            try {
-              const likeListResponse = await pb.collection('likeList').getFullList({
-                filter: `owner = "${parsedUser.token.id}"`,
-              });
+          const likeListResponse = await pb.collection('likeList').getFullList({
+            filter: `owner = "${parsedUser.token.id}"`,
+          });
 
-              const likedIds = likeListResponse.map((item) => item.costumeCard).flat();
-
-              initLikeOrigin(likedIds);
-              initLikeLocal();
-            } catch (error) {
-              console.error('Failed to fetch likeList:', error);
-            }
-          };
-          fetchLikeList();
+          const likedIds = likeListResponse.map((item) => item.costumeCard).flat();
+          initLikeOrigin(likedIds);
+          initLikeLocal();
         }
-      } catch (error) {
-        console.error('Error parsing user data from sessionStorage:', error);
       }
+
+      // CostumeCards API 호출
+      const cachedCostumeCards = localStorage.getItem('costumeCards');
+
+      if (cachedCostumeCards && JSON.parse(cachedCostumeCards).length > 0) {
+        setCostumeCards(JSON.parse(cachedCostumeCards));
+      } else {
+        const records = await pb.collection('costumeCard').getFullList({
+          sort: '-created',
+        });
+        setCostumeCards(records);
+        localStorage.setItem('costumeCards', JSON.stringify(records));
+      }
+
+      const currentTime = formatDate(new Date());
+      console.log(currentTime);
+
+      localStorage.setItem('lastAccessTime', currentTime);
+
+      getLocationAndFetchWeather();
+    } catch (error) {
+      console.error('Error:', error);
+      setLoading(false); // 에러가 발생해도 로딩 종료
     }
-  }, []);
+  };
+
+  const getLocationAndFetchWeather = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          try {
+            await initFetching(lat, lon);
+            setLoading(false); // Set loading to false after all data is fetched
+          } catch (error) {
+            console.error('Error fetching weather data:', error);
+            setLoading(false);
+          }
+        },
+        (err) => {
+          console.error('위치 가져오기 오류:', err);
+          setLoading(false);
+          alert('위치 정보를 받아오는 데 실패했습니다. 위치 접근 권한을 확인해주세요.');
+        }
+      );
+    } else {
+      alert('Geolocation은 이 브라우저에서 지원되지 않습니다.');
+      setLoading(false);
+    }
+  };
+
+  /*************************************************************************/
+  // 위 함수를 일괄적으로 실행시키는 이펙트 훅
 
   useEffect(() => {
-    const fetchCostumeCards = async () => {
-      try {
-        const cachedCostumeCards = sessionStorage.getItem('costumeCards');
+    intervalIdRef.current = setInterval(() => {
+      setCurrentCommentIndex((prevIndex) => (prevIndex + 1) % loadingComments.length);
+    }, 8000);
 
-        if (cachedCostumeCards && JSON.parse(cachedCostumeCards).length > 0) {
-          setCostumeCards(JSON.parse(cachedCostumeCards));
-        } else {
-          const records = await pb.collection('costumeCard').getFullList({
-            sort: '-created',
-          });
-          setCostumeCards(records);
-          sessionStorage.setItem('costumeCards', JSON.stringify(records));
-          localStorage.setItem('costumeCards', JSON.stringify(records));
-        }
-      } catch (error) {
-        console.error('Failed to fetch costumeCards:', error);
-      } finally {
-        // 모든 데이터를 불러왔을 때 로딩 상태 해제
-        setIsLoading(false);
-      }
-    };
+    mainApi();
 
-    fetchCostumeCards();
+    return () => clearInterval(intervalIdRef.current);
   }, []);
+
+  /**************************************************************************************************************/
+  // 로딩 끝나면 상태창 없애기 위한 Flag 및 이펙트 훅
+
+  const isLoading = loading || weatherLoading;
+
+  useEffect(() => {
+    if (!isLoading) {
+      // 로딩이 완료되었을 때 interval 정리
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null;
+      }
+
+      const timer = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowLoader(true);
+      console.log('loadingComments:', loadingComments);
+      console.log('currentCommentIndex:', currentCommentIndex);
+      console.log('currentComment:', loadingComments[currentCommentIndex]);
+    }
+  }, [isLoading]);
+  /**************************************************************************************************************/
 
   return (
     <>
@@ -88,16 +172,19 @@ function MainPage(props) {
         <link rel="canonical" href="https://stylecast.netlify.app/" />
       </Helmet>
 
-      {/* 로딩 상태에 따른 조건부 렌더링 */}
-      {isLoading ? (
-        <div>Loading...</div> // 로딩 중일 때 표시할 컴포넌트 또는 스피너
-      ) : (
-        <div className={S.wrapComponent}>
-          <Weather />
-          <Product />
-          <LookBook />
-        </div>
-      )}
+      <div className={S.wrapComponent}>
+        {showLoader && (
+          <div className={`${S.loaderOverlay} ${!isLoading ? S.fadeOut : ''}`}>
+            <Loader />
+            <div className={S.commentWrapper}>
+              <LoadingComment text={loadingComments[currentCommentIndex]} />
+            </div>
+          </div>
+        )}
+        <Weather />
+        <Product />
+        <LookBook />
+      </div>
     </>
   );
 }
