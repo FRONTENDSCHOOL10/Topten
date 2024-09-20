@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Calendar } from 'react-calendar';
-import { Bookmark } from '@/components';
 import pb from '@/api/pocketbase';
+import { Bookmark, CommonModal } from '@/components';
+import { useUserStore } from '@/stores';
 import S from '@/styles/pages/Calendar.module.scss';
+import { useEffect, useState } from 'react';
+import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import styled from 'styled-components';
 import { FaBookmark } from 'react-icons/fa';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import styled from 'styled-components';
 
 // 캘린더 스타일 커스터마이징
 const StyledCalendar = styled(Calendar)`
@@ -79,6 +80,9 @@ const isSameDay = (date1, date2) => {
 };
 
 const CalendarPage = () => {
+  const { isLoggedIn, initUser, user } = useUserStore();
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
   const [date, setDate] = useState(new Date());
   const [visible, setVisible] = useState(false);
 
@@ -91,11 +95,28 @@ const CalendarPage = () => {
 
   const [calendarCollapsed, setCalendarCollapsed] = useState(false);
 
+  useEffect(() => {
+    initUser();
+  }, [initUser]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setIsModalOpen(true);
+    } else {
+      setIsModalOpen(false);
+    }
+  }, [isLoggedIn]);
+
   // PocketBase에서 북마크 데이터를 불러오는 함수
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
-        const userid = JSON.parse(localStorage.getItem('pb_auth')).token.id;
+        if (!user || !user.id) {
+          console.warn('User is not authenticated.');
+          return;
+        }
+
+        const userid = user.id;
         const bookmarks = await pb.collection('bookmarkItem').getFullList({
           filter: `user = "${userid}"`,
           sort: 'saveTime',
@@ -117,8 +138,13 @@ const CalendarPage = () => {
       }
     };
 
-    fetchBookmarks();
-  }, []);
+    if (isLoggedIn) {
+      fetchBookmarks();
+    } else {
+      setBookmarkList([]); // Clear bookmark list if not logged in
+      setBookmarkMap({});
+    }
+  }, [isLoggedIn, user]);
 
   // 이전/다음 북마크로 이동하는 함수
   const goToBookmark = (direction) => {
@@ -194,6 +220,17 @@ const CalendarPage = () => {
 
   return (
     <div className="wrapComponent">
+      {!isLoggedIn && (
+        <CommonModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title={['로그인 후', '이용해보세요!']}
+          firstActionText="로그인"
+          firstActionLink="/login"
+          secondActionText="회원가입"
+          secondActionLink="/register"
+        />
+      )}
       <div className={S.titleWrapper}>
         <p className={S.title}>원하시는 날짜를 선택하세요</p>
         <button className={S.btn} onClick={toggleCalendar}>
