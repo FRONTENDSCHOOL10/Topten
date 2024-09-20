@@ -79,9 +79,7 @@ export function getInitTemperature(currentTemperature) {
 export const outfitCategories = [
   {
     계절: '봄',
-    recommend: {
-      '20°~22°': '블라우스, 긴팔 티, 면바지, 슬랙스',
-    },
+    recommend: { '20°~22°': '블라우스, 긴팔 티, 면바지, 슬랙스' },
   },
   {
     계절: '여름',
@@ -108,8 +106,9 @@ export const outfitCategories = [
 ];
 
 export function getRecommend(currentTemperature) {
-  const recommendObject = outfitCategories.filter((item) => item.recommend[currentTemperature]);
-  return recommendObject[0].recommend[currentTemperature];
+  const recommendObject = outfitCategories.map((item) => item.recommend[currentTemperature]);
+  const recommendText = recommendObject.filter((item) => item !== undefined).join(', ');
+  return recommendText;
 }
 
 export const categoryList = {
