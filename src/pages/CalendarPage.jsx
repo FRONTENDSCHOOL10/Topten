@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Calendar } from 'react-calendar';
 import { Bookmark, CommonModal } from '@/components';
 import pb from '@/api/pocketbase';
-import S from './Calender.module.scss';
+import S from '@/styles/pages/Calendar.module.scss';
 import 'react-calendar/dist/Calendar.css';
 import styled from 'styled-components';
 import { FaBookmark } from 'react-icons/fa';

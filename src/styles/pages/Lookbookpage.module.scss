@@ -41,7 +41,7 @@
     align-items: end;
 
     .description {
-      @include font-style(18px, 300, $--black);
+      @include font-style(16px, 400, $--black);
 
       width: 242px;
       margin-top: 16px;
@@ -58,6 +58,7 @@
       .goNext {
         all: unset;
         padding:0 6px;
+        cursor:pointer;
       }
       .goPrev {
         margin-right: 10px;

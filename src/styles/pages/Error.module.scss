@@ -1,0 +1,27 @@
+.errorTitle {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  q {
+    font-weight: 700;
+  }
+}
+
+.errorReason {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  p {
+    font-weight: 400;
+  }
+
+  .errorCode {
+    font-weight: 400;
+    color: red;
+  }
+}

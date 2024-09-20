@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useRef } from 'react';
 import S from './../styles/pages/MainPage.module.scss';
 import { Weather, Product, LookBook, Loader, LoadingComment } from '@/components';
@@ -11,7 +12,7 @@ function MainPage() {
   const [user, setUser] = useState(null);
   const [costumeCards, setCostumeCards] = useState([]);
   const { initLikeOrigin, initLikeLocal } = useLikeStore();
-  const { loading: weatherLoading, initFetching, error: weatherError } = useWeatherStore();
+  const { loading: weatherLoading, initFetching } = useWeatherStore();
   const [currentCommentIndex, setCurrentCommentIndex] = useState(0);
   const intervalIdRef = useRef(null);
 

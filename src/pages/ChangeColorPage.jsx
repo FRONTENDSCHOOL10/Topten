@@ -8,7 +8,6 @@ import updateUserData from '../api/updateData';
 import useGetUserInfo from '../hooks/useGetUserInfo';
 import { Toaster } from 'react-hot-toast';
 
-
 const ChangeColorPage = () => {
   const { user } = useGetUserInfo();
   const [color, setColor] = useState(() => ['']);

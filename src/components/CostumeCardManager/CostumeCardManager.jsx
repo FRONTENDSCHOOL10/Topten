@@ -9,7 +9,7 @@ import useLikeStore from '@/stores/likeStore'; // Zustand store
 import S from './CostumeCardManager.module.scss';
 import getPbImageURL from '@/api/getPbImageURL'; // PocketBase 이미지 URL 생성 함수
 
-const CostumeCardManager = ({ user, viewType, costumeCards }) => {
+const CostumeCardManager = ({ viewType, costumeCards }) => {
   // 수정된 부분: likeList를 likeLocal로 변경하고 toggleLike를 toggleLikeLocal로 변경
   const { likeLocal, toggleLikeLocal } = useLikeStore();
 
@@ -78,7 +78,6 @@ const CostumeCardManager = ({ user, viewType, costumeCards }) => {
 
 // PropTypes 유효성 검사
 CostumeCardManager.propTypes = {
-  user: object, // user는 객체 형식
   viewType: string.isRequired, // viewType은 필수 문자열
   costumeCards: arrayOf(object).isRequired, // costumeCards는 객체 배열 형식
 };

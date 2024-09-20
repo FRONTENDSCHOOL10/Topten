@@ -112,7 +112,7 @@ const LikedPage = () => {
           </div>
           {/* CostumeCardManager를 사용한 좋아요한 카드 리스트 표시 */}
           <div className={S.ccmWrapper}>
-            <CostumeCardManager user={null} viewType="앨범" costumeCards={filteredLikeCards} />
+            <CostumeCardManager viewType="앨범" costumeCards={filteredLikeCards} />
           </div>
         </div>
       </div>
