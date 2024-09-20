@@ -4,7 +4,6 @@ import S from './../styles/pages/changePage.module.scss';
 import Input from '../components/Input/Input';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
-import loadToast from '../api/loadToast';
 import { Toaster } from 'react-hot-toast';
 import useGetUserInfo from '../hooks/useGetUserInfo';
 //잠시 커밋 확인 위한 주석
