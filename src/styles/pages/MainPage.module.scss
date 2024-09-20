@@ -32,6 +32,7 @@
 
   .img__container {
     position: relative;
+    height:90px;
 
     div {
       width: 90px;
@@ -48,7 +49,7 @@
 
     .camera__button {
       position: absolute;
-      bottom: 15px;
+      bottom: 0px;
       right: 0px;
       width: 28px;
       height: 28px;
@@ -58,6 +59,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
+      img{
+        width:15px;
+      }
     }
   }
 
@@ -84,7 +89,7 @@
 
       h2 {
         margin-bottom: 10px;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: 600;
       }
       img {
@@ -113,8 +118,19 @@
     }
 
     label {
+      @include font-style(14px, 400, $--black);
+
       width: 100%;
       padding: 15px 0;
+    }
+
+    img{
+      width:16px;
+    }
+
+    button{
+      background-color:transparent;
+      border:0;
     }
   }
 }
