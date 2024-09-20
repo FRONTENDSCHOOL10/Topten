@@ -14,3 +14,12 @@ export async function getUserInfo() {
 
   return { ...data, isUser: true };
 }
+
+//zustand으로 통일위해 생성
+export async function getUserData(uid) {
+  pb.autoCancellation(false);
+
+  const data = await pb.collection('users').getOne(uid);
+
+  return data;
+}
