@@ -44,7 +44,7 @@ const LoadingComment = ({ text = '' }) => {
               opacity: [0, 1, 1, 0],
             },
             {
-              duration: 3,
+              duration: 4,
               delay: index * 0.2,
               repeat: Infinity,
               easing: 'linear',

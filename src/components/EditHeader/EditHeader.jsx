@@ -1,4 +1,3 @@
-import React from 'react';
 import arrow from '/icon/right.svg';
 import S from './EditHeader.module.scss';
 import { useNavigate } from 'react-router-dom';
