@@ -42,7 +42,7 @@
   padding: 0.6rem 0.6rem 0 0;
 
   .title {
-    
+    margin-bottom:6px;
     font-weight: 700;
   }
 
@@ -50,16 +50,21 @@
     @include ellipsis(2, 1.2em); /* 두 줄만 표시하고 나머지는 숨김 */
     text-overflow: ellipsis;
     overflow: hidden;
+    margin-bottom:6px;
   }
 
   .link {
     display:flex;
-    align-items: center;
+    align-items: baseline;
     text-decoration: none;
     color: var(--black);
     font-weight: 600;
-    &:hover {
-      cursor: pointer;
+    cursor: pointer;
+
+    img, svg{
+      display:inline-block;
+      margin-right:2px;
+      padding-top: 3px;
     }
   }
 }
