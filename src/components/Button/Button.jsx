@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { string, bool, element, object, oneOf } from 'prop-types';
+import { string, bool, element, object, oneOf, func } from 'prop-types';
 import { animate } from 'motion'; // motion-one에서 animate 함수 import
 import clsx from 'clsx'; // clsx 라이브러리로 className 동적 할당
 import S from './Button.module.scss';
-import { useNavigate } from 'react-router-dom/dist';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * Button 컴포넌트
@@ -60,10 +60,10 @@ function Button({
   };
 
   // 클릭 시 링크 이동
-  const handleClick = (event) => {
+  const handleClick = async (event) => {
     // 만약 props로 onClick이 전달되었다면 실행
     if (props.onClick) {
-      props.onClick(event);
+      await props.onClick(event);
     }
 
     // linkTo가 있을 때만 페이지 이동을 처리
@@ -106,6 +106,7 @@ Button.propTypes = {
   iconAnimation: object, // 아이콘에 적용할 애니메이션 설정
   linkTo: string, // 이동해야할 링크
   TemperButton: bool, //온도버튼으로 전환
+  onClick: func,
 };
 
 export default Button;

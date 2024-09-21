@@ -43,6 +43,13 @@ const useUserStore = create((set) => ({
     });
   },
 
+  setUser: (user) =>
+    set({
+      user: user,
+      isLoggedIn: true,
+      profileImageUrl: user.userPhoto ? getPbImageURL(user, 'userPhoto') : userLoginImg,
+    }),
+
   logout: () => {
     sessionStorage.removeItem('pb_auth');
     localStorage.removeItem('pb_auth');

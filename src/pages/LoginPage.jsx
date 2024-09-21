@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import styles from '@/styles/pages/Login.module.scss';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { validatePassword, validateEmail } from './../api/validation';
+import { useUserStore } from '@/stores';
 
 pb.authStore.save = (model, token, expiration) => {
   const authData = { model, token, expiration };
@@ -61,6 +62,9 @@ function LoginPage() {
     try {
       const authData = await pb.collection('users').authWithPassword(email, password);
       console.log('로그인 성공:', authData);
+
+      await useUserStore.getState().getUserFromDb(authData);
+
       navigate('/main');
     } catch (error) {
       console.error('로그인 실패:', error);
@@ -108,7 +112,10 @@ function LoginPage() {
         <meta property="twitter:title" content="로그인 | StyleCast - 나만의 스타일 캐스트" />
         <meta name="description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
         <meta property="og:description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
-        <meta name="keywords" content="날씨, 기온, 옷차림, 뭐입지, 입을옷, 의류, 기상정보, 룩북, 체형, 퍼스널컬러" />
+        <meta
+          name="keywords"
+          content="날씨, 기온, 옷차림, 뭐입지, 입을옷, 의류, 기상정보, 룩북, 체형, 퍼스널컬러"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:image" content="https://stylecast.netlify.app/image/og-sc.png" />
         <meta property="og:url" content="https://stylecast.netlify.app/" />
@@ -166,15 +173,13 @@ function LoginPage() {
               warningText={warnings.password || warnings.auth}
             />
             <div className={styles.showPasswordWrap}>
-                <input
-                  type="checkbox"
-                  id="showPassword"
-                  checked={showPassword}
-                  onChange={toggleShowPassword}
-                />
-              <label htmlFor="showPassword">
-                비밀번호 보기
-              </label>
+              <input
+                type="checkbox"
+                id="showPassword"
+                checked={showPassword}
+                onChange={toggleShowPassword}
+              />
+              <label htmlFor="showPassword">비밀번호 보기</label>
             </div>
             <div className={styles.buttonArea}>
               <Button type="submit" text="로그인" onClick={handleLogin} active={true} />

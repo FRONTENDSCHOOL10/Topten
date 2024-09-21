@@ -7,7 +7,11 @@ import S from './Header.module.scss';
 import useUserStore from '@/stores/userStore';
 
 const Header = () => {
-  const { isLoggedIn, profileImageUrl, initUser } = useUserStore();
+  const { isLoggedIn, profileImageUrl, initUser } = useUserStore((state) => ({
+    isLoggedIn: state.isLoggedIn,
+    profileImageUrl: state.profileImageUrl,
+    initUser: state.initUser,
+  }));
 
   useEffect(() => {
     // 컴포넌트가 처음 렌더링될 때 사용자 상태 초기화
