@@ -1,18 +1,13 @@
-import { useMemo, useState, useEffect } from 'react';
-import { CostumeCardManager, Button, CommonModal } from '@/components';
+import { useMemo, useState } from 'react';
+import useLikeStore from '@/stores/likeStore';
+import { CostumeCardManager, Button } from '@/components';
 import { temperatureList, categoryList } from '../data/constant';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Mousewheel } from 'swiper/modules';
 import 'swiper/css';
 import clsx from 'clsx';
 import S from '@/styles/pages/LikedPage.module.scss';
-import { useUserStore, useLikeStore } from '@/stores';
 
 const LikedPage = () => {
-  // 로그인 확인 부분
-  const { isLoggedIn, initUser } = useUserStore();
-  const [isModalOpen, setIsModalOpen] = useState(true);
-
   // 로컬스토리지에서 costumeCards를 가져옴
   const costumeCards = JSON.parse(localStorage.getItem('costumeCards')) || [];
 
@@ -20,17 +15,13 @@ const LikedPage = () => {
   const { likeLocal } = useLikeStore();
 
   // 기온별 필터 상태 관리
-  const [temperature, setTemperature] = useState('');
+  const [temperature, setTemperature] = useState('5°~8°');
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 상위 카테고리
   const [selectedSubCategory, setSelectedSubCategory] = useState(null); // 선택된 하위 카테고리
 
   // 날씨 필터 버튼 클릭 시 temperature 업데이트
   const handleTemperatureClick = (temp) => {
-    if (temperature === temp) {
-      setTemperature(''); // 선택 해제
-    } else {
-      setTemperature(temp); // 새로운 온도 선택
-    }
+    setTemperature(temp);
   };
 
   // 카테고리 버튼 클릭 시 category 업데이트
@@ -46,53 +37,21 @@ const LikedPage = () => {
 
   // likeLocal에 포함된 의상 카드를 필터링하여 관리
   const filteredLikeCards = useMemo(() => {
-    let filteredCards = costumeCards.filter((card) => likeLocal.includes(card.id));
-
-    if (temperature) {
-      filteredCards = filteredCards.filter(
-        (card) =>
-          Array.isArray(card.costumeTemperature) && card.costumeTemperature.includes(temperature)
-      );
+    if (!selectedCategory && !selectedSubCategory) {
+      return costumeCards.filter((card) => likeLocal.includes(card.id));
     }
-
-    if (selectedCategory) {
-      filteredCards = filteredCards.filter((card) => card.upperCategory === selectedCategory);
-    }
-
-    if (selectedSubCategory) {
-      filteredCards = filteredCards.filter((card) => card.lowerCategory === selectedSubCategory);
-    }
-
-    return filteredCards;
+    return costumeCards.filter(
+      (card) =>
+        likeLocal.includes(card.id) &&
+        Array.isArray(card.costumeTemperature) &&
+        card.costumeTemperature.includes(temperature) &&
+        (card.upperCategory === selectedCategory || card.lowerCategory === selectedSubCategory)
+    );
   }, [likeLocal, costumeCards, temperature, selectedCategory, selectedSubCategory]);
-
-  useEffect(() => {
-    initUser();
-  }, [initUser]);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      setIsModalOpen(true);
-    } else {
-      setIsModalOpen(false);
-    }
-  }, [isLoggedIn]);
 
   return (
     <div className="wrapComponent">
       <div className={S.likedPage}>
-        {!isLoggedIn && (
-          <CommonModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            title={['로그인 후', '이용해보세요!']}
-            firstActionText="로그인"
-            firstActionLink="/login"
-            secondActionText="회원가입"
-            secondActionLink="/register"
-          />
-        )}
-
         <div className={S.title}>
           <img src="/image/icon-like.png" alt="좋아요 페이지 아이콘" className={S.likeIcon} />
           <h2>좋아요</h2>
@@ -103,17 +62,14 @@ const LikedPage = () => {
         <Swiper
           spaceBetween={10}
           slidesPerView={4} // 한 번에 4개의 버튼을 보여줌
-          mousewheel={true}
-          modules={[Mousewheel]}
           className={S.temperatureButtonsSwiper}
         >
           {temperatureList.map((temp, index) => (
             <SwiperSlide key={index}>
               <Button
                 text={temp}
-                TemperButton={true}
+                style={{ width: '66px', height: '22px', fontSize: '12px', fontWeight: 400 }}
                 onClick={() => handleTemperatureClick(temp)}
-                active={temp === temperature}
               />
             </SwiperSlide>
           ))}
