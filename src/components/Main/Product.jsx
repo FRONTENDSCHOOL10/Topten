@@ -91,6 +91,10 @@ function Product() {
     setFormData((prev) => ({ ...prev, comment: value }));
   };
 
+  const handleGetStar = (value) => {
+    setFormData((prev) => ({ ...prev, rate: value }));
+  };
+
   // 북마크 저장 함수
   const handleSave = async () => {
     const date = new Date();
@@ -102,8 +106,8 @@ function Product() {
     //기존 데이터에 옷 시간 uid 데이터를 추가
     const bookmarkItem = {
       ...formData,
-      upperItems: filteredUpper,
-      lowerItems: filteredLower,
+      upperItems: filteredUpper.map((item) => item.id),
+      lowerItems: filteredLower.map((item) => item.id),
       date: getDate(),
       saveTime: getDate(),
       uid: user.id,
@@ -152,6 +156,7 @@ function Product() {
           onClick={() => setClickedModal(false)}
           onChange={handleChange}
           onEdit={handleSave}
+          handleGetStar={handleGetStar}
         />
       ) : (
         ''
