@@ -10,9 +10,10 @@ import loadToast from '../api/loadToast';
 import { Helmet } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { COLORS, GENDER, POLICY, SIZE, INITCHECKED, INITUSER, WARNING } from '../data/constant';
+import { useNavigate } from 'react-router-dom';
 
 function RegisterPage(props) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState(INITUSER);
   const [visible, setVisible] = useState({
     name: null,
@@ -31,6 +32,9 @@ function RegisterPage(props) {
       const createdUserInfo = await createUser(user); //;
       console.log('createdUserInfo', createdUserInfo);
       loadToast('회원가입이 완료되었습니다', '📌');
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     } catch (error) {
       console.error(error);
     }
