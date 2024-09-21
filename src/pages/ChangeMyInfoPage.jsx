@@ -6,6 +6,7 @@ import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 import { Toaster } from 'react-hot-toast';
 import { useUserStore } from '@/stores';
+import loadToast from '@/api/loadToast';
 //잠시 커밋 확인 위한 주석
 const ChangeMyInfoPage = () => {
   const { user } = useUserStore();

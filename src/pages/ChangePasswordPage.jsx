@@ -11,6 +11,7 @@ import { WARNING } from '../data/constant';
 
 import { Toaster } from 'react-hot-toast';
 import { useUserStore } from '@/stores';
+import loadToast from '@/api/loadToast';
 
 const ChangePasswordPage = () => {
   const { user } = useUserStore();

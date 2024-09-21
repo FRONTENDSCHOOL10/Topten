@@ -37,6 +37,7 @@ const ChangeFitPage = () => {
     }
   };
   console.log('user', user);
+
   return (
     <div className={S.wrapComponent}>
       <EditHeader

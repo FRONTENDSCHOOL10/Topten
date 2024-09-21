@@ -7,6 +7,7 @@ import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 import { Toaster } from 'react-hot-toast';
 import { useUserStore } from '@/stores';
+import loadToast from '@/api/loadToast';
 
 const ChangeColorPage = () => {
   const { user } = useUserStore();
@@ -27,6 +28,7 @@ const ChangeColorPage = () => {
       console.error(error);
     }
   };
+
   return (
     <div className={S.wrapComponent}>
       <EditHeader
