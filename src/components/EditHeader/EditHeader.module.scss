@@ -1,6 +1,7 @@
-.editHeader {
-  font-family: Pretendard;
+@import './../../styles/utils/theme';
+@import './../../styles/utils/utils';
 
+.editHeader {
   div {
     display: flex;
     align-items: center;
@@ -19,10 +20,7 @@
     }
 
     .navText {
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 300;
-      line-height: normal;
+      @include font-style(14px, 400, $--gray-custom-600);
     }
   }
 
@@ -32,11 +30,7 @@
   }
 
   .description {
-    color: var(--gray-600, #919191);
-    font-family: Pretendard;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 110%;
+    @include font-style(14px, 400, $--gray-custom-600);
     letter-spacing: -0.48px;
     margin-bottom: 30px;
     padding: 12px 0 0;
