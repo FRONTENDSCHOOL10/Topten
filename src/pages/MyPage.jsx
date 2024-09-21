@@ -16,6 +16,7 @@ import useUserStore from '@/stores/userStore';
 import clsx from 'clsx';
 import S from './../styles/pages/MainPage.module.scss';
 
+import defaultImg from '/image/happiness.png';
 import { NavList, CommonModal } from '@/components';
 
 const MyPage = () => {

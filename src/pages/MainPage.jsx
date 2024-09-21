@@ -5,7 +5,7 @@ import { Weather, Product, LookBook, Loader, LoadingComment } from '@/components
 import pb from '@/api/pocketbase';
 import useLikeStore from '@/stores/likeStore';
 import { Helmet } from 'react-helmet-async';
-import { useWeatherStore } from '@/stores';
+import { useWeatherStore } from '@/stores/weatherStore';
 import { loadingComments } from '@/data/constant';
 
 function MainPage() {
