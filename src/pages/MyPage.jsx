@@ -17,6 +17,8 @@ import clsx from 'clsx';
 import S from './../styles/pages/MainPage.module.scss';
 
 import { NavList, CommonModal } from '@/components';
+import loadToast from '@/api/loadToast';
+import toast from 'react-hot-toast';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -37,6 +39,7 @@ const MyPage = () => {
   useEffect(() => {
     initUser(); // zustand의 initUser 호출
     setIsLoading(false);
+    toast.remove();
   }, [initUser]);
 
   const updateProfileImage = async (e) => {
