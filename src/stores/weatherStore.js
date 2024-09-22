@@ -64,7 +64,7 @@ const getCurrentKSTDate = () => {
 };
 
 // Zustand를 이용하여 상태 관리 스토어를 생성
-const useWeatherStore = create((set, get) => ({
+export const useWeatherStore = create((set, get) => ({
   // 상태 변수 정의
   weatherData: null,
   location: { lat: null, lon: null },
@@ -324,5 +324,3 @@ const useWeatherStore = create((set, get) => ({
     }
   },
 }));
-
-export default useWeatherStore;
