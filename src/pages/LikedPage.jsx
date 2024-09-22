@@ -15,7 +15,9 @@ const LikedPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   // 로컬스토리지에서 costumeCards를 가져옴
-  const costumeCards = JSON.parse(localStorage.getItem('costumeCards')) || [];
+  const costumeCards = useMemo(() => {
+    return JSON.parse(localStorage.getItem('costumeCards')) || [];
+  }, []);
 
   // likeOrigin을 zustand에서 가져옴
   const { likeLocal } = useLikeStore();
