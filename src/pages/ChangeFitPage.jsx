@@ -6,14 +6,16 @@ import Select from '../components/Select/Select';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 
-import useGetUserInfo from '../hooks/useGetUserInfo';
-
 import { Toaster } from 'react-hot-toast';
-
+import loadToast from '@/api/loadToast';
+import useUserStore from '@/stores/userStore';
 
 const ChangeFitPage = () => {
-  const { user } = useGetUserInfo();
-  const [userSize, setUserSize] = useState({ topSize: '', bottomSize: '' });
+  const { user } = useUserStore();
+  const [userSize, setUserSize] = useState({
+    topSize: user.userSize[0],
+    bottomSize: user.userSize[1],
+  });
 
   //공백 조건 처리 필
   const handleChange = (e) => {
@@ -23,13 +25,19 @@ const ChangeFitPage = () => {
 
   const handleClick = async () => {
     try {
-      const updatedSize = { ...user, userSize: [userSize.topSize, userSize.bottomSize] };
+      const updatedSize = {
+        ...user,
+        userSize: [userSize.topSize, userSize.bottomSize],
+      };
+      console.log('updatedSize', updatedSize);
       const updatedUser = await updateUserData('users', user.id, updatedSize);
       loadToast('사이즈 변경 완료', '📌');
     } catch (error) {
       console.error(error);
     }
   };
+  console.log('user', user);
+
   return (
     <div className={S.wrapComponent}>
       <EditHeader
@@ -39,10 +47,24 @@ const ChangeFitPage = () => {
       />
 
       <div className={S.select__container}>
-        <Select name="topSize" text="상의 사이즈" items={SIZE} onChange={handleChange} />
+        <Select
+          name="topSize"
+          text="상의 사이즈"
+          items={SIZE}
+          onChange={handleChange}
+          toChangeInfo={true}
+          current={user.userSize[0]}
+        />
       </div>
       <div className={S.select__container}>
-        <Select name="bottomSize" text="하의 사이즈" items={SIZE} onChange={handleChange} />
+        <Select
+          name="bottomSize"
+          text="하의 사이즈"
+          items={SIZE}
+          onChange={handleChange}
+          toChangeInfo={true}
+          current={user.userSize[1]}
+        />
       </div>
 
       <div className={S.button__container}>
@@ -50,7 +72,6 @@ const ChangeFitPage = () => {
       </div>
 
       <Toaster />
-
     </div>
   );
 };

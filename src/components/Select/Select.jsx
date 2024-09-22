@@ -1,18 +1,30 @@
 import { useId } from 'react';
 import styles from './Select.module.scss';
-import { string, arrayOf, func } from 'prop-types';
+import { string, arrayOf, func, bool, any } from 'prop-types';
 
-export default function Select({ name, text = '', items, onChange }) {
+export default function Select({
+  name,
+  text = '',
+  items,
+  onChange,
+  toChangeInfo = false,
+  current,
+}) {
   const id = useId();
   return (
     <div className={styles.select__container}>
       <label htmlFor={id}>{text}</label>
       <select id={id} className={styles.select} name={name} onChange={(e) => onChange?.(e)}>
-        {items.map((item, index) => (
-          <option key={index} value={item}>
-            {item}
-          </option>
-        ))}
+        {toChangeInfo ? <option value={current}>{current}</option> : ''}
+        {items.map((item, index) =>
+          item === current ? (
+            ''
+          ) : (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          )
+        )}
       </select>
     </div>
   );
@@ -23,6 +35,8 @@ Select.propTypes = {
   text: string, // label 태그 value
   items: arrayOf(string).isRequired, // option 태그에 사용 배열 / 필
   onChange: func,
+  toChangeInfo: bool,
+  current: any,
 };
 
 // 예시

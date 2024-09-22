@@ -3,8 +3,17 @@ import { func, string } from 'prop-types';
 import { useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import S from './/BookmarkModal.module.scss';
+import { useEffect } from 'react';
 
-const BookmarkModal = ({ address, saveDate, weatherText, onClick, onChange, onEdit }) => {
+const BookmarkModal = ({
+  address,
+  saveDate,
+  weatherText,
+  onClick,
+  onChange,
+  onEdit,
+  handleGetStar,
+}) => {
   const [rating, setRating] = useState(0); // 별점 상태
   const [comment, setComment] = useState('');
 
@@ -14,6 +23,14 @@ const BookmarkModal = ({ address, saveDate, weatherText, onClick, onChange, onEd
     }
     setComment(e.target.value);
   };
+
+  useEffect(() => {
+    if (handleGetStar) {
+      handleGetStar(rating);
+    } else {
+      return;
+    }
+  }, [rating]);
 
   return (
     <div className={S.modalOverlay}>
@@ -45,6 +62,7 @@ BookmarkModal.propTypes = {
   onClick: func,
   onChange: func,
   onEdit: func,
+  handleGetStar: func,
 };
 
 export default BookmarkModal;
