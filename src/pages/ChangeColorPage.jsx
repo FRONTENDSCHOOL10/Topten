@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import EditHeader from './../components/EditHeader/EditHeader';
 import S from './../styles/pages/ChangeColorPage.module.scss';
 import Select from '../components/Select/Select';
