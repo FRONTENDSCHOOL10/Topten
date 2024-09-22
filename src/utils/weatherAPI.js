@@ -84,7 +84,7 @@ export const fetchWeatherDataFromAPI = async (lat, lon) => {
 
   const params = {
     serviceKey: API_KEY,
-    numOfRows: 1000,
+    numOfRows: 500,
     pageNo: 1,
     dataType: 'JSON',
     base_date: baseDate,
@@ -113,7 +113,7 @@ export const fetchYesterdayWeatherDataFromAPI = async (lat, lon) => {
 
   const params = {
     serviceKey: API_KEY,
-    numOfRows: 1000,
+    numOfRows: 500,
     pageNo: 1,
     dataType: 'JSON',
     base_date: baseDate,
@@ -141,7 +141,7 @@ export const fetchHourlyWeatherDataFromAPI = async (lat, lon, baseDate = null) =
 
   const params = {
     serviceKey: API_KEY,
-    numOfRows: 1000,
+    numOfRows: 500,
     pageNo: 1,
     dataType: 'JSON',
     base_date: finalBaseDate,
@@ -152,6 +152,6 @@ export const fetchHourlyWeatherDataFromAPI = async (lat, lon, baseDate = null) =
 
   const response = await axios.get(url, { params });
 
-  console.log('API 응답 데이터:', response.data.response.body.items.item); // 데이터를 로그로 확인
+  // console.log('API 응답 데이터:', response.data.response.body.items.item); // 데이터를 로그로 확인
   return response.data.response.body.items.item;
 };

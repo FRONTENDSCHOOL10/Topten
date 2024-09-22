@@ -4,7 +4,7 @@ import userLoginImg from '/image/user-login.png';
 import { getUserData } from '@/api/getData';
 
 const useUserStore = create((set) => ({
-  user: null, // 유저 정보를 저장할 상태
+  user: null,
   profileImageUrl: userLoginImg,
   isLoggedIn: false,
 
@@ -12,12 +12,13 @@ const useUserStore = create((set) => ({
     const pb_auth = sessionStorage.getItem('pb_auth') || localStorage.getItem('pb_auth');
     if (pb_auth) {
       const parsedAuth = JSON.parse(pb_auth);
+      const profileImageUrl = parsedAuth.record.userPhoto
+        ? `${getPbImageURL(parsedAuth.record, 'userPhoto')}?v=${new Date().getTime()}` // 캐시 무효화를 위한 쿼리 파라미터 추가
+        : userLoginImg;
       set({
-        user: parsedAuth.token, // 모든 사용자 정보 저장
+        user: parsedAuth.record, // authData.record 사용
         isLoggedIn: true,
-        profileImageUrl: parsedAuth.token.userPhoto
-          ? getPbImageURL(parsedAuth.token, 'userPhoto')
-          : userLoginImg,
+        profileImageUrl,
       });
     } else {
       set({
@@ -28,18 +29,24 @@ const useUserStore = create((set) => ({
     }
   },
 
-  getUserFromDb: async (updatedUser) => {
-    sessionStorage.setItem('pb_auth', JSON.stringify(updatedUser));
-    localStorage.setItem('pb_auth', JSON.stringify(updatedUser));
-    const pb_auth = sessionStorage.getItem('pb_auth') || localStorage.getItem('pb_auth');
-    await getUserData(updatedUser.token.id);
-    const parsedAuth = JSON.parse(pb_auth);
+  setUserAuth: async (authData) => {
+    console.log('setUserAuth called with:', authData); // 디버깅용 로그
+    sessionStorage.setItem('pb_auth', JSON.stringify(authData));
+    localStorage.setItem('pb_auth', JSON.stringify(authData));
+
+    const profileImageUrl = authData.record.userPhoto
+      ? `${getPbImageURL(authData.record, 'userPhoto')}?v=${new Date().getTime()}` // 캐시 무효화를 위한 쿼리 파라미터 추가
+      : userLoginImg;
+
     set({
-      user: parsedAuth.token, // 모든 사용자 정보 저장
+      user: authData.record, // authData.record 사용
       isLoggedIn: true,
-      profileImageUrl: parsedAuth.token.userPhoto
-        ? getPbImageURL(parsedAuth.token, 'userPhoto')
-        : userLoginImg,
+      profileImageUrl,
+    });
+
+    // 비동기 작업은 여기서 분리하여 상태 업데이트가 즉시 이루어지도록 함
+    await getUserData(authData.record.id).catch((error) => {
+      console.error('getUserData 실패:', error);
     });
   },
 
@@ -53,11 +60,10 @@ const useUserStore = create((set) => ({
     });
   },
 
-  updateProfileImage: async (newImageURL) => {
-    set((state) => ({
-      ...state,
+  updateProfileImage: (newImageURL) => {
+    set({
       profileImageUrl: newImageURL || userLoginImg,
-    }));
+    });
   },
 }));
 

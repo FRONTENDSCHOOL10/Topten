@@ -55,18 +55,9 @@ const StyledCalendar = styled(Calendar)`
   }
 `;
 
-// 날짜 포맷 변환 함수
+// 날짜 포맷 변환 함수 (checkDate 사용)
 const formatDate = (dateString) => {
-  const date = new Date(dateString);
-
-  if (isNaN(date)) {
-    return '날짜 없음'; // 날짜가 올바르지 않으면 '날짜 없음' 표시
-  }
-
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0'); // 두 자릿수로 맞춤
-  const day = date.getDate().toString().padStart(2, '0'); // 두 자릿수로 맞춤
-
+  const [year, month, day] = dateString.split('-');
   return `${year}.${month}.${day}`;
 };
 
@@ -77,6 +68,20 @@ const isSameDay = (date1, date2) => {
     date1.getMonth() === date2.getMonth() &&
     date1.getDate() === date2.getDate()
   );
+};
+
+// 헬퍼 함수: Date 객체를 'YYYY-MM-DD' 형식의 문자열로 변환
+const formatDateKey = (date) => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+// 헬퍼 함수: 'YYYY-MM-DD' 문자열을 Date 객체로 변환 (로컬 시간)
+const parseCheckDate = (dateStr) => {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, day);
 };
 
 const CalendarPage = () => {
@@ -100,25 +105,49 @@ const CalendarPage = () => {
   useEffect(() => {
     const fetchBookmarks = async () => {
       try {
-        const userid = JSON.parse(localStorage.getItem('pb_auth')).token.id;
-        const bookmarks = await pb.collection('bookmarkItem').getFullList({
-          filter: `user = "${userid}"`,
-          sort: 'saveTime',
-        });
+        const storedBookmarks = localStorage.getItem('bookMarks');
+        let bookmarks;
 
-        localStorage.setItem('bookMarks', JSON.stringify(bookmarks));
+        if (storedBookmarks) {
+          // 로컬스토리지에 bookMarks가 존재하는 경우
+          bookmarks = JSON.parse(storedBookmarks);
+          // console.log('로컬스토리지에서 북마크를 불러왔습니다:', bookmarks);
+        } else {
+          // 로컬스토리지에 bookMarks가 없는 경우 PocketBase에서 데이터 가져오기
+          const authData = localStorage.getItem('pb_auth');
+          if (!authData) {
+            throw new Error('인증 정보가 로컬스토리지에 없습니다.');
+          }
 
-        // 날짜별 북마크 객체 생성
+          const userid = JSON.parse(authData).record.id;
+          bookmarks = await pb.collection('bookmarkItem').getFullList({
+            filter: `user = "${userid}"`,
+            sort: 'saveTime',
+          });
+
+          // 가져온 데이터를 로컬스토리지에 저장
+          localStorage.setItem('bookMarks', JSON.stringify(bookmarks));
+          // console.log('PocketBase에서 북마크를 가져와 로컬스토리지에 저장했습니다:', bookmarks);
+        }
+
+        // 날짜별 북마크 객체 생성 (checkDate를 키로 사용)
         const bookmarkObj = {};
         bookmarks.forEach((b) => {
-          const bookmarkDate = new Date(b.saveTime);
-          bookmarkObj[bookmarkDate.toDateString()] = b; // 날짜를 키로 저장
+          const dateKey = b.checkDate; // 'YYYY-MM-DD' 형식 사용
+          if (!bookmarkObj[dateKey]) {
+            bookmarkObj[dateKey] = [];
+          }
+          bookmarkObj[dateKey].push(b); // 동일 날짜에 여러 북마크가 있을 경우 배열로 저장
+          // console.log(`Adding bookmark to dateKey: ${dateKey}`);
         });
 
+        // 상태 업데이트
         setBookmarkList(bookmarks); // 배열로 북마크 저장
         setBookmarkMap(bookmarkObj); // 객체로 날짜별 북마크 저장
+        // console.log('bookmarkList 상태:', bookmarks);
+        // console.log('bookmarkMap 상태:', bookmarkObj);
       } catch (error) {
-        console.error('Failed to fetch bookmarks:', error);
+        console.error('북마크를 불러오는 데 실패했습니다:', error);
       }
     };
 
@@ -136,7 +165,9 @@ const CalendarPage = () => {
 
     setCurrentBookmarkIndex(newIndex);
 
-    const newBookmarkDate = new Date(bookmarkList[newIndex].saveTime);
+    // Set date based on checkDate instead of saveTime
+    const checkDate = bookmarkList[newIndex].checkDate; // 'YYYY-MM-DD'
+    const newBookmarkDate = parseCheckDate(checkDate); // Convert to Date object using parseCheckDate
 
     setDate(newBookmarkDate); // 캘린더의 날짜도 업데이트
 
@@ -145,21 +176,24 @@ const CalendarPage = () => {
       setActiveStartDate(newBookmarkDate); // 새로운 월로 변경
     }
 
-    handleDayClick(newBookmarkDate);
+    setVisible(true); // 북마크가 선택된 상태로 표시
+    // console.log(`현재 북마크 인덱스: ${newIndex}, 날짜: ${newBookmarkDate}`);
   };
 
   // 날짜 클릭 시 북마크 확인 및 업데이트
   const handleDayClick = (value) => {
-    const clickedDate = value.toDateString();
-    const bookmark = bookmarkMap[clickedDate]; // 해당 날짜의 북마크 가져오기
+    const dateKey = formatDateKey(value); // 'YYYY-MM-DD' 형식으로 변환
+    const bookmarksForDate = bookmarkMap[dateKey]; // 해당 날짜의 북마크 가져오기
 
-    if (bookmark) {
-      console.log(`북마크가 선택되었습니다: ${bookmark.saveTime}`);
+    if (bookmarksForDate && bookmarksForDate.length > 0) {
+      // console.log(`북마크가 선택되었습니다: ${bookmarksForDate[0].saveTime}`);
       setVisible(true);
-      const index = bookmarkList.findIndex((b) => b.id === bookmark.id);
-      setCurrentBookmarkIndex(index); // 해당 북마크의 인덱스를 설정
+      setCurrentBookmarkIndex(bookmarkList.findIndex((b) => b.id === bookmarksForDate[0].id));
+      // console.log(
+      //   `선택된 북마크 인덱스: ${bookmarkList.findIndex((b) => b.id === bookmarksForDate[0].id)}`
+      // );
     } else {
-      console.log('해당 날짜에 북마크가 없습니다.');
+      // console.log('해당 날짜에 북마크가 없습니다.');
       setVisible(false);
     }
   };
@@ -167,26 +201,24 @@ const CalendarPage = () => {
   // 타일에 북마크 아이콘 표시
   const renderTileContent = ({ date, view }) => {
     if (view === 'month') {
-      const hasBookmark = bookmarkList.some((b) => {
-        const bookmarkDate = new Date(b.saveTime);
-        return isSameDay(bookmarkDate, date);
-      });
+      const dateKey = formatDateKey(date); // 'YYYY-MM-DD' 형식으로 변환
+      const bookmarksForDate = bookmarkMap[dateKey];
 
-      if (hasBookmark) {
-        return (
+      if (bookmarksForDate && bookmarksForDate.length > 0) {
+        return bookmarksForDate.map((bookmark, index) => (
           <FaBookmark
+            key={bookmark.id}
             style={{
               marginLeft: '8px',
-              marginTop: '15px',
+              marginTop: `${index * 15}px`, // 아이콘이 겹치지 않도록 조정
               color: 'orange',
             }}
           />
-        );
+        ));
       }
     }
     return null;
   };
-
   // 날짜 변경 시 상태 업데이트
   const onChange = (newDate) => {
     setDate(newDate);
@@ -236,7 +268,7 @@ const CalendarPage = () => {
           <button type="button" className={S.arrow} onClick={() => goToBookmark('prev')}>
             <IoIosArrowBack />
           </button>
-          <p>{formatDate(bookmarkList[currentBookmarkIndex]?.saveTime)}</p>
+          <p>{formatDate(bookmarkList[currentBookmarkIndex]?.checkDate)}</p>
           <button type="button" className={S.arrow} onClick={() => goToBookmark('next')}>
             <IoIosArrowForward />
           </button>

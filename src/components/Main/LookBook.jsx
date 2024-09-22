@@ -45,7 +45,7 @@ function LookBook({ item }) {
   // 계절 판별
   const season = getSeason(month, temperature);
 
-  console.log('현재 계절은 ' + season + '입니다.');
+  // console.log('현재 계절은 ' + season + '입니다.');
 
   useEffect(() => {
     // 룩북 상세 페이지의 룩북
@@ -78,7 +78,7 @@ function LookBook({ item }) {
           // 계절에 맞는 아이템 필터링
           const seasonItems = items.filter((item) => item.lookBookSeason.includes(season));
 
-          console.log(seasonItems);
+          // console.log(seasonItems);
 
           // 해당 계절 중 랜덤으로 하나 선택
           if (seasonItems.length > 0) {
@@ -86,7 +86,7 @@ function LookBook({ item }) {
 
             setLookBookItems(randomItem);
 
-            console.log('선택된 착용샷:', randomItem);
+            // console.log('선택된 착용샷:', randomItem);
 
             // 착장샷의 items 배열을 관련 상품으로 설정
             if (randomItem.items && randomItem.items.length > 0) {

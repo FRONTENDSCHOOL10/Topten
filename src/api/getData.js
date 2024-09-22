@@ -9,17 +9,24 @@ export async function getUserInfo() {
   if (!localStorage.getItem('pb_auth')) {
     return { isUser: false };
   }
-  const uid = JSON.parse(localStorage.getItem('pb_auth')).token.id;
+  const uid = JSON.parse(localStorage.getItem('pb_auth')).record.id;
   const data = await pb.collection('users').getOne(uid);
 
   return { ...data, isUser: true };
 }
 
 //zustand으로 통일위해 생성
-export async function getUserData(uid) {
-  pb.autoCancellation(false);
-
-  const data = await pb.collection('users').getOne(uid);
-
-  return data;
-}
+export const getUserData = async (userId) => {
+  if (!userId) {
+    throw new Error('User ID is required');
+  }
+  try {
+    const data = await pb.collection('users').getOne(userId);
+    console.log('User Data:', data);
+    // 필요한 추가 작업 수행
+    return data;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    throw error;
+  }
+};

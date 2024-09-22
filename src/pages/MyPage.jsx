@@ -16,7 +16,6 @@ import useUserStore from '@/stores/userStore';
 import clsx from 'clsx';
 import S from './../styles/pages/MainPage.module.scss';
 
-import defaultImg from '/image/happiness.png';
 import { NavList, CommonModal } from '@/components';
 import loadToast from '@/api/loadToast';
 import toast from 'react-hot-toast';
@@ -29,7 +28,7 @@ const MyPage = () => {
     initUser,
     logout: storeLogout,
     profileImageUrl,
-    getUserFromDb,
+    setUserAuth,
   } = useUserStore();
   const { syncLikeLocalToOriginAndServer } = useLikeSync(user?.id);
   const [isActive, setIsActive] = useState(false);
@@ -54,7 +53,7 @@ const MyPage = () => {
         ...user,
         userPhoto: formData.get('userPhoto'),
       });
-      getUserFromDb({ model: 'model', token: updatedUser });
+      setUserAuth({ model: 'model', token: updatedUser });
       //setUser({ ...user, userPhoto: updatedUser.userPhoto }); // 업데이트된 프로필 이미지 설정
       loadToast('프로필 이미지 설정 완료', '📌');
     } catch (error) {

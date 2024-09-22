@@ -23,6 +23,8 @@ import styles from './Product.module.scss';
 import updateUserData from '../../api/updateData';
 import { useMemo } from 'react';
 
+import pb from '@/api/pocketbase';
+
 function Product() {
   const { user } = useGetUserInfo();
   const [formData, setFormData] = useState(
@@ -103,6 +105,9 @@ function Product() {
     const day = ('0' + date.getDate()).slice(-2);
     const today = `${year}-${month}-${day}`;
 
+    const weatherData = JSON.parse(localStorage.getItem('weatherData')) || {};
+    const skyCondition = weatherData.skyCondition || '';
+
     //기존 데이터에 옷 시간 uid 데이터를 추가
     const bookmarkItem = {
       ...formData,
@@ -112,6 +117,7 @@ function Product() {
       saveTime: getDate(),
       uid: user.id,
       checkDate: today,
+      weather: skyCondition, // Add weather data here
     };
 
     // 오늘 이전에 저장한 북마크 아이템 있는지 검사
@@ -134,6 +140,15 @@ function Product() {
     // db에 저장이 끝났다면 팝업이 사라지며 토스트가 호출
     setClickedModal(false);
     loadToast('북마크 저장 완료', '📌');
+
+    // Update bookmarks in localStorage
+    const userid = JSON.parse(localStorage.getItem('pb_auth')).record.id;
+    const bookmarks = await pb.collection('bookmarkItem').getFullList({
+      filter: `user = "${userid}"`,
+      sort: 'saveTime',
+    });
+
+    localStorage.setItem('bookMarks', JSON.stringify(bookmarks));
   };
 
   //추천 문구
