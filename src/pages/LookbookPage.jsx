@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 import { IoRefreshSharp } from 'react-icons/io5';
-import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation, NavLink } from 'react-router-dom';
 import { A11y, Keyboard, Pagination, Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
@@ -22,7 +22,7 @@ function LookbookPage() {
   const weatherData = JSON.parse(localStorage.getItem('weatherData'));
   const skyCondition = weatherData ? weatherData.skyCondition : '';
   const weatherIcon = getWeatherIcon(skyCondition);
-  
+
   // 전체 착용샷
   const [lookBookItems, setLookBookItems] = useState([]);
 
@@ -56,7 +56,6 @@ function LookbookPage() {
 
   console.log('현재 계절은 ' + season + '입니다.');
 
-
   useEffect(() => {
     const fetchLookBookItems = async () => {
       try {
@@ -85,13 +84,11 @@ function LookbookPage() {
           .sort(() => 0.5 - Math.random())
           .slice(0, 3);
 
-
         // 현재 착용샷 - 업데이트
         setCurrentSeasonItems({ seasonItems, allSeasonItems });
 
         // 전체 챡용샷 - 업데이트
         setLookBookItems([...seasonItems, ...allSeasonItems]);
-
 
         // 전체 착용샷 - 세션에 저장 --------------------------
         // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
@@ -99,7 +96,6 @@ function LookbookPage() {
           'lookBookItems',
           JSON.stringify([...seasonItems, ...allSeasonItems])
         );
-
       } catch (error) {
         console.error('착용샷 데이터를 가져오는 중 에러 발생:', error);
       }
@@ -107,7 +103,6 @@ function LookbookPage() {
 
     fetchLookBookItems();
   }, [season]);
-
 
   // 스와이퍼 네비게이션 버튼 -----------------------
   const goNext = () => {
@@ -118,12 +113,10 @@ function LookbookPage() {
     swiperRef.current.swiper.slidePrev();
   };
 
-
   // 착용샷 클릭 시 착용샷 상세 페이지로 이동 ------
   const handleImageClick = (item) => {
     navigate(`/lookbook/${item.id}`);
   };
-
 
   // 새로고침 기능 -----------------------------
   const handleRefresh = async () => {
@@ -149,29 +142,24 @@ function LookbookPage() {
         .sort(() => 0.5 - Math.random())
         .slice(0, 3);
 
-
       // 새로운 착용샷(계절용 + 범용) 업데이트
       const newLookBookItems = [...newSeasonItems, ...newAllSeasonItems];
 
       setLookBookItems(newLookBookItems);
 
-
       // 새로운 착용샷 세션에 저장
       // - 상세 페이지에서 돌아올 시 착용샷 유지를 위함
       sessionStorage.setItem('lookBookItems', JSON.stringify(newLookBookItems));
-
 
       // 첫 번째 슬라이드로 돌아오기
       if (swiperRef.current && swiperRef.current.swiper) {
         swiperRef.current.swiper.slideTo(0);
       }
-
     } catch (error) {
       console.error('새로고침 중 에러 발생:', error);
     }
   };
 
-  
   return isDetailPage ? (
     <Outlet />
   ) : (
@@ -214,10 +202,7 @@ function LookbookPage() {
         </div>
 
         <div className={styles.weatherIcon}>
-          <img
-            src={weatherIcon.src}
-            alt={weatherIcon.alt}
-          />
+          <img src={weatherIcon.src} alt={weatherIcon.alt} />
         </div>
 
         <div className={styles.subTitle}>
@@ -255,12 +240,14 @@ function LookbookPage() {
             {lookBookItems.length > 0 ? (
               lookBookItems.map((item) => (
                 <SwiperSlide key={item.id}>
-                  <img
-                    src={getPbImageURL(item, 'outfitImage')}
-                    alt={item.lookBookTitle}
-                    className={styles.outfitImage}
-                    onClick={() => handleImageClick(item)}
-                  />
+                  <NavLink to={`/lookbook/${item.id}`}>
+                    <img
+                      src={getPbImageURL(item, 'outfitImage')}
+                      alt={item.lookBookTitle}
+                      className={styles.outfitImage}
+                      onClick={() => handleImageClick(item)}
+                    />
+                  </NavLink>
                 </SwiperSlide>
               ))
             ) : (

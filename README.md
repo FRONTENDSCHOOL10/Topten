@@ -787,7 +787,6 @@
   - feat: 온도에 맞는 추천 문구 리턴 함수 생성
   - fix: pb관련 함수 묶음
 
-
 ### 9월 20일
 
 - 황선우
@@ -849,6 +848,7 @@
   -
 
 - 황선우
+
   - hotfix: 좋아요 페이지 리팩토링(PR #141)부분 재적용
     - (좋아요페이지) framer-motion을 통해, 정렬되는 애니메이션 추가
       - 좋아요 클릭 시
@@ -859,6 +859,8 @@
     - (의상카드매니저) 좋아요페이지에 맞도록 스타일 조정
   - refactor : costumeCard에 useMemo 적용하여 메모이제이션 처리
     - (좋아요 페이지) costumeCard를 localStorage에서 불러올 때, useMemo를 적용하도록 코드수정함.
+  - fix : 룩북페이지의 img를 NavLink로 감싸 focus 되도록 수정
+    - (룩북페이지) : img를 NavLink로 감싸 focus 되도록 수정
 
 - 함정민
   - style: 전반적인 스타일 교정
