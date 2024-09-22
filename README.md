@@ -840,3 +840,5 @@
     - (좋아요페이지) 좋아요 카드 정렬로직 수정
       - 이제 기온별 필터링버튼이 제대로 적용됩니다.
     - (의상카드매니저) 좋아요페이지에 맞도록 스타일 조정
+  - refactor : costumeCard에 useMemo 적용하여 메모이제이션 처리
+    - (좋아요 페이지) costumeCard를 localStorage에서 불러올 때, useMemo를 적용하도록 코드수정함.
