@@ -10,7 +10,7 @@ import { validatePassword } from '../api/validation';
 import { WARNING } from '../data/constant';
 
 import { Toaster } from 'react-hot-toast';
-import { useUserStore } from '@/stores';
+import useUserStore from '@/stores/userStore';
 import loadToast from '@/api/loadToast';
 
 const ChangePasswordPage = () => {

@@ -6,7 +6,7 @@ import { COLORS } from '../data/constant';
 import Button from '../components/Button/Button';
 import updateUserData from '../api/updateData';
 import { Toaster } from 'react-hot-toast';
-import { useUserStore } from '@/stores';
+import useUserStore from '@/stores/userStore';
 import loadToast from '@/api/loadToast';
 
 const ChangeColorPage = () => {

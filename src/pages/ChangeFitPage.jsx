@@ -8,7 +8,7 @@ import updateUserData from '../api/updateData';
 
 import { Toaster } from 'react-hot-toast';
 import loadToast from '@/api/loadToast';
-import { useUserStore } from '@/stores';
+import useUserStore from '@/stores/userStore';
 
 const ChangeFitPage = () => {
   const { user } = useUserStore();
