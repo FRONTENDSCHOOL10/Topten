@@ -4,18 +4,11 @@
   align-items: center;
 }
 
-.flexAlbum {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; /* 카드 간 간격을 균일하게 유지 */
-  gap: 20px 0px; /* 세로 간격 20px, 가로 간격 0px */
-}
-
-.cardWrapper {
-  // width: 80%;
-}
-.cardWrapperAlbum {
-  width: 50%;
+.gridAlbum {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px 0px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .gridOOTD {

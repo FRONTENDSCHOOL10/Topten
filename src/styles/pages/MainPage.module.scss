@@ -32,7 +32,7 @@
 
   .img__container {
     position: relative;
-    height:90px;
+    height: 90px;
 
     div {
       width: 90px;
@@ -60,8 +60,8 @@
       justify-content: center;
       align-items: center;
 
-      img{
-        width:15px;
+      img {
+        width: 15px;
       }
     }
   }
@@ -119,18 +119,17 @@
 
     label {
       @include font-style(14px, 400, $--black);
-
       width: 100%;
       padding: 15px 0;
     }
 
-    img{
-      width:16px;
+    img {
+      width: 16px;
     }
 
-    button{
-      background-color:transparent;
-      border:0;
+    button {
+      background-color: transparent;
+      border: 0;
     }
   }
 }
