@@ -7,10 +7,10 @@ export default async function createData(formData) {
     date: formData.date,
     saveTime: formData.saveTime,
     comment: formData.comment,
-    upperItems: formData.upperItems.map((item) => item.id),
-    lowerItems: formData.lowerItems.map((item) => item.id),
+    upperItems: formData.upperItems,
+    lowerItems: formData.lowerItems,
     user: formData.uid,
-    rate: 0,
+    rate: formData.rate,
     checkDate: formData.checkDate,
   };
 

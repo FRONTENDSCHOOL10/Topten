@@ -21,6 +21,7 @@ import useLikeStore from './../../stores/likeStore';
 import { BookmarkModal, Button, CommonModal, CostumeCard } from '@/components';
 import styles from './Product.module.scss';
 import updateUserData from '../../api/updateData';
+import { useMemo } from 'react';
 
 function Product() {
   const { user } = useGetUserInfo();
@@ -68,8 +69,8 @@ function Product() {
     return filteredItems.slice(0, 2);
   };
 
-  const filteredUpper = makeFilteredItem('상의');
-  const filteredLower = makeFilteredItem('하의');
+  const filteredUpper = useMemo(() => makeFilteredItem('상의'), [temperature, activeRandom]);
+  const filteredLower = useMemo(() => makeFilteredItem('하의'), [temperature, activeRandom]);
 
   // 새로고침 버튼 클릭 시 다음 아이템으로 새로고침
   const refreshProductItem = () => {
@@ -90,6 +91,10 @@ function Product() {
     setFormData((prev) => ({ ...prev, comment: value }));
   };
 
+  const handleGetStar = (value) => {
+    setFormData((prev) => ({ ...prev, rate: value }));
+  };
+
   // 북마크 저장 함수
   const handleSave = async () => {
     const date = new Date();
@@ -101,8 +106,8 @@ function Product() {
     //기존 데이터에 옷 시간 uid 데이터를 추가
     const bookmarkItem = {
       ...formData,
-      upperItems: filteredUpper,
-      lowerItems: filteredLower,
+      upperItems: filteredUpper.map((item) => item.id),
+      lowerItems: filteredLower.map((item) => item.id),
       date: getDate(),
       saveTime: getDate(),
       uid: user.id,
@@ -151,6 +156,7 @@ function Product() {
           onClick={() => setClickedModal(false)}
           onChange={handleChange}
           onEdit={handleSave}
+          handleGetStar={handleGetStar}
         />
       ) : (
         ''
