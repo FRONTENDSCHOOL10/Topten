@@ -2,7 +2,7 @@ import pb from './pocketbase';
 
 export default async function createData(formData) {
   const newData = {
-    weather: formData.weatherText,
+    weather: formData.skyCondition,
     address: formData.address,
     date: formData.date,
     saveTime: formData.saveTime,

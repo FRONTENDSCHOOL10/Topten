@@ -112,6 +112,7 @@ function Product() {
       saveTime: getDate(),
       uid: user.id,
       checkDate: today,
+      weather: formData.skyCondition,
     };
 
     // 오늘 이전에 저장한 북마크 아이템 있는지 검사
