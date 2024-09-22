@@ -836,3 +836,14 @@
   - fix: select 조건부 랜더링 추가
   - fix: user 정보 zustand로 변경 및 props 추가
   - fix: 회원가입 완료 후 인트로 페이지로 이동
+
+### 9월 22일
+
+- 곽승헌
+  - fix: 별점 value 수정
+  - fix: 북마크 별점 읽기 위해서 props와 useEffect 추가
+  - feat: 북마크 별점 저장을 위한 함수 생성
+  - feat: 페이지 언마운트 시 timeout 삭제를 위한 useEffect 추가
+  - fix: 토스트 활성화
+  - feat: 토스트 반복 나타남 현상 해결
+  - fix: getInitTemperature 함수 조건 수정
