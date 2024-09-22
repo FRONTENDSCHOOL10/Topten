@@ -17,12 +17,12 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      framer-motion:
+        specifier: ^11.5.6
+        version: 11.5.6(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       kind-tiger:
         specifier: ^1.0.1
         version: 1.0.1
-      lazyload:
-        specifier: 2.0.0-rc.2
-        version: 2.0.0-rc.2
       motion:
         specifier: ^10.18.0
         version: 10.18.0
@@ -1450,6 +1450,20 @@ packages:
     resolution: {integrity: sha512-GMBAbW9antB8iZRHLoGw0b3HANt57diZYFO/HL1JGIC1MjKrdmhxvrJbupnVvpys0zsz7yBApXdQyfepKly2kA==}
     engines: {node: '>=0.10.0'}
 
+  framer-motion@11.5.6:
+    resolution: {integrity: sha512-JMwUpAxv/DWgul9vPgX0ElKn0G66sUc6O9tOXsYwn3zxwvhxFljSXC0XT2QCzuTYBshwC8nyDAa1SYcV0Ldbhw==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
     engines: {node: '>= 0.6'}
@@ -1932,9 +1946,6 @@ packages:
 
   kind-tiger@1.0.1:
     resolution: {integrity: sha512-rBKnYqU+0uqPxdL8DxdUun7AVFWlnfQxQa3JVIftxQ298WQUKcZWbRc18geNOvmRESyO+A+qVJor+x9YEqv4dQ==}
-
-  lazyload@2.0.0-rc.2:
-    resolution: {integrity: sha512-v3OKwYrKHX09eAyeAmkpvVCF5qWZo8rxERT9AVOUFaRwlTIuCyMYVBfHYSra1uyBdKDEHnUkvpZTLgNWI9Y7lA==}
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -4606,6 +4617,14 @@ snapshots:
     dependencies:
       map-cache: 0.2.2
 
+  framer-motion@11.5.6(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      tslib: 2.7.0
+    optionalDependencies:
+      '@emotion/is-prop-valid': 1.2.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   fresh@0.5.2: {}
 
   from@0.1.7: {}
@@ -5094,8 +5113,6 @@ snapshots:
   kind-of@6.0.3: {}
 
   kind-tiger@1.0.1: {}
-
-  lazyload@2.0.0-rc.2: {}
 
   levn@0.4.1:
     dependencies:
