@@ -14,7 +14,7 @@
 
 |     곽승헌     |     권보령     |     함정민     |     황선우     |
 |:--------------:|:--------------:|:--------------:|:--------------:|
-| **조장** <br/> (Team Master) | **문서 기록 마스터** <br/> (Notion, github Wiki) | **디자인 마스터** <br/> (Design Master) | **스크럼 마스터** <br/> (Scrum Master) |
+| <img src="https://github.com/user-attachments/assets/60c1f364-0639-48f2-ae15-0ad942755318" width="150" width="150" /> <br/> **조장** <br/> (Team Master) | <img src="https://github.com/user-attachments/assets/65b7d205-c0f6-4d82-908e-22c850c7e36c"  width="150" width="70" /> <br/> **문서 기록 마스터** <br/> (Notion, github Wiki) | <img src="https://github.com/user-attachments/assets/6683edd3-811f-4f4c-abea-c2787d93ae0e" width="150" width="150" /> <br/> **디자인 마스터** <br/> (Design Master) | <img src="https://github.com/user-attachments/assets/4ad0a3c7-ede1-4c28-ab61-f481702ec757" width="150" width="80" /> <br/> **스크럼 마스터** <br/> (Scrum Master) |
 |       INTP      |       ISTJ      |       ENFP      |       INTJ      |
 | [Github](https://github.com/nada77777) | [Github](https://github.com/kwonboryong) | [Github](https://github.com/hammadam) | [Github](https://github.com/EraMorgett4) |
 
