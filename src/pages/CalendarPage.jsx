@@ -29,7 +29,7 @@ const StyledCalendar = styled(Calendar)`
   .react-calendar__month-view__days__day {
     font-family: Pretendard;
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
     height: 39px;
   }
   .react-calendar__tile {
