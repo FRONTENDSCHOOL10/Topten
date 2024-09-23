@@ -195,9 +195,9 @@ const LikedPage = () => {
         <CommonModal
           isOpen={isConfirmModalOpen}
           onClose={cancelToggleLike}
-          title={['정말 지우시겠습니까?']}
-          firstActionText="취소"
-          secondActionText="확인"
+          title={['북마크를', '삭제하시겠습니까?']}
+          firstActionText="앗 실수!"
+          secondActionText="삭제할래요"
           onFirstAction={cancelToggleLike}
           onSecondAction={confirmToggleLike}
         />
