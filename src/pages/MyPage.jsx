@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast';
 
 import pb from '../api/pocketbase';
 import updateUserData from '../api/updateData';
-// import loadToast from '../api/loadToast';
 
 import { NAV } from '../data/constant';
 
@@ -53,12 +52,15 @@ const MyPage = () => {
         ...user,
         userPhoto: formData.get('userPhoto'),
       });
-      setUserAuth({ model: 'model', token: updatedUser });
+
+      setUserAuth({ record: updatedUser, token: user.token });
       //setUser({ ...user, userPhoto: updatedUser.userPhoto }); // 업데이트된 프로필 이미지 설정
       loadToast('프로필 이미지 설정 완료', '📌');
+      setIsActive(false);
     } catch (error) {
       console.error('프로필 이미지 업데이트 중 오류 발생:', error);
       loadToast('프로필 이미지 업데이트 실패', '❌');
+      setIsActive(false);
     }
   };
 
