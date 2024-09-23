@@ -871,3 +871,4 @@
     - record와 token 값이 뒤바뀌어있던 관련 함수들 전부 수정
     - (마이페이지) 사진 업로드 후 토글이 닫히도록 updateProfileImage 함수 수정
     - login 함수 추가 및 logout 함수 수정
+    - (메인페이지) mainAPI내에 likeList fetching 부분의 token으로 오기되어있던 부분 record로 수정
