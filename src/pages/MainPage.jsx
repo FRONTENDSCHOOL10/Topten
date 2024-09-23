@@ -11,7 +11,7 @@ import { loadingComments } from '@/data/constant';
 function MainPage() {
   const [user, setUser] = useState(null);
   const [costumeCards, setCostumeCards] = useState([]);
-  const { initLikeOrigin, initLikeLocal } = useLikeStore();
+  const { initLikeOrigin, initLikeLocal, likeOrigin, likeLocal } = useLikeStore();
   const { loading: weatherLoading, initFetching } = useWeatherStore();
   const [currentCommentIndex, setCurrentCommentIndex] = useState(0);
   const intervalIdRef = useRef(null);
@@ -52,14 +52,23 @@ function MainPage() {
         const parsedUser = JSON.parse(pbAuth);
         setUser(parsedUser);
 
-        if (parsedUser && parsedUser.token?.id) {
+        console.log(parsedUser);
+
+        if (parsedUser && parsedUser.record?.id) {
           const likeListResponse = await pb.collection('likeList').getFullList({
-            filter: `owner = "${parsedUser.token.id}"`,
+            filter: `owner = "${parsedUser.record.id}"`,
           });
 
+          console.log('likeListResponse: ', likeListResponse);
+          if (likeListResponse) {
+            console.log('length:', likeListResponse.length);
+          }
+
           const likedIds = likeListResponse.map((item) => item.costumeCard).flat();
-          initLikeOrigin(likedIds);
-          initLikeLocal();
+          if (!likeOrigin.length && !likeLocal.length) {
+            initLikeOrigin(likedIds);
+            initLikeLocal();
+          }
         }
       }
 
@@ -77,7 +86,6 @@ function MainPage() {
       }
 
       const currentTime = formatDate(new Date());
-      console.log(currentTime);
 
       localStorage.setItem('lastAccessTime', currentTime);
 
@@ -147,9 +155,9 @@ function MainPage() {
       return () => clearTimeout(timer);
     } else {
       setShowLoader(true);
-      console.log('loadingComments:', loadingComments);
-      console.log('currentCommentIndex:', currentCommentIndex);
-      console.log('currentComment:', loadingComments[currentCommentIndex]);
+      // console.log('loadingComments:', loadingComments);
+      // console.log('currentCommentIndex:', currentCommentIndex);
+      // console.log('currentComment:', loadingComments[currentCommentIndex]);
     }
   }, [isLoading]);
   /**************************************************************************************************************/

@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast';
 
 import pb from '../api/pocketbase';
 import updateUserData from '../api/updateData';
-// import loadToast from '../api/loadToast';
 
 import { NAV } from '../data/constant';
 
@@ -53,12 +52,15 @@ const MyPage = () => {
         ...user,
         userPhoto: formData.get('userPhoto'),
       });
-      setUserAuth({ model: 'model', token: updatedUser });
+
+      setUserAuth({ record: updatedUser, token: user.token });
       //setUser({ ...user, userPhoto: updatedUser.userPhoto }); // 업데이트된 프로필 이미지 설정
       loadToast('프로필 이미지 설정 완료', '📌');
+      setIsActive(false);
     } catch (error) {
       console.error('프로필 이미지 업데이트 중 오류 발생:', error);
       loadToast('프로필 이미지 업데이트 실패', '❌');
+      setIsActive(false);
     }
   };
 
@@ -70,10 +72,8 @@ const MyPage = () => {
   const handleLogout = async () => {
     try {
       await syncLikeLocalToOriginAndServer(); // 로그아웃 시 서버에 like-origin 업데이트
-
       pb.authStore.clear(); // 로그아웃 시 스토리지에서 pb_auth 삭제
-
-      storeLogout();
+      await storeLogout();
       navigate('/');
     } catch (error) {
       console.error('로그아웃 중 오류 발생:', error);

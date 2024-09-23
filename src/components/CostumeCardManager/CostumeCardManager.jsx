@@ -10,9 +10,11 @@ import 'swiper/css/grid';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import S from './CostumeCardManager.module.scss';
 
-const CostumeCardManager = ({ viewType, costumeCards }) => {
+const CostumeCardManager = ({ viewType, costumeCards, onLikeToggle }) => {
   // 수정된 부분: likeList를 likeLocal로 변경하고 toggleLike를 toggleLikeLocal로 변경
   const { likeLocal, toggleLikeLocal } = useLikeStore();
+
+  const handleToggle = onLikeToggle || toggleLikeLocal;
 
   // 좋아요 상태와 카드 데이터를 메모이제이션
   const memoizedCards = useMemo(() => {
@@ -69,7 +71,7 @@ const CostumeCardManager = ({ viewType, costumeCards }) => {
                   record={record}
                   imageUrl={imageUrl}
                   isLiked={likeLocal.includes(record.id)}
-                  onLikeToggle={() => toggleLikeLocal(record.id)}
+                  onLikeToggle={() => handleToggle(record.id)}
                 />
               </motion.div>
             );
@@ -96,7 +98,7 @@ const CostumeCardManager = ({ viewType, costumeCards }) => {
                 record={record}
                 imageUrl={imageUrl}
                 isLiked={likeLocal.includes(record.id)}
-                onLikeToggle={() => toggleLikeLocal(record.id)}
+                onLikeToggle={() => handleToggle(record.id)}
               />
             </div>
           );
