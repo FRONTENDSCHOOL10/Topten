@@ -24,17 +24,19 @@ export const useLikeSync = (userId) => {
   const syncLikeLocalToOriginAndServer = useCallback(async () => {
     console.log('syncLikeLocalToOriginAndServer가 실행됨');
     if (!userId) return;
+    console.log('try구문 진입');
     try {
       const updatedLikeList = [...new Set(likeLocal)]; // 중복 제거 후 처리
 
       initLikeOrigin(updatedLikeList); // 업데이트된 likeLocal을 likeOrigin으로 저장
+      console.log('initLikeOrigin실행됨');
 
       // 서버에 업데이트
       const existingLikeList = await pb
         .collection('likeList')
-        .getFirstListItem(`owner="${userId}"`);
+        .getFullList({ filter: `owner="${userId}"` });
       console.log('existingLikeList in syncLikeLocalToOriginAndServer', existingLikeList);
-      if (existingLikeList) {
+      if (existingLikeList.length > 0) {
         await pb.collection('likeList').update(existingLikeList.id, {
           owner: userId,
           costumeCard: updatedLikeList,

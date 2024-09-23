@@ -19,13 +19,16 @@ const LikedPage = () => {
     return JSON.parse(localStorage.getItem('costumeCards')) || [];
   }, []);
 
-  // likeOrigin을 zustand에서 가져옴
-  const { likeLocal } = useLikeStore();
+  // likelocal을 zustand에서 가져옴
+  const { likeLocal, toggleLikeLocal } = useLikeStore();
 
   // 기온별 필터 상태 관리
   const [temperature, setTemperature] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택된 상위 카테고리
   const [selectedSubCategory, setSelectedSubCategory] = useState(null); // 선택된 하위 카테고리
+
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [cardToToggle, setCardToToggle] = useState(null);
 
   // 날씨 필터 버튼 클릭 시 temperature 업데이트
   const handleTemperatureClick = (temp) => {
@@ -80,6 +83,27 @@ const LikedPage = () => {
       setIsModalOpen(false);
     }
   }, [isLoggedIn]);
+
+  // 좋아요 버튼 클릭 시 모달을 여는 함수
+  const handleLikeToggle = (cardId) => {
+    setCardToToggle(cardId);
+    setIsConfirmModalOpen(true);
+  };
+
+  // 모달에서 확인 버튼을 눌렀을 때 호출되는 함수
+  const confirmToggleLike = () => {
+    if (cardToToggle) {
+      toggleLikeLocal(cardToToggle);
+      setCardToToggle(null);
+      setIsConfirmModalOpen(false);
+    }
+  };
+
+  // 모달에서 취소 버튼을 눌렀을 때 호출되는 함수
+  const cancelToggleLike = () => {
+    setCardToToggle(null);
+    setIsConfirmModalOpen(false);
+  };
 
   return (
     <div className="wrapComponent">
@@ -159,9 +183,24 @@ const LikedPage = () => {
           </div>
           {/* CostumeCardManager를 사용한 좋아요한 카드 리스트 표시 */}
           <div className={S.ccmWrapper}>
-            <CostumeCardManager viewType="앨범" costumeCards={filteredLikeCards} />
+            <CostumeCardManager
+              viewType="앨범"
+              costumeCards={filteredLikeCards}
+              onLikeToggle={handleLikeToggle}
+            />
           </div>
         </div>
+
+        {/* 좋아요 취소 확인 모달 */}
+        <CommonModal
+          isOpen={isConfirmModalOpen}
+          onClose={cancelToggleLike}
+          title={['정말 지우시겠습니까?']}
+          firstActionText="취소"
+          secondActionText="확인"
+          onFirstAction={cancelToggleLike}
+          onSecondAction={confirmToggleLike}
+        />
       </div>
     </div>
   );
