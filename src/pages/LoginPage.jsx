@@ -8,7 +8,7 @@ import { validatePassword, validateEmail } from './../api/validation';
 import useUserStore from '@/stores/userStore';
 
 pb.authStore.save = (model, token) => {
-  const authData = { token, model };
+  const authData = { model, token };
 
   sessionStorage.setItem('pb_auth', JSON.stringify(authData));
   localStorage.setItem('pb_auth', JSON.stringify(authData));
