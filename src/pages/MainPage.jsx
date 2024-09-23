@@ -52,9 +52,9 @@ function MainPage() {
         const parsedUser = JSON.parse(pbAuth);
         setUser(parsedUser);
 
-        if (parsedUser && parsedUser.token?.id) {
+        if (parsedUser && parsedUser.record?.id) {
           const likeListResponse = await pb.collection('likeList').getFullList({
-            filter: `owner = "${parsedUser.token.id}"`,
+            filter: `owner = "${parsedUser.record.id}"`,
           });
 
           const likedIds = likeListResponse.map((item) => item.costumeCard).flat();
@@ -77,7 +77,6 @@ function MainPage() {
       }
 
       const currentTime = formatDate(new Date());
-      console.log(currentTime);
 
       localStorage.setItem('lastAccessTime', currentTime);
 
@@ -147,9 +146,9 @@ function MainPage() {
       return () => clearTimeout(timer);
     } else {
       setShowLoader(true);
-      console.log('loadingComments:', loadingComments);
-      console.log('currentCommentIndex:', currentCommentIndex);
-      console.log('currentComment:', loadingComments[currentCommentIndex]);
+      // console.log('loadingComments:', loadingComments);
+      // console.log('currentCommentIndex:', currentCommentIndex);
+      // console.log('currentComment:', loadingComments[currentCommentIndex]);
     }
   }, [isLoading]);
   /**************************************************************************************************************/
