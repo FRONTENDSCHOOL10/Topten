@@ -72,10 +72,8 @@ const MyPage = () => {
   const handleLogout = async () => {
     try {
       await syncLikeLocalToOriginAndServer(); // 로그아웃 시 서버에 like-origin 업데이트
-
       pb.authStore.clear(); // 로그아웃 시 스토리지에서 pb_auth 삭제
-
-      storeLogout();
+      await storeLogout();
       navigate('/');
     } catch (error) {
       console.error('로그아웃 중 오류 발생:', error);

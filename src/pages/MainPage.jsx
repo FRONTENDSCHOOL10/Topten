@@ -11,7 +11,7 @@ import { loadingComments } from '@/data/constant';
 function MainPage() {
   const [user, setUser] = useState(null);
   const [costumeCards, setCostumeCards] = useState([]);
-  const { initLikeOrigin, initLikeLocal } = useLikeStore();
+  const { initLikeOrigin, initLikeLocal, likeOrigin, likeLocal } = useLikeStore();
   const { loading: weatherLoading, initFetching } = useWeatherStore();
   const [currentCommentIndex, setCurrentCommentIndex] = useState(0);
   const intervalIdRef = useRef(null);
@@ -52,14 +52,23 @@ function MainPage() {
         const parsedUser = JSON.parse(pbAuth);
         setUser(parsedUser);
 
+        console.log(parsedUser);
+
         if (parsedUser && parsedUser.record?.id) {
           const likeListResponse = await pb.collection('likeList').getFullList({
             filter: `owner = "${parsedUser.record.id}"`,
           });
 
+          console.log('likeListResponse: ', likeListResponse);
+          if (likeListResponse) {
+            console.log('length:', likeListResponse.length);
+          }
+
           const likedIds = likeListResponse.map((item) => item.costumeCard).flat();
-          initLikeOrigin(likedIds);
-          initLikeLocal();
+          if (!likeOrigin.length && !likeLocal.length) {
+            initLikeOrigin(likedIds);
+            initLikeLocal();
+          }
         }
       }
 

@@ -3,6 +3,7 @@ import getPbImageURL from '@/api/getPbImageURL';
 import userLoginImg from '/image/user-login.png';
 import { getUserData } from '@/api/getData';
 import pb from '@/api/pocketbase';
+import useLikeStore from './likeStore';
 
 const useUserStore = create((set) => ({
   user: null,
@@ -58,7 +59,7 @@ const useUserStore = create((set) => ({
       console.log('Login successful:', authData);
       localStorage.setItem('pb_auth', JSON.stringify(authData));
       sessionStorage.setItem('pb_auth', JSON.stringify(authData));
-      console.log(pb.authStore.expiration);
+      // console.log(pb.authStore.expiration);
 
       // Determine profile image URL
       const profileImageUrl = authData.record.userPhoto
@@ -89,6 +90,9 @@ const useUserStore = create((set) => ({
     localStorage.removeItem('pb_auth');
     localStorage.removeItem('bookMarks');
     localStorage.removeItem('bookmarkItem');
+
+    const { resetLikeLists } = useLikeStore.getState();
+    resetLikeLists();
 
     set({
       user: null,

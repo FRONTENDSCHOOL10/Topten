@@ -24,27 +24,36 @@ export const useLikeSync = (userId) => {
   const syncLikeLocalToOriginAndServer = useCallback(async () => {
     console.log('syncLikeLocalToOriginAndServer가 실행됨');
     if (!userId) return;
+    console.log('try구문 진입');
     try {
       const updatedLikeList = [...new Set(likeLocal)]; // 중복 제거 후 처리
 
       initLikeOrigin(updatedLikeList); // 업데이트된 likeLocal을 likeOrigin으로 저장
+      console.log('initLikeOrigin실행됨');
 
       // 서버에 업데이트
       const existingLikeList = await pb
         .collection('likeList')
-        .getFirstListItem(`owner="${userId}"`);
+        .getFullList({ filter: `owner="${userId}"` });
       console.log('existingLikeList in syncLikeLocalToOriginAndServer', existingLikeList);
-      if (existingLikeList) {
-        await pb.collection('likeList').update(existingLikeList.id, {
+      if (existingLikeList.length > 0 && existingLikeList[0].costumeCard) {
+        const existingItem = existingLikeList[0]; // 첫 번째 항목 가져오기
+
+        // 기존 costumeCard와 updatedLikeList 병합 및 중복 제거
+        // const updatedCards = [...new Set([...existingItem.costumeCard, ...updatedLikeList])];
+
+        await pb.collection('likeList').update(existingItem.id, {
           owner: userId,
-          costumeCard: updatedLikeList,
+          costumeCard: updatedLikeList, // 병합된 카드 리스트로 업데이트
         });
         console.log('updatedLikeList in syncLikeLocalToOriginAndServer', updatedLikeList);
       } else {
+        // 만약 기존 항목이 없거나 costumeCard가 없을 때 새로 생성
         await pb.collection('likeList').create({
           owner: userId,
           costumeCard: updatedLikeList,
         });
+        console.log('New likeList created with updatedLikeList:', updatedLikeList);
       }
 
       resetLikeLists(); // 상태 초기화 (likeLocal, likeOrigin)
