@@ -1,0 +1,38 @@
+@import './../../styles/utils/theme';
+@import './../../styles/utils/utils';
+
+.editHeader {
+  div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 24px 0;
+
+    .icon {
+      cursor: pointer;
+      width: 14px;
+      height: 14px;
+      transform: rotate(180deg);
+
+      img {
+        display: block;
+      }
+    }
+
+    .navText {
+      @include font-style(14px, 400, $--gray-custom-600);
+    }
+  }
+
+  .mainText {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .description {
+    @include font-style(14px, 400, $--gray-custom-600);
+    letter-spacing: -0.48px;
+    margin-bottom: 30px;
+    padding: 12px 0 0;
+  }
+}

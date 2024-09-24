@@ -1,0 +1,31 @@
+@import './../utils/theme';
+@import './../utils/utils';
+
+.user {
+  font-family: Pretendard;
+  font-style: normal;
+  line-height: normal;
+  border-bottom: 1px solid var(--gray-600, #919191);
+  padding: 30px 0;
+
+  &:first-child{
+    padding-top: 10px;
+  }
+  .userName {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 12px;
+  }
+  .userInfo {
+    color: var(--gray-600, #919191);
+    font-size: 14px;
+    font-weight: 400;
+    p {
+      padding: 2px 0;
+    }
+  }
+
+  &:last-child {
+    border: 0;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "icons": [
+    { "src": "/image/sc-favicon.png", "type": "image/png", "sizes": "32x32" },
+    { "src": "/image/sc-favicon-192.png", "type": "image/png", "sizes": "192x192" },
+    {
+      "src": "/image/sc-favicon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    { "src": "/image/sc-favicon-512.png", "type": "image/png", "sizes": "512x512" }
+  ],
+  "name": "StyleCast",
+  "short_name": "StyleCast",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
+}

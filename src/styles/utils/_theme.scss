@@ -1,0 +1,75 @@
+// 1. CSS 커스텀 속성 (root에서 정의)
+:root {
+  --white: #fff;
+  --black: #000;
+
+  --gray-50: #f3f3f4;
+  --gray-100: #e5e6e8;
+  --gray-200: #cbcdd1;
+  --gray-300: #b1b4ba;
+  --gray-400: #979ba3;
+  --gray-500: #7d828c;
+  --gray-600: #919191;
+  --gray-700: #4b4e54;
+  --gray-800: #323438;
+  --gray-900: #1f1f1f;
+  --gray-950: #0d0d0e;
+
+  --accent-color: #440fbf;
+
+  --background: var(--gray-900);
+  --foreground: var(--gray-50);
+  --border-color: var(--gray-700);
+  --border-thickness: 0.5px;
+
+  --rounded-none: 0;
+  --rounded-xs: 2px;
+  --rounded-sm: 4px;
+  --rounded-md: 6px;
+  --rounded-lg: 8px;
+  --rounded-full: 9999px;
+
+  --primary-color: #ffbc17;
+  --gray-custom-100: #f5f5f5;
+  --gray-custom-300: #bdbdbd;
+  --gray-custom-600: #919191;
+  --red-100: #ff5050;
+  --green-100: #1bb668;
+}
+
+// 2. Sass 변수로 CSS 커스텀 속성 활용 (변수 이름을 $--으로 변경)
+$--white: var(--white);
+$--black: var(--black);
+
+$--gray-50: var(--gray-50);
+$--gray-100: var(--gray-100);
+$--gray-200: var(--gray-200);
+$--gray-300: var(--gray-300);
+$--gray-400: var(--gray-400);
+$--gray-500: var(--gray-500);
+$--gray-600: var(--gray-600);
+$--gray-700: var(--gray-700);
+$--gray-800: var(--gray-800);
+$--gray-900: var(--gray-900);
+$--gray-950: var(--gray-950);
+
+$--accent-color: var(--accent-color);
+
+$--background: var(--background);
+$--foreground: var(--foreground);
+$--border-color: var(--border-color);
+$--border-thickness: var(--border-thickness);
+
+$--rounded-none: var(--rounded-none);
+$--rounded-xs: var(--rounded-xs);
+$--rounded-sm: var(--rounded-sm);
+$--rounded-md: var(--rounded-md);
+$--rounded-lg: var(--rounded-lg);
+$--rounded-full: var(--rounded-full);
+
+$--primary-color: var(--primary-color);
+$--gray-custom-100: var(--gray-custom-100);
+$--gray-custom-300: var(--gray-custom-300);
+$--gray-custom-600: var(--gray-custom-600);
+$--red-100: var(--red-100);
+$--green-100: var(--green-100);

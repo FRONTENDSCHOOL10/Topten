@@ -1,0 +1,91 @@
+@import './../utils/theme';
+@import './../utils/utils';
+
+
+.top__title{
+  margin-bottom:30px;
+}
+
+.top__title--big{
+  @include font-style(20px, 700, $--black);
+}
+.top__title--sm{
+  @include font-style(14px, 400, $--gray-custom-600);
+
+  margin-top:12px;
+  line-height:1.4;
+}
+.loginForm > div:nth-child(2){
+  margin-bottom:0 !important;
+}
+
+.showPasswordWrap{
+  display:flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top:4px;
+  margin-bottom:30px;
+  text-align:right;
+
+  input[type=checkbox]{
+    margin-right:6px;
+
+    &:focus{
+      outline:2px solid $--black;
+    }
+  }
+}
+
+.buttonArea{
+  display:flex;
+  justify-content: center;
+}
+
+.joinGroup{
+  @include font-style(14px, 500, $--gray-custom-600);
+
+  display: flex;
+  justify-content: center;
+  margin-top:50px;
+  
+  a{
+    text-decoration:none;
+    color:$--gray-custom-600;
+  }
+
+  .distinguished{
+    display:inline-block;
+    padding:0 16px;
+  }
+}
+
+.redirecting{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  position:fixed;
+  top:0%;
+  left:0%;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.4);
+
+  .pop{
+    position:absolute;
+    top:50%;
+    left:50%;
+    translate:-50% -50%;
+    width:60%;
+    max-width:280px;
+    padding:30px;
+    border-radius:10px;
+    background:$--white;
+  }
+
+  p{
+    @include font-style(16px, 400, $--black);
+
+    line-height:1.4;
+    text-align:center;
+  }
+}

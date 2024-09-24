@@ -1,0 +1,12 @@
+.loader {
+  position: absolute;
+  margin: 2em auto;
+  height: 100px;
+  width: 20%;
+  text-align: center;
+  display: inline-block;
+
+  svg rect {
+    fill: #ff6700;
+  }
+}

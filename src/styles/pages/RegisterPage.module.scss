@@ -1,0 +1,129 @@
+@import './../utils/theme';
+@import './../utils/utils';
+
+.wrapComponent {
+  font-family: Pretendard;
+  font-family: Pretendard;
+  color: var(--black, #000);
+  //padding: 30px 12px;
+
+  .title {
+    @include font-style(20px, 700, $--black);
+  }
+
+  .description {
+    @include font-style(14px, 400, $--gray-custom-600);
+    line-height: 1.4;
+    letter-spacing: -0.48px;
+    padding-top: 12px;
+  }
+
+  .ootd__info {
+    @include font-style(14px, 400, $--gray-custom-600);
+    line-height: 1.4;
+    letter-spacing: -0.48px;
+    padding: 72px 0 30px 0;
+  }
+
+  .radio__container {
+    width: 288px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--gray-custom-300);
+
+    .label {
+      font-weight: 700;
+    }
+
+    .mark {
+      color: var(--primary-color);
+    }
+
+    .radio__inner {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding-top: 5px;
+
+      div {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      input:focus-visible {
+        outline: 2px solid black;
+      }
+    }
+  }
+
+  .registerInput {
+    padding-top: 30px;
+  }
+
+  .select__container {
+    width: 288px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--gray-custom-300);
+
+    .select__title {
+      padding-top: 30px;
+      font-weight: 700;
+    }
+  }
+
+  .policy__container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    input:focus-visible {
+      outline: 2px solid black;
+    }
+
+    div {
+      display: flex;
+      gap: 5px;
+    }
+
+    .policy__title {
+      padding-top: 72px;
+      @include font-style(14px, 400, $--gray-custom-600);
+      line-height: 1.4;
+      letter-spacing: -0.48px;
+    }
+
+    .policyGr {
+      display: flex;
+      align-items: center;
+    }
+
+    .checkAll__title {
+      @include font-style(18px, 700, $--black);
+      line-height: 110%;
+      letter-spacing: -0.56px;
+    }
+  }
+
+  .button__container {
+    padding: 30px 0;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type='radio']:checked {
+  background-color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}

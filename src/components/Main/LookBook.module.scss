@@ -1,0 +1,46 @@
+@import '../../styles/utils/theme';
+@import '../../styles/utils/utils';
+
+.container {
+  margin-top: 17px;
+  border-top:1px solid var(--gray-custom-300);
+
+  .title {
+    @include font-style(18px, 600, $--black);
+
+    margin: 60px 0 14px;
+  }
+
+  .outfitContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .outfitImage {
+      max-width: 100%;
+      max-height: 400px; // 임시
+      height: auto;
+      object-fit: contain;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .productContainer {
+    margin-top: 27px;
+
+    .card{
+      width:auto;
+    }
+
+    .productTitle{
+      margin-bottom:10px;
+    }
+  }
+
+  .buttonArea{
+    display:flex;
+    justify-content: center;
+    padding:50px 0 30px;
+  }
+}

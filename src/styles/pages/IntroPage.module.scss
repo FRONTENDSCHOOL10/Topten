@@ -1,0 +1,71 @@
+@import 'src/styles/utils/_theme.scss';
+
+#page {
+  height: 60vh;
+}
+
+.logo {
+  &__wrapper {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    height: 60vh;
+  }
+}
+
+.sun {
+  width: 100px;
+  position: absolute;
+  z-index: -1;
+}
+
+.cloud {
+  width: 100px;
+}
+
+.buttonArea {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.authArea {
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+
+  .divider {
+    width: 1px;
+    height: 25px;
+    background-color: #000;
+    margin: 0 10px;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  padding: 5px 10px;
+
+  &:hover {
+    // color: $--primary-color;
+    cursor: pointer;
+  }
+
+  &:active {
+    color: $--red-100;
+  }
+
+  &:focus {
+    outline: none;
+    font-weight: 700;
+  }
+}

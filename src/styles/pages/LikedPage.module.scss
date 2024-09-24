@@ -1,0 +1,81 @@
+.album {
+  display: flex;
+  justify-content: space-between;
+  padding-top:12px;
+}
+
+.ccmWrapper {
+  width: 64%; // 기존 40%에서 조정
+  padding-bottom:30px;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  padding: 30px 0;
+
+  img {
+    width: 8%;
+  }
+
+  h2 {
+    font-weight: 700;
+  }
+
+  p {
+    font-weight: 400;
+    color: var(--gray-600);
+  }
+}
+
+.line {
+  background-color: var(--gray-600);
+  border: 0;
+  height: 1px;
+}
+
+.temperatureButtonsSwiper {
+  padding: 18px 0;
+}
+
+.categoryButtons {
+  display: flex;
+  flex-direction: column;
+  width: 30%; // 왼쪽 카테고리의 너비 설정
+  background-color: var(--gray-custom-100);
+}
+
+.categoryButton {
+  padding: 10px 15px;
+  background-color: var(--gray-custom-100);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+
+  &:hover {
+    background-color: var(--gray-custom-300);
+  }
+}
+
+.upperCategory {
+  font-weight: bold;
+}
+
+.lowerCategory {
+  font-weight: normal;
+  padding-left: 30px; // 들여쓰기
+}
+
+.active {
+  background-color: var(--white);
+}
+
+.temperatureButtons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 18px 0;
+}

@@ -1,0 +1,22 @@
+.select__container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  label {
+    padding-top: 5px;
+  }
+
+  .select {
+    width: 162px;
+    height: 34px;
+    border-radius: 6px;
+    padding: 0 8px;
+    border: 1px solid var(--gray-custom-300);
+
+    &:focus{
+      outline:2px solid var(--primary-color);
+      border:1px solid var(--primary-color);
+    }
+  }
+}

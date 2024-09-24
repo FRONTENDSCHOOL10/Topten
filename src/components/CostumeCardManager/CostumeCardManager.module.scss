@@ -1,0 +1,36 @@
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexAlbum {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* 카드 간 간격을 균일하게 유지 */
+  gap: 20px 0px; /* 세로 간격 20px, 가로 간격 0px */
+}
+
+.cardWrapper {
+  // width: 80%;
+}
+.cardWrapperAlbum {
+  width: 50%;
+}
+
+.gridOOTD {
+  display: grid;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto; /* 중앙 정렬 */
+}
+
+.twoByOneGrid {
+  grid-template-columns: repeat(2, 1fr); /* 2열 */
+  grid-template-rows: 1fr; /* 1행 */
+}
+
+.twoByTwoGrid {
+  grid-template-columns: repeat(2, 1fr); /* 2열 */
+  grid-template-rows: repeat(2, 1fr); /* 2행 */
+}

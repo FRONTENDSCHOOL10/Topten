@@ -1,0 +1,94 @@
+@import '../../styles/utils/theme';
+@import '../../styles/utils/utils';
+
+.sectionArea{
+  padding-bottom:60px;
+  border-bottom:1px solid $--gray-custom-300;
+}
+
+.weatherWrap{
+  display:flex;
+  flex-direction: column;
+  gap:18px;
+
+  margin-bottom:30px;
+}
+
+.weatherLocation{
+  @include font-style(16px, 500, $--black);
+}
+
+.icon{
+  width:16px;
+}
+
+.currentWeather{
+  display:flex;
+  justify-content:space-between;
+}
+
+.weatherInfo{
+  display:flex;
+  flex-direction: column;
+  gap:20px;
+}
+
+.weatherDetail{
+  display:flex;
+  flex-direction: column;
+  gap:8px;
+}
+
+.nowTMP{
+  @include font-style(36px, 800, $--black);
+}
+
+.nowWeather{
+  @include font-style(16px, 700, $--black);
+}
+
+.nowWeatherSpan{
+  padding-left:10px;
+}
+
+.iconWeatherLg{
+  width:120px;
+}
+
+.iconWeatherSm{
+  width:16px;
+}
+
+.hourlyWeather{
+  
+  ul{
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap:13px;
+    overflow:hidden;
+    overflow-x:scroll;
+    text-align:center;
+  }
+
+  .hourlyWeatherLi{
+    min-width:26px;
+    padding-bottom:18px;
+  }
+
+  p{
+    @include font-style(12px, 400, $--black);
+    
+    line-height:1.2;
+  }
+}
+
+.iconLoading{
+  width:18px;
+  animation: __loading__ 1s infinite linear;
+}
+
+@keyframes __loading__{
+	0%{transform:rotate(0deg);}
+	100%{transform:rotate(360deg);}
+}

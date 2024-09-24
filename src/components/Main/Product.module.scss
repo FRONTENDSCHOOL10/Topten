@@ -1,0 +1,75 @@
+@import './../../styles/utils/theme';
+@import './../../styles/utils/utils';
+
+.product__component {
+  font-family: Pretendard;
+  .product__title__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 30px;
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: normal;
+    }
+
+    button {
+      font-size: 12px;
+      width: 108px;
+      height: 26px;
+      margin: 0px;
+      padding: 0 5px;
+      border: 1px solid var(--primary-color);
+
+      &:hover .icon,
+      &:focus .icon,
+      &:active .icon{
+        color: var(--black);
+      }
+    }
+    span{
+      margin-left:0.2rem;
+    }
+    .icon {
+      margin-left:0.2rem;
+      color: var(--primary-color);
+    }
+  }
+
+  .buttonArea{
+    display:flex;
+    justify-content: center;
+    margin:10px 0 60px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 18px 0;
+  }
+  .recommend__container {
+    padding-bottom: 18px;
+
+    .recommend {
+      @include font-style(16px, 400, $--black);
+      letter-spacing: -0.48px;
+      margin-left: 5px;
+    }
+
+    img{
+      width:13px;
+    }
+  }
+  .upper__section {
+    margin-bottom:16px;
+  }
+  .upper__section,
+  .lower__section {
+    display: flex;
+    gap: 12px;
+  }
+}

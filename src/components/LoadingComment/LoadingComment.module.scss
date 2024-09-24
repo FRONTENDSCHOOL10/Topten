@@ -1,0 +1,16 @@
+.load {
+  position: relative;
+  width: 100%;
+  height: 36px;
+  overflow: visible;
+  user-select: none;
+  cursor: default;
+}
+
+.letter {
+  position: absolute;
+  width: 20px;
+  height: 36px;
+  font-family: Pretendard, sans-serif;
+  color: var(--primary-color);
+}

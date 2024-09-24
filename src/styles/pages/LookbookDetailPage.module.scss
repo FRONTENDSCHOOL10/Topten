@@ -1,0 +1,46 @@
+@import './../utils/theme';
+@import './../utils/utils';
+
+.wrapComponent {
+  padding-top: 67px;
+
+  .topWrapper {
+    display: flex;
+    align-items: center;
+
+    .goPrev {
+      all: unset;
+      height: 18px;
+      margin: 14px 9px 0 0;
+      cursor:pointer;
+    }
+
+    .title {
+      @include font-style(18px, 600, $--black);
+      line-height: 19.8px;
+
+      margin: 30px 0 14px;
+    }
+  }
+
+  .weatherIcon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .subTitle {
+    .description {
+      @include font-style(16px, 400, $--black);
+      width: 242px;
+      margin-top: 16px;
+    }
+  }
+  .product {
+    margin-top:17px;
+    padding-bottom:30px;
+
+    .container{
+      margin-top:0;
+    }
+  }
+}

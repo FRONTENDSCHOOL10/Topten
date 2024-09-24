@@ -1,0 +1,59 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 900;
+}
+.BookmarkModal {
+  border: 1px solid black;
+  background-color: white;
+  width: 288px;
+  // height: 264px;
+  padding: 30px 20px;
+
+  .date__button__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    button {
+      margin: 0;
+    }
+
+    .close {
+      border: none;
+      background: transparent;
+      font-size: 20px;
+    }
+  }
+
+  .location {
+    padding: 18px 0 12px 0;
+  }
+
+  .comment__rate__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    label {
+      padding: 18px 0 12px 0;
+    }
+
+    ul {
+      display: flex;
+    }
+  }
+
+  textarea {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 18px;
+    padding:8px;
+  }
+}
