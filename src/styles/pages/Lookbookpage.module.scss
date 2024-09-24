@@ -59,6 +59,10 @@
         all: unset;
         padding:0 6px;
         cursor:pointer;
+
+        &:focus{
+          outline:2px solid #007aff;
+        }
       }
       .goPrev {
         margin-right: 10px;
