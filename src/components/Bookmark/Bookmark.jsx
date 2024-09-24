@@ -28,7 +28,7 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
 
   const weatherData = JSON.parse(localStorage.getItem('weatherData'));
   const savedAddress = bookmark?.address || '주소 없음';
-  const savedTime = bookmark?.saveTime ? formatDate(bookmark.saveTime) : '날짜 없음';
+  const savedTime = bookmark?.checkDate ? formatDate(bookmark.checkDate) : '날짜 없음';
 
   const skyCondition = weatherData.skyCondition;
 
@@ -121,7 +121,7 @@ const Bookmark = ({ bookmark, bookmarkList, setBookmarkList, currentBookmarkInde
         <div className={S.comment}>
           <div className={S.comment__Part}>
             <label htmlFor="comment">Comment</label>
-            <StarRate initialRate={bookmark?.rate2} onRate={handleRate} />
+            <StarRate initialRate={bookmark?.rate} onRate={handleRate} />
           </div>
           <p className={S.comment__Content}>{bookmark?.comment || '코멘트가 없습니다.'}</p>
           <p className={S.savedDate}>{savedTime}</p>

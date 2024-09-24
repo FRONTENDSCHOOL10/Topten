@@ -1,6 +1,5 @@
 export { default as Button } from './Button/Button.jsx';
-// export { default as CostumeCard } from './CostumeCard/CostumeCard.jsx';
-export { default as CostumeCard } from './CostumeCard_hjm/CostumeCard.jsx';
+export { default as CostumeCard } from './CostumeCard/CostumeCard.jsx';
 export { default as CostumeCardManager } from './CostumeCardManager/CostumeCardManager.jsx';
 export { default as Form } from './Form/Form.jsx';
 export { default as Header } from './Header/Header.jsx';
