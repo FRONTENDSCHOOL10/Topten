@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { FaBookmark } from 'react-icons/fa';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import useUserStore from '@/stores/userStore';
+import { Helmet } from 'react-helmet-async';
 
 // 캘린더 스타일 커스터마이징
 const StyledCalendar = styled(Calendar)`
@@ -230,62 +231,77 @@ const CalendarPage = () => {
   };
 
   return (
-    <div className="wrapComponent">
-      {!isLoggedIn && (
-        <CommonModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title={['로그인 후', '이용해보세요!']}
-          firstActionText="로그인"
-          firstActionLink="/login"
-          secondActionText="회원가입"
-          secondActionLink="/register"
-        />
-      )}
-      <div className={S.titleWrapper}>
-        <p className={S.title}>원하시는 날짜를 선택하세요</p>
-        <button className={S.btn} onClick={toggleCalendar}>
-          {calendarCollapsed ? '달력 열기' : '달력 접기'}
-        </button>
-      </div>
-
-      <div className={`${S.calendarWrapper} ${calendarCollapsed ? S.collapsed : ''}`}>
-        <StyledCalendar
-          onChange={onChange}
-          value={date}
-          activeStartDate={activeStartDate}
-          next2Label={null}
-          prev2Label={null}
-          showNeighboringMonth={false}
-          formatDay={(_, date) => date.toLocaleString('en', { day: 'numeric' })}
-          tileContent={renderTileContent}
-          onClickDay={handleDayClick}
-        />
-      </div>
-
-      {visible && (
-        <div className={S.statusBar}>
-          <button type="button" className={S.arrow} onClick={() => goToBookmark('prev')}>
-            <IoIosArrowBack />
-          </button>
-          <p>{formatDate(bookmarkList[currentBookmarkIndex]?.checkDate)}</p>
-          <button type="button" className={S.arrow} onClick={() => goToBookmark('next')}>
-            <IoIosArrowForward />
-          </button>
-        </div>
-      )}
-
-      <div className={S.BookmarkWrapper}>
-        {visible && (
-          <Bookmark
-            bookmark={bookmarkList[currentBookmarkIndex]}
-            bookmarkList={bookmarkList}
-            setBookmarkList={setBookmarkList}
-            currentBookmarkIndex={currentBookmarkIndex}
+    <>
+      <Helmet>
+        <title>캘린더 | StyleCast - 나만의 스타일 캐스트</title>
+        <meta property="og:title" content="캘린더 | StyleCast - 나만의 스타일 캐스트" />
+        <meta property="twitter:title" content="캘린더 | StyleCast - 나만의 스타일 캐스트" />
+        <meta name="description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta property="og:description" content="날씨에 따른 옷차림을 추천해주는 StyleCast" />
+        <meta name="keywords" content="날씨, 기온, 옷차림, 뭐입지, 입을옷, 의류, 기상정보, 룩북, 체형, 퍼스널컬러" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://stylecast.netlify.app/image/og-sc.png" />
+        <meta property="og:url" content="https://stylecast.netlify.app/" />
+        <meta property="og:site:author" content="TopTen" />
+        <link rel="canonical" href="https://stylecast.netlify.app/" />
+      </Helmet>
+      <div className="wrapComponent">
+        {!isLoggedIn && (
+          <CommonModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            title={['로그인 후', '이용해보세요!']}
+            firstActionText="로그인"
+            firstActionLink="/login"
+            secondActionText="회원가입"
+            secondActionLink="/register"
           />
         )}
+        <div className={S.titleWrapper}>
+          <p className={S.title}>원하시는 날짜를 선택하세요</p>
+          <button className={S.btn} onClick={toggleCalendar}>
+            {calendarCollapsed ? '달력 열기' : '달력 접기'}
+          </button>
+        </div>
+
+        <div className={`${S.calendarWrapper} ${calendarCollapsed ? S.collapsed : ''}`}>
+          <StyledCalendar
+            onChange={onChange}
+            value={date}
+            activeStartDate={activeStartDate}
+            next2Label={null}
+            prev2Label={null}
+            showNeighboringMonth={false}
+            formatDay={(_, date) => date.toLocaleString('en', { day: 'numeric' })}
+            tileContent={renderTileContent}
+            onClickDay={handleDayClick}
+          />
+        </div>
+
+        {visible && (
+          <div className={S.statusBar}>
+            <button type="button" className={S.arrow} onClick={() => goToBookmark('prev')}>
+              <IoIosArrowBack />
+            </button>
+            <p>{formatDate(bookmarkList[currentBookmarkIndex]?.checkDate)}</p>
+            <button type="button" className={S.arrow} onClick={() => goToBookmark('next')}>
+              <IoIosArrowForward />
+            </button>
+          </div>
+        )}
+
+        <div className={S.BookmarkWrapper}>
+          {visible && (
+            <Bookmark
+              bookmark={bookmarkList[currentBookmarkIndex]}
+              bookmarkList={bookmarkList}
+              setBookmarkList={setBookmarkList}
+              currentBookmarkIndex={currentBookmarkIndex}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
