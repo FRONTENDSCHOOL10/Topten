@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Input, Button, Form } from '@/components';
 import styles from './../styles/pages/FindPasswordPage.module.scss';
 import pb from './../api/pocketbase';
@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { Helmet } from 'react-helmet-async';
 import { validateName, validateEmail } from './../api/validation';
 
-function FindPasswordPage(props) {
+function FindPasswordPage() {
   // 이름 상태
   const [name, setName] = useState('');
 
