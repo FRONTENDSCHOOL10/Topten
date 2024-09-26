@@ -36,6 +36,11 @@
 ###  [스타일 캐스트(Style Cast) 프로젝트](https://stylecast.netlify.app/)
 <img src="https://github.com/user-attachments/assets/0b1a9540-1404-4745-8c00-1b9e4cbc9e97" alt="인트로 페이지" width="800" height="500">
 
+### 기간
+2024.08.26 ~ 09.24
+
+<br/>
+
 ### 프로젝트 소개
 기온만으로는 적절한 옷차림을 결정하기 어려운 경우가 많습니다. <br/>
 이 애플리케이션은 당일 날씨와 기온에 따라 적합한 옷차림(Outfit of the Day, OOTD)을 추천받을 수 있도록 설계되었습니다. <br/>
